@@ -1,4 +1,6 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -25,6 +27,7 @@ namespace PayPal.Sdk.Checkout.Core.MessageSerializers
             where TRequestBody : notnull
         {
             var serializer = new NewtonsoftJsonSerializer();
+            serializer.Converters.Add(new StringEnumConverter());
 
             var memoryStream = new MemoryStream();
             await using var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8, -1, leaveOpen: true);
@@ -65,6 +68,7 @@ namespace PayPal.Sdk.Checkout.Core.MessageSerializers
             );
 
             var serializer = new NewtonsoftJsonSerializer();
+            serializer.Converters.Add(new StringEnumConverter());
 
             using var streamReader = new StreamReader(stream);
             using var jsonTextReader = new JsonTextReader(streamReader);
