@@ -27,7 +27,7 @@ namespace PayPal.Sdk.Checkout.Orders
         /// <summary>
         /// The intent to either capture payment immediately or authorize a payment for an order after order creation.
         /// </summary>
-        [DataMember(Name = "intent", EmitDefaultValue = false)]
+        [DataMember(Name = "intent", EmitDefaultValue = true)]
         public EOrderIntent CheckoutPaymentIntent { get; set; }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace PayPal.Sdk.Checkout.Orders
         /// <summary>
         /// The order status.
         /// </summary>
-        [DataMember(Name = "status", EmitDefaultValue = false)]
+        [DataMember(Name = "status", EmitDefaultValue = true)]
         public EOrderStatus Status { get; set; }
 
         /// <summary>

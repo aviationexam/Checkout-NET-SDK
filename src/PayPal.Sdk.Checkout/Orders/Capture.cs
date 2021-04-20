@@ -86,7 +86,7 @@ namespace PayPal.Sdk.Checkout.Orders
         /// <summary>
         /// The status of the captured payment.
         /// </summary>
-        [DataMember(Name = "status", EmitDefaultValue = false)]
+        [DataMember(Name = "status", EmitDefaultValue = true)]
         public ECaptureStatus Status { get; set; }
 
         /// <summary>

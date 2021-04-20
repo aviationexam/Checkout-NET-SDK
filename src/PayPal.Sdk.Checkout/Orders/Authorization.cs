@@ -75,7 +75,7 @@ namespace PayPal.Sdk.Checkout.Orders
         /// <summary>
         /// The status for the authorized payment.
         /// </summary>
-        [DataMember(Name = "status", EmitDefaultValue = false)]
+        [DataMember(Name = "status", EmitDefaultValue = true)]
         public EAuthorizationStatus Status { get; set; }
 
         /// <summary>

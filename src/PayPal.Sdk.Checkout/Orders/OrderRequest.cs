@@ -33,7 +33,7 @@ namespace PayPal.Sdk.Checkout.Orders
         /// <summary>
         /// The intent to either capture payment immediately or authorize a payment for an order after order creation.
         /// </summary>
-        [DataMember(Name = "intent", EmitDefaultValue = false)]
+        [DataMember(Name = "intent", EmitDefaultValue = true)]
         public EOrderIntent CheckoutPaymentIntent { get; set; }
 
         /// <summary>

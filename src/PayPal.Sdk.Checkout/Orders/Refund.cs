@@ -75,7 +75,7 @@ namespace PayPal.Sdk.Checkout.Orders
         /// <summary>
         /// The status of the capture.
         /// </summary>
-        [DataMember(Name = "status", EmitDefaultValue = false)]
+        [DataMember(Name = "status", EmitDefaultValue = true)]
         public ERefundStatus Status { get; set; }
 
         /// <summary>
