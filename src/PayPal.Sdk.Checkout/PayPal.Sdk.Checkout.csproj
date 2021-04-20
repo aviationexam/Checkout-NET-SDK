@@ -9,11 +9,11 @@
     <PackageProjectUrl>https://github.com/aviationexam/PayPal-Checkout-Sdk</PackageProjectUrl>
     <Title>PayPalCheckoutSdk</Title>
     <Authors>PayPal, Aviationexams</Authors>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\LICENSE" Pack="true" PackagePath="LICENSE"/>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath=""/>
   </ItemGroup>
   
   <ItemGroup>
