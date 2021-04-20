@@ -119,7 +119,7 @@ You can start off by trying out [creating and capturing an order](/samples/PayPa
 
 To try out different samples for both create and authorize intent head to [this link](/samples/PayPal.Sdk.Checkout.Samples).
 
-Note: Update the `PayPal.Sdk.Checkout.Test` with your sandbox client credentials or pass your client credentials as environment variable while executing the samples.
+Note: Update the `tests/PayPal.Sdk.Checkout.Test/user.appsettings.json5` or the `sample/PayPal.Sdk.Checkout.Samples/user.appsettings.json5` with your sandbox client credentials.
 
 
 ## License
