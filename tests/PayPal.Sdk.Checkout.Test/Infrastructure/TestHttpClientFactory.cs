@@ -42,7 +42,10 @@ namespace PayPal.Sdk.Checkout.Test.Infrastructure
                     .AddConsole();
             });
 
-            serviceCollection.Replace(ServiceDescriptor.Singleton<IHttpMessageHandlerBuilderFilter, HttpClientLoggingFilter>());
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("IS_AZURE_DEVOPS")))
+            {
+                serviceCollection.Replace(ServiceDescriptor.Singleton<IHttpMessageHandlerBuilderFilter, HttpClientLoggingFilter>());
+            }
 
             return serviceCollection.BuildServiceProvider();
         }
