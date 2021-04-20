@@ -8,7 +8,7 @@
     <Owners>PayPal</Owners>
     <PackageProjectUrl>https://github.com/aviationexam/PayPal-Checkout-Sdk</PackageProjectUrl>
     <Title>PayPalCheckoutSdk</Title>
-    <Authors>PayPal</Authors>
+    <Authors>PayPal, Aviationexams</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
