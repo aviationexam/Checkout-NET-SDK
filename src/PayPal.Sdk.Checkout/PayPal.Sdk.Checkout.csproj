@@ -9,8 +9,13 @@
     <PackageProjectUrl>https://github.com/aviationexam/PayPal-Checkout-Sdk</PackageProjectUrl>
     <Title>PayPalCheckoutSdk</Title>
     <Authors>PayPal</Authors>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="LICENSE"/>
+  </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
