@@ -73,6 +73,6 @@ namespace PayPal.Sdk.Checkout.Orders
         /// Configures a <strong>Continue</strong> or <strong>Pay Now</strong> checkout flow.
         /// </summary>
         [DataMember(Name = "user_action", EmitDefaultValue = false)]
-        public EUserAction? UserAction { get; set; } = null!;
+        public EUserAction? UserAction { get; set; }
     }
 }
