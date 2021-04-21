@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace PayPal.Sdk.Checkout.Orders
@@ -18,7 +19,19 @@ namespace PayPal.Sdk.Checkout.Orders
         /// <summary>
         /// The funds that are held on behalf of the merchant.
         /// </summary>
+        [DataMember(Name = "platform_fees", EmitDefaultValue = false)]
+        public ICollection<object>? PlatformFees { get; set; }
+
+        /// <summary>
+        /// The funds that are held on behalf of the merchant.
+        /// </summary>
+        [DataMember(Name = "payee_pricing_tier_id", EmitDefaultValue = false)]
+        public string? PayeePricingTierId { get; set; }
+
+        /// <summary>
+        /// The funds that are held on behalf of the merchant.
+        /// </summary>
         [DataMember(Name = "disbursement_mode", EmitDefaultValue = false)]
-        public string DisbursementMode { get; set; } = null!;
+        public EDisbursementMode? DisbursementMode { get; set; }
     }
 }
