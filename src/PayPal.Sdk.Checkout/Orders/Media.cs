@@ -1,10 +1,3 @@
-// This class was generated on Tue, 21 May 2019 11:25:19 PDT by version 0.1.0-dev+8fcb5f of Braintree SDK Generator
-// Media.cs
-// @version 0.1.0-dev+8fcb5f
-// @type object
-// @data H4sIAAAAAAAC/6ySQUvzQBCG79+vGPbUQr6miHrITbFCkdiixUspsk0mycJmdp2dYIP0v0tabS0FFfW47zDMs8/Mi5q1HlWiUsyNVpF60Gz00uKtrrtYReoG2/3jCkPGxotxpBI1qxDqrhGk9QiacsgcCa7kP1LmckMlhKzCGgcqUhfMut2OG0bqDnU+IduqpNA2YBc8NYYx3wVTdh5ZDAaVzHegQdhQeUy6NKS5fXyfewC+rY32peNvbLjpmBvuEWGeNlaMb9i7gDAmQSYUSLWxMFoJUjCOAvTScTrqw1SzwIQwgWvHtRZwxYceDEGXCJcuNxgWvUrEhySOxTkbBgalGDgu40pqG3ORnQxPz/q/lUeNtevoS4PdDg+0vQWf7fzHfmbPLoHN0UGH9S0T539jYrH+9woAAP//
-// DO NOT EDIT
-
 using System.Runtime.Serialization;
 
 namespace PayPal.Sdk.Checkout.Orders

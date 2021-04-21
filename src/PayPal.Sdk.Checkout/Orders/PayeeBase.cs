@@ -1,10 +1,3 @@
-// This class was generated on Tue, 21 May 2019 11:25:19 PDT by version 0.1.0-dev+8fcb5f of Braintree SDK Generator
-// PayeeBase.cs
-// @version 0.1.0-dev+8fcb5f
-// @type object
-// @data H4sIAAAAAAAC/7xUwW7bOBC971cMdFacINnswafdIIcNCqRB4fbSFvaYfLKIUKQyJO2oRf69IOW4dtyiBVr0IkCPHMx7b+bxczUbelTTqucBmC85oKqrdyyGlxa33B2dvcKwhau6ukZQYvpovKum1awFaUQ2NlDjhWIL6iCqZRdp03oSKJg1QjlpktOB2Glqkm2MtSPsRUMmNNuvNYHYBk/3zm8c8XixsJpUdfWfCA+jjLO6egPWr50dqmnDNiADD8kI9A64E99DokGopu93BoQoxq2OxStr4OLc6APt++ixCX1aWqPo5npnQyF7Ql52ok6UgCM0cd9P6MZF8TopaIqeQup7L5FSACkOCDWFpNqs/ErYuJkAZFzESji3pY2JLd3xcMe2pk0L2XakBTo2ds5aC0JYZAKLZwZzoxfZWucj8ZqNzap/1VCXrH2qf+hqoXXg6AHRb7qaBYsrgtmaT9BUamhbM/mQzs4u1NJ6df+QfET5H78qRPFuNSK3PmI6wqf7OL3ts/n//E2qZWEVIYFYQGyt30DTEo3Pv07T+eXl925xEzEOfeyhvN5S+Xfb9CtCwazchP73G6whdalawUHY2oFYKfR5RTp+NF3qyMKtYluWit2h+jzI88t96mOGeo7ZNVpDTGNK9Djm6uSKSfpnWRIeTYjPLp++tPnPrM3e6h4szyF+vDpjNEomhG6uc0aMasu7Qh2He+hsUMhR8k2ZwraClfLJRXKpW0LKCjoNXUaQ01mCF1sjmnouWkbbX9YFEpQOSzsQnJKhDDavElMvvheDyDLQOgt2MdO44oCL81ybwvguwOWhFH6CkGz8LWn9+PTXFwAAAP//
-// DO NOT EDIT
-
 using System.Runtime.Serialization;
 
 namespace PayPal.Sdk.Checkout.Orders

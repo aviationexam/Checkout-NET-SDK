@@ -1,10 +1,3 @@
-// This class was generated on Tue, 21 May 2019 11:25:19 PDT by version 0.1.0-dev+8fcb5f of Braintree SDK Generator
-// TaxInfo.cs
-// @version 0.1.0-dev+8fcb5f
-// @type object
-// @data H4sIAAAAAAAC/6yRT0vDQBBH736KYS9eQrDgKTelFxG0aPAi0k6zk2Zxs7vObLSL9LtL0j9ordCCx/nlkfBePlWZAqlCRVxOjau9ytQTssG5pTts957cUtqMKlNjkopNiMY7VaiyIYi4hJsx+BpiQ1B1En1LnEP57QIjgFY8vDr/4QBlYAOmHrz2sYHZ8EE9A3R6e0xjCjQDZAKmt84w6Vxl6ooZ01rgIlMPhPre2aSKGq1QP6zR3TBhH4ijIVHF805dIhu3+ENc/9DeTb/lt4LnsumQw2MXgudIGmrPg+cE0wRtr9uSi9BSbLwG72zKoUzBVGhtygZ0E9MIjEZQNchYRWIB691ieJ9x2rwb3aGVIdXo8iA278Q4EiE5qVjkbi+Y66xdZUdWG37YgXTb/Yh+0KMnRvwHw5fV2RcAAAD//w==
-// DO NOT EDIT
-
 using System.Runtime.Serialization;
 
 namespace PayPal.Sdk.Checkout.Orders
