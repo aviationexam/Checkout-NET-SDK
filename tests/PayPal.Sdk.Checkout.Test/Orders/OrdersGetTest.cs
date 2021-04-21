@@ -40,13 +40,13 @@ namespace PayPal.Sdk.Checkout.Test.Orders
             Assert.NotNull(retrievedOrder.PurchaseUnits);
             Assert.Equal(retrievedOrder.PurchaseUnits.Count, createdOrder.PurchaseUnits.Count);
 
-            for (var count = 0; count < retrievedOrder.PurchaseUnits.Count; count++)
+            foreach (var purchaseUnit in retrievedOrder.PurchaseUnits)
             {
-                var retrievedOrderPurchaseUnit = retrievedOrder.PurchaseUnits[count];
-                var createdOrderPurchaseUnit = createdOrder.PurchaseUnits[count];
-                Assert.Equal(retrievedOrderPurchaseUnit.ReferenceId, createdOrderPurchaseUnit.ReferenceId);
-                Assert.Equal(retrievedOrderPurchaseUnit.AmountWithBreakdown.CurrencyCode, createdOrderPurchaseUnit.AmountWithBreakdown.CurrencyCode);
-                Assert.Equal(retrievedOrderPurchaseUnit.AmountWithBreakdown.Value, createdOrderPurchaseUnit.AmountWithBreakdown.Value);
+                var createdOrderPurchaseUnit = Assert.Single(createdOrder.PurchaseUnits, x => x.ReferenceId == purchaseUnit.ReferenceId);
+
+                Assert.Equal(purchaseUnit.ReferenceId, createdOrderPurchaseUnit!.ReferenceId);
+                Assert.Equal(purchaseUnit.AmountWithBreakdown.CurrencyCode, createdOrderPurchaseUnit.AmountWithBreakdown.CurrencyCode);
+                Assert.Equal(purchaseUnit.AmountWithBreakdown.Value, createdOrderPurchaseUnit.AmountWithBreakdown.Value);
             }
 
             Assert.NotNull(retrievedOrder.CreateTime);

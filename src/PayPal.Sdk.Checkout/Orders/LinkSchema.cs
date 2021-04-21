@@ -7,7 +7,6 @@
 
 using System.Runtime.Serialization;
 
-
 namespace PayPal.Sdk.Checkout.Orders
 {
     /// <summary>
@@ -32,12 +31,12 @@ namespace PayPal.Sdk.Checkout.Orders
         // /// An array of sub-schemas. The data must validate against all sub-schemas.
         // /// </summary>
         // [DataMember(Name="allOf", EmitDefaultValue = false)]
-        // public List<AllOfItem> AllOf { get; set; } = null!;
+        // public ICollection<AllOfItem> AllOf { get; set; } = null!;
         // /// <summary>
         // /// An array of sub-schemas. The data must validate against one or more sub-schemas.
         // /// </summary>
         // [DataMember(Name="anyOf", EmitDefaultValue = false)]
-        // public List<AnyOfItem> AnyOf { get; set; } = null!;
+        // public ICollection<AnyOfItem> AnyOf { get; set; } = null!;
         /// <summary>
         /// </summary>
         [DataMember(Name = "definitions", EmitDefaultValue = false)]
@@ -63,7 +62,7 @@ namespace PayPal.Sdk.Checkout.Orders
         // /// An array of links.
         // /// </summary>
         // [DataMember(Name="links", EmitDefaultValue = false)]
-        // public List<Link> Links { get; set; } = null!;
+        // public ICollection<Link> Links { get; set; } = null!;
         /// <summary>
         /// </summary>
         [DataMember(Name = "not", EmitDefaultValue = false)]
@@ -73,7 +72,7 @@ namespace PayPal.Sdk.Checkout.Orders
         // /// An array of sub-schemas. The data must validate against one sub-schema.
         // /// </summary>
         // [DataMember(Name="oneOf", EmitDefaultValue = false)]
-        // public List<OneOfItem> OneOf { get; set; } = null!;
+        // public ICollection<OneOfItem> OneOf { get; set; } = null!;
         /// <summary>
         /// To apply this schema to the instances' URIs, start the URIs with this value.
         /// </summary>

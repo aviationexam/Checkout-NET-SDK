@@ -2,6 +2,7 @@ using PayPal.Sdk.Checkout.Extensions;
 using PayPal.Sdk.Checkout.Orders;
 using PayPal.Sdk.Checkout.Test.Infrastructure;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Xunit;
 
@@ -49,7 +50,7 @@ namespace PayPal.Sdk.Checkout.Test.Orders
 
             var getOrder = getOrderResponse.ResponseBody!;
 
-            var firstPurchaseUnit = getOrder.PurchaseUnits[0];
+            var firstPurchaseUnit = getOrder.PurchaseUnits.Single();
             Assert.Equal("test_ref_id1", firstPurchaseUnit.ReferenceId);
             Assert.Equal("USD", firstPurchaseUnit.AmountWithBreakdown.CurrencyCode);
             Assert.Equal("100.00", firstPurchaseUnit.AmountWithBreakdown.Value);

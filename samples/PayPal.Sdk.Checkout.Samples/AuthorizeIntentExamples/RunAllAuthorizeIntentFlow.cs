@@ -1,5 +1,6 @@
 using PayPal.Sdk.Checkout.Extensions;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PayPal.Sdk.Checkout.Samples.AuthorizeIntentExamples
@@ -25,7 +26,7 @@ namespace PayPal.Sdk.Checkout.Samples.AuthorizeIntentExamples
                 Console.WriteLine("\t{0}: {1}\tCall Type: {2}", link.Rel, link.Href, link.Method);
             }
 
-            var amount = createOrderResponse.PurchaseUnits[0].AmountWithBreakdown;
+            var amount = createOrderResponse.PurchaseUnits.Single().AmountWithBreakdown;
             Console.WriteLine("Total Amount: {0} {1}", amount.CurrencyCode, amount.Value);
 
             Console.WriteLine("Copy approve link and paste it in browser. Login with buyer account and follow the instructions.\nOnce approved hit enter...\n");
@@ -35,9 +36,9 @@ namespace PayPal.Sdk.Checkout.Samples.AuthorizeIntentExamples
             var authorizeOrderResponse = await payPalHttpClient.AuthorizeOrder(accessToken!, createOrderResponse.Id);
 
             Console.WriteLine("Status: {0}", authorizeOrderResponse!.Status);
-            var authorizationId = authorizeOrderResponse.PurchaseUnits[0].Payments.Authorizations[0].Id;
+            var authorizationId = authorizeOrderResponse.PurchaseUnits.Single().Payments.Authorizations.Single().Id;
             Console.WriteLine("Order Id: {0}", authorizeOrderResponse.Id);
-            Console.WriteLine("Authorization Id: {0}", authorizeOrderResponse.PurchaseUnits[0].Payments.Authorizations[0].Id);
+            Console.WriteLine("Authorization Id: {0}", authorizeOrderResponse.PurchaseUnits.Single().Payments.Authorizations.Single().Id);
             Console.WriteLine("Intent: {0}", authorizeOrderResponse.CheckoutPaymentIntent);
             Console.WriteLine("Links:");
             foreach (var link in authorizeOrderResponse.Links)
@@ -45,7 +46,7 @@ namespace PayPal.Sdk.Checkout.Samples.AuthorizeIntentExamples
                 Console.WriteLine("\t{0}: {1}\tCall Type: {2}", link.Rel, link.Href, link.Method);
             }
 
-            var authorizedAmount = authorizeOrderResponse.PurchaseUnits[0].AmountWithBreakdown;
+            var authorizedAmount = authorizeOrderResponse.PurchaseUnits.Single().AmountWithBreakdown;
             Console.WriteLine("Buyer:");
             Console.WriteLine("\tEmail Address: {0}", authorizeOrderResponse.Payer.Email);
             Console.WriteLine("AuthorizedAmount: {0}", authorizedAmount);

@@ -5,6 +5,7 @@ using PayPal.Sdk.Checkout.Extensions;
 using PayPal.Sdk.Checkout.Orders;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PayPal.Sdk.Checkout.Samples
@@ -154,7 +155,7 @@ namespace PayPal.Sdk.Checkout.Samples
                     Console.WriteLine("\t{0}: {1}\tCall Type: {2}", link.Rel, link.Href, link.Method);
                 }
 
-                var amount = response.PurchaseUnits[0].AmountWithBreakdown;
+                var amount = response.PurchaseUnits.Single().AmountWithBreakdown;
                 Console.WriteLine("Total Amount: {0} {1}", amount.CurrencyCode, amount.Value);
                 Console.WriteLine("Response JSON: \n {0}", response.AsJson());
             }
@@ -214,7 +215,7 @@ namespace PayPal.Sdk.Checkout.Samples
                     Console.WriteLine("\t{0}: {1}\tCall Type: {2}", link.Rel, link.Href, link.Method);
                 }
 
-                var amount = response.PurchaseUnits[0].AmountWithBreakdown;
+                var amount = response.PurchaseUnits.Single().AmountWithBreakdown;
                 Console.WriteLine("Total Amount: {0} {1}", amount.CurrencyCode, amount.Value);
             }
 

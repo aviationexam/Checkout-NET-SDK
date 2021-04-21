@@ -4,6 +4,7 @@ using PayPal.Sdk.Checkout.Core.Interfaces;
 using PayPal.Sdk.Checkout.Extensions;
 using PayPal.Sdk.Checkout.Orders;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PayPal.Sdk.Checkout.Samples.AuthorizeIntentExamples
@@ -29,7 +30,7 @@ namespace PayPal.Sdk.Checkout.Samples.AuthorizeIntentExamples
             {
                 Console.WriteLine("Status: {0}", response.Status);
                 Console.WriteLine("Order Id: {0}", response.Id);
-                Console.WriteLine("Authorization Id: {0}", response.PurchaseUnits[0].Payments.Authorizations[0].Id);
+                Console.WriteLine("Authorization Id: {0}", response.PurchaseUnits.Single().Payments.Authorizations.Single().Id);
                 Console.WriteLine("Intent: {0}", response.CheckoutPaymentIntent);
                 Console.WriteLine("Links:");
                 foreach (var link in response.Links)
@@ -37,7 +38,7 @@ namespace PayPal.Sdk.Checkout.Samples.AuthorizeIntentExamples
                     Console.WriteLine("\t{0}: {1}\tCall Type: {2}", link.Rel, link.Href, link.Method);
                 }
 
-                var amount = response.PurchaseUnits[0].AmountWithBreakdown;
+                var amount = response.PurchaseUnits.Single().AmountWithBreakdown;
                 Console.WriteLine("Buyer:");
                 Console.WriteLine("\tEmail Address: {0}", response.Payer.Email);
                 Console.WriteLine("Response JSON: \n {0}", response.AsJson());

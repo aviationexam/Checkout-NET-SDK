@@ -10,7 +10,6 @@ using System;
 using System.IO;
 using System.Net.Http;
 
-
 namespace PayPal.Sdk.Checkout.Payments
 {
     /// <summary>

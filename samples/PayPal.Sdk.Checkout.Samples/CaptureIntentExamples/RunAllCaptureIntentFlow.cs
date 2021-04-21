@@ -1,5 +1,6 @@
 using PayPal.Sdk.Checkout.Extensions;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PayPal.Sdk.Checkout.Samples.CaptureIntentExamples
@@ -25,7 +26,7 @@ namespace PayPal.Sdk.Checkout.Samples.CaptureIntentExamples
                 Console.WriteLine("\t{0}: {1}\tCall Type: {2}", link.Rel, link.Href, link.Method);
             }
 
-            var amount = createOrderResponse.PurchaseUnits[0].AmountWithBreakdown;
+            var amount = createOrderResponse.PurchaseUnits.Single().AmountWithBreakdown;
             Console.WriteLine("Total Amount: {0} {1}", amount.CurrencyCode, amount.Value);
 
             Console.WriteLine("Copy approve link and paste it in browser. Login with buyer account and follow the instructions.\nOnce approved hit enter...\n");
@@ -52,7 +53,7 @@ namespace PayPal.Sdk.Checkout.Samples.CaptureIntentExamples
                 }
             }
 
-            var captureAmount = captureOrderResponse.PurchaseUnits[0].AmountWithBreakdown;
+            var captureAmount = captureOrderResponse.PurchaseUnits.Single().AmountWithBreakdown;
             Console.WriteLine("Buyer:");
             Console.WriteLine("\tEmail Address: {0}\n\tName: {1} {2}", captureOrderResponse.Payer.Email, captureOrderResponse.Payer.Name.GivenName, captureOrderResponse.Payer.Name.Surname);
             Console.WriteLine("CaptureAmount: {0}", captureAmount);

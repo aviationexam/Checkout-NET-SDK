@@ -80,7 +80,7 @@ namespace PayPal.Sdk.Checkout.Test.Orders
             Assert.NotNull(createdOrder.PurchaseUnits);
             Assert.Single(createdOrder.PurchaseUnits);
 
-            var firstPurchaseUnit = createdOrder.PurchaseUnits[0];
+            var firstPurchaseUnit = createdOrder.PurchaseUnits.Single();
             Assert.Equal("test_ref_id1", firstPurchaseUnit.ReferenceId);
             Assert.Equal("USD", firstPurchaseUnit.AmountWithBreakdown.CurrencyCode);
             Assert.Equal("100.00", firstPurchaseUnit.AmountWithBreakdown.Value);

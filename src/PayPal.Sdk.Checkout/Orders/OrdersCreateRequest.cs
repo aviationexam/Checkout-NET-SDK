@@ -9,7 +9,6 @@ using PayPal.Sdk.Checkout.Core.MessageSerializers;
 using PayPal.Sdk.Checkout.RequestInterfaces;
 using System.Net.Http;
 
-
 namespace PayPal.Sdk.Checkout.Orders
 {
     /// <summary>

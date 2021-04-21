@@ -7,7 +7,6 @@
 
 using System.Runtime.Serialization;
 
-
 namespace PayPal.Sdk.Checkout.Payments
 {
     /// <summary>

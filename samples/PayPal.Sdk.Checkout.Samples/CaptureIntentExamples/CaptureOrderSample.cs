@@ -3,6 +3,7 @@ using PayPal.Sdk.Checkout.Core.Interfaces;
 using PayPal.Sdk.Checkout.Extensions;
 using PayPal.Sdk.Checkout.Orders;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PayPal.Sdk.Checkout.Samples.CaptureIntentExamples
@@ -37,7 +38,7 @@ namespace PayPal.Sdk.Checkout.Samples.CaptureIntentExamples
                     }
                 }
 
-                var amount = response.PurchaseUnits[0].AmountWithBreakdown;
+                var amount = response.PurchaseUnits.Single().AmountWithBreakdown;
                 Console.WriteLine("Buyer:");
                 Console.WriteLine("\tEmail Address: {0}\n\tName: {1} {2}\n",
                     response.Payer.Email,
