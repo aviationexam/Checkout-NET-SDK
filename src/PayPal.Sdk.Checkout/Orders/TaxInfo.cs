@@ -34,7 +34,7 @@ namespace PayPal.Sdk.Checkout.Orders
         /// REQUIRED
         /// The customer's tax ID type. Supported for the PayPal payment method only.
         /// </summary>
-        [DataMember(Name = "tax_id_type", EmitDefaultValue = false)]
-        public string TaxIdType { get; set; } = null!;
+        [DataMember(Name = "tax_id_type", EmitDefaultValue = true)]
+        public ETaxIdType TaxIdType { get; set; }
     }
 }
