@@ -33,7 +33,7 @@ namespace PayPal.Sdk.Checkout.Orders
         /// <summary>
         /// The phone type.
         /// </summary>
-        [DataMember(Name = "phone_type", EmitDefaultValue = false)]
-        public string PhoneType { get; set; } = null!;
+        [DataMember(Name = "phone_type", EmitDefaultValue = true)]
+        public EPhoneType PhoneType { get; set; }
     }
 }
