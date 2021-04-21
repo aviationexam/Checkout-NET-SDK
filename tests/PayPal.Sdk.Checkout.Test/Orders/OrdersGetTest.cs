@@ -59,7 +59,7 @@ namespace PayPal.Sdk.Checkout.Test.Orders
                 {
                     foundApproveUrl = true;
                     Assert.NotNull(linkDescription.Href);
-                    Assert.Equal("GET", linkDescription.Method);
+                    Assert.Equal(EHttpMethod.Get, linkDescription.Method);
                     _testOutputHelper.WriteLine(linkDescription.Href);
                 }
             }

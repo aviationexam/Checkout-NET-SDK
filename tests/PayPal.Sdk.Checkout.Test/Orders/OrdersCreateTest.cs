@@ -92,7 +92,7 @@ namespace PayPal.Sdk.Checkout.Test.Orders
             Assert.Contains(createdOrder.Links, x => x.Rel == "approve");
             var approveUrl = createdOrder.Links.First(x => x.Rel == "approve");
             Assert.NotNull(approveUrl.Href);
-            Assert.Equal("GET", approveUrl.Method);
+            Assert.Equal(EHttpMethod.Get, approveUrl.Method);
 
             _testOutputHelper.WriteLine("OrderId: {0}", createdOrder.Id);
             _testOutputHelper.WriteLine("ApproveUrl: {0}", approveUrl.Href);
