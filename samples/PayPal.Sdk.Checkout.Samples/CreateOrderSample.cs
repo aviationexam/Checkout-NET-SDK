@@ -22,11 +22,11 @@ namespace PayPal.Sdk.Checkout.Samples
                 ApplicationContext = new ApplicationContext
                 {
                     BrandName = "EXAMPLE INC",
-                    LandingPage = "BILLING",
+                    LandingPage = ELandingPage.Billing,
                     CancelUrl = "https://www.example.com",
                     ReturnUrl = "https://www.example.com",
-                    UserAction = "CONTINUE",
-                    ShippingPreference = "SET_PROVIDED_ADDRESS"
+                    UserAction = EUserAction.Continue,
+                    ShippingPreference = EShippingPreference.SetProvidedAddress,
                 },
                 PurchaseUnits = new List<PurchaseUnitRequest>
                 {
@@ -87,7 +87,7 @@ namespace PayPal.Sdk.Checkout.Samples
                                     Value = "10.00"
                                 },
                                 Quantity = "1",
-                                Category = "PHYSICAL_GOODS"
+                                Category = EItemCategory.PhysicalGoods,
                             },
                             new()
                             {
@@ -105,7 +105,7 @@ namespace PayPal.Sdk.Checkout.Samples
                                     Value = "5.00"
                                 },
                                 Quantity = "2",
-                                Category = "PHYSICAL_GOODS"
+                                Category = EItemCategory.PhysicalGoods,
                             }
                         },
                         ShippingDetail = new ShippingDetail

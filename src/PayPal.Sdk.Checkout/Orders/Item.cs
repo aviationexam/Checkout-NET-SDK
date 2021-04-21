@@ -27,13 +27,7 @@ namespace PayPal.Sdk.Checkout.Orders
         /// The item category type.
         /// </summary>
         [DataMember(Name = "category", EmitDefaultValue = false)]
-        public string Category { get; set; } = null!;
-
-        /// <summary>
-        /// The detailed item description.
-        /// </summary>
-        [DataMember(Name = "description", EmitDefaultValue = false)]
-        public string Description { get; set; } = null!;
+        public EItemCategory? Category { get; set; }
 
         /// <summary>
         /// REQUIRED
@@ -41,6 +35,12 @@ namespace PayPal.Sdk.Checkout.Orders
         /// </summary>
         [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; set; } = null!;
+
+        /// <summary>
+        /// The detailed item description.
+        /// </summary>
+        [DataMember(Name = "description", EmitDefaultValue = false)]
+        public string? Description { get; set; }
 
         /// <summary>
         /// REQUIRED
@@ -53,13 +53,13 @@ namespace PayPal.Sdk.Checkout.Orders
         /// The stock keeping unit (SKU) for the item.
         /// </summary>
         [DataMember(Name = "sku", EmitDefaultValue = false)]
-        public string Sku { get; set; } = null!;
+        public string? Sku { get; set; }
 
         /// <summary>
         /// The currency and amount for a financial transaction, such as a balance or payment due.
         /// </summary>
         [DataMember(Name = "tax", EmitDefaultValue = false)]
-        public Money Tax { get; set; } = null!;
+        public Money? Tax { get; set; }
 
         /// <summary>
         /// REQUIRED
