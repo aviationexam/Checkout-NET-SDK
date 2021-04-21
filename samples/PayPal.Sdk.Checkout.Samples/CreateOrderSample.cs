@@ -111,7 +111,7 @@ namespace PayPal.Sdk.Checkout.Samples
                         },
                         ShippingDetail = new ShippingDetail
                         {
-                            Name = new Name
+                            Name = new ShippingName
                             {
                                 FullName = "John Doe"
                             },
