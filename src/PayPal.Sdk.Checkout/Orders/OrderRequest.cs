@@ -43,12 +43,6 @@ namespace PayPal.Sdk.Checkout.Orders
         public Payer Payer { get; set; } = null!;
 
         /// <summary>
-        /// The instruction to process an order.
-        /// </summary>
-        [DataMember(Name = "processing_instruction", EmitDefaultValue = false)]
-        public string ProcessingInstruction { get; set; } = null!;
-
-        /// <summary>
         /// REQUIRED
         /// An array of purchase units. At present only 1 purchase_unit is supported. Each purchase unit establishes a contract between a payer and the payee. Each purchase unit represents either a full or partial order that the payer intends to purchase from the payee.
         /// </summary>
