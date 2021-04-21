@@ -20,6 +20,5 @@ namespace PayPal.Sdk.Checkout.Orders
         /// </summary>
         [EnumMember(Value = "PAY_NOW")]
         PayNow,
-
     }
 }
