@@ -6,7 +6,7 @@ namespace PayPal.Sdk.Checkout.Orders
     /// The authorize an order request.
     /// </summary>
     [DataContract]
-    public class AuthorizeRequest
+    public class AuthorizeRequest : OrderActionRequest
     {
         /// <summary>
         /// Required default constructor
@@ -20,12 +20,6 @@ namespace PayPal.Sdk.Checkout.Orders
         /// </summary>
         [DataMember(Name = "amount", EmitDefaultValue = false)]
         public Money Amount { get; set; } = null!;
-
-        /// <summary>
-        /// The payment source definition.
-        /// </summary>
-        [DataMember(Name = "payment_source", EmitDefaultValue = false)]
-        public PaymentSource PaymentSource { get; set; } = null!;
 
         /// <summary>
         /// The API caller-provided external ID for the purchase unit. Required for multiple purchase units.
