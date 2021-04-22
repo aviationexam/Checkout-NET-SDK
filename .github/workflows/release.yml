@@ -31,5 +31,8 @@ jobs:
         with:
           name: Nuget-packages-${{ steps.gitversion.outputs.nuGetVersionV2 }}
           path: nuget-packages
-      - name: Push package to nuget
+      - name: Push package to Github Packages
+        run: dotnet nuget push 'nuget-packages/*.nupkg' --api-key ${{ secrets.GITHUB_TOKEN  }} --source github
+      - name: Push package to Nuget
         run: dotnet nuget push 'nuget-packages/*.nupkg' --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+
