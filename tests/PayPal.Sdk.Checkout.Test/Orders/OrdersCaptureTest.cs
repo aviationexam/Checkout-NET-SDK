@@ -1,6 +1,8 @@
+using PayPal.Sdk.Checkout.ContractEnums;
 using PayPal.Sdk.Checkout.Extensions;
 using PayPal.Sdk.Checkout.Orders;
 using PayPal.Sdk.Checkout.Test.Infrastructure;
+using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -19,22 +21,32 @@ namespace PayPal.Sdk.Checkout.Test.Orders
             Assert.NotNull(accessToken);
 
             var orderResponse = await OrdersCreateTest.CreateOrder(payPalHttpClient, accessToken!);
-            var createdOrder = orderResponse.ResponseBody!;
+            var createdOrderId = orderResponse.ResponseBody!.Id;
 
-            var request = new OrdersCaptureRequest(createdOrder.Id);
-            request.SetRequestBody(new OrderActionRequest
+            var getOrderResponse = await payPalHttpClient.GetOrderRawAsync(accessToken!, createdOrderId);
+
+            if (getOrderResponse.ResponseBody!.CheckoutPaymentIntent == EOrderIntent.Authorize)
             {
-                PaymentSource = new PaymentSource
+                var request = new OrdersCaptureRequest(createdOrderId);
+                request.SetPreferReturn(EPreferReturn.Representation);
+                request.SetRequestBody(new OrderActionRequest
                 {
-                    Card = new Card { },
-                    Token = new Token { },
-                }
-            });
+                    //PaymentSource = new PaymentSource
+                    //{
+                    //    Card = new Card { },
+                    //    Token = new Token
+                    //    {
+                    //        Id = "",
+                    //        Type = ETokenType.BillingAgreement,
+                    //    },
+                    //}
+                });
 
-            var response = await payPalHttpClient.ExecuteAsync<OrdersCaptureRequest, Order>(request, accessToken);
+                var response = await payPalHttpClient.ExecuteAsync<OrdersCaptureRequest, OrderActionRequest, Order>(request, accessToken);
 
-            Assert.Equal(201, (int) response.ResponseStatusCode);
-            Assert.NotNull(response.ResponseBody);
+                Assert.Equal(HttpStatusCode.Created, response.ResponseStatusCode);
+                Assert.NotNull(response.ResponseBody);
+            }
         }
     }
 }

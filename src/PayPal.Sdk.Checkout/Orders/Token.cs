@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace PayPal.Sdk.Checkout.Orders
@@ -16,17 +17,17 @@ namespace PayPal.Sdk.Checkout.Orders
         }
 
         /// <summary>
-        /// REQUIRED
         /// The PayPal-generated ID for the token.
         /// </summary>
+        [Required]
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; } = null!;
 
         /// <summary>
-        /// REQUIRED
         /// The tokenization method that generated the ID.
         /// </summary>
+        [Required]
         [DataMember(Name = "type", EmitDefaultValue = false)]
-        public string Type { get; set; } = null!;
+        public ETokenType? Type { get; set; }
     }
 }
