@@ -31,6 +31,8 @@ jobs:
         with:
           name: Nuget-packages-${{ steps.gitversion.outputs.nuGetVersionV2 }}
           path: nuget-packages
+      - name: Configure Github Nuget Feed
+        run: dotnet nuget add source --name github https://nuget.pkg.github.com/aviationexam/index.json
       - name: Push package to Github Packages
         run: dotnet nuget push 'nuget-packages/*.nupkg' --api-key ${{ secrets.GITHUB_TOKEN  }} --source github
       - name: Push package to Nuget
