@@ -13,7 +13,7 @@ namespace PayPal.Sdk.Checkout.Orders
     /// </summary>
     public class OrdersAuthorizeRequest : BaseHttpRequest<Order, AuthorizeRequest>, IConfigurePrefer, IConfigurePayPalRequestId, IConfigurePayPalMetadataId
     {
-        public OrdersAuthorizeRequest(string orderId) : base("/v2/checkout/orders/{order_id}/authorize?", HttpMethod.Post)
+        public OrdersAuthorizeRequest(string orderId) : base("/v2/checkout/orders/{order_id}/authorize", HttpMethod.Post)
         {
             try
             {

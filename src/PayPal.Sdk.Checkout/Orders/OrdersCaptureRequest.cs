@@ -13,7 +13,7 @@ namespace PayPal.Sdk.Checkout.Orders
     /// </summary>
     public class OrdersCaptureRequest : BaseHttpRequest<Order, OrderActionRequest>, IConfigurePrefer, IConfigurePayPalRequestId, IConfigurePayPalMetadataId
     {
-        public OrdersCaptureRequest(string orderId) : base("/v2/checkout/orders/{order_id}/capture?", HttpMethod.Post)
+        public OrdersCaptureRequest(string orderId) : base("/v2/checkout/orders/{order_id}/capture", HttpMethod.Post)
         {
             try
             {

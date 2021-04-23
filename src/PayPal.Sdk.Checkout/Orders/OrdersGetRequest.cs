@@ -10,7 +10,7 @@ namespace PayPal.Sdk.Checkout.Orders
     /// </summary>
     public class OrdersGetRequest : BaseHttpRequest<Order>
     {
-        public OrdersGetRequest(string orderId) : base("/v2/checkout/orders/{order_id}?", HttpMethod.Get)
+        public OrdersGetRequest(string orderId) : base("/v2/checkout/orders/{order_id}", HttpMethod.Get)
         {
             try
             {

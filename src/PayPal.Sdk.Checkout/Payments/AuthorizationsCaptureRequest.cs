@@ -11,7 +11,7 @@ namespace PayPal.Sdk.Checkout.Payments
     /// </summary>
     public class AuthorizationsCaptureRequest : BaseHttpRequest<Capture, CaptureRequest>, IConfigurePrefer, IConfigurePayPalRequestId
     {
-        public AuthorizationsCaptureRequest(string authorizationId) : base("/v2/payments/authorizations/{authorization_id}/capture?", HttpMethod.Post)
+        public AuthorizationsCaptureRequest(string authorizationId) : base("/v2/payments/authorizations/{authorization_id}/capture", HttpMethod.Post)
         {
             try
             {

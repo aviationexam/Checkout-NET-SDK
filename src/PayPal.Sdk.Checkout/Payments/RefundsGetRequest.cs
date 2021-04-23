@@ -10,7 +10,7 @@ namespace PayPal.Sdk.Checkout.Payments
     /// </summary>
     public class RefundsGetRequest : BaseHttpRequest<Refund>
     {
-        public RefundsGetRequest(string refundId) : base("/v2/payments/refunds/{refund_id}?", HttpMethod.Get)
+        public RefundsGetRequest(string refundId) : base("/v2/payments/refunds/{refund_id}", HttpMethod.Get)
         {
             try
             {

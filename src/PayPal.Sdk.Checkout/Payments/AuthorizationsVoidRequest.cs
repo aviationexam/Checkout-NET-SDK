@@ -10,7 +10,7 @@ namespace PayPal.Sdk.Checkout.Payments
     /// </summary>
     public class AuthorizationsVoidRequest : BaseHttpRequest
     {
-        public AuthorizationsVoidRequest(string authorizationId) : base("/v2/payments/authorizations/{authorization_id}/void?", HttpMethod.Post)
+        public AuthorizationsVoidRequest(string authorizationId) : base("/v2/payments/authorizations/{authorization_id}/void", HttpMethod.Post)
         {
             try
             {

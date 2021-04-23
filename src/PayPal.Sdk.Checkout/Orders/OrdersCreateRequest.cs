@@ -9,7 +9,7 @@ namespace PayPal.Sdk.Checkout.Orders
     /// </summary>
     public class OrdersCreateRequest : BaseHttpRequest<Order, OrderRequest>, IConfigurePrefer, IConfigurePayPalPartnerAttributionId
     {
-        public OrdersCreateRequest() : base("/v2/checkout/orders?", HttpMethod.Post)
+        public OrdersCreateRequest() : base("/v2/checkout/orders", HttpMethod.Post)
         {
             ContentType = JsonSerializer.ApplicationJson;
         }

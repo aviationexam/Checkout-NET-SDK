@@ -11,7 +11,7 @@ namespace PayPal.Sdk.Checkout.Orders
     /// </summary>
     public class OrdersValidateRequest : BaseHttpRequest<Order, OrderActionRequest>, IConfigurePayPalMetadataId
     {
-        public OrdersValidateRequest(string orderId) : base("/v2/checkout/orders/{order_id}/validate-payment-method?", HttpMethod.Post)
+        public OrdersValidateRequest(string orderId) : base("/v2/checkout/orders/{order_id}/validate-payment-method", HttpMethod.Post)
         {
             try
             {

@@ -21,7 +21,7 @@ namespace PayPal.Sdk.Checkout.Orders
     /// </summary>
     public class OrdersPatchRequest<T> : BaseVoidHttpRequest<ICollection<Patch<T>>>
     {
-        public OrdersPatchRequest(string orderId) : base("/v2/checkout/orders/{order_id}?", HttpMethod.Patch)
+        public OrdersPatchRequest(string orderId) : base("/v2/checkout/orders/{order_id}", HttpMethod.Patch)
         {
             try
             {

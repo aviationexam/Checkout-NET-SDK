@@ -11,7 +11,7 @@ namespace PayPal.Sdk.Checkout.Payments
     /// </summary>
     public class CapturesRefundRequest : BaseHttpRequest<Refund, RefundRequest>, IConfigurePrefer, IConfigurePayPalRequestId
     {
-        public CapturesRefundRequest(string captureId) : base("/v2/payments/captures/{capture_id}/refund?", HttpMethod.Post)
+        public CapturesRefundRequest(string captureId) : base("/v2/payments/captures/{capture_id}/refund", HttpMethod.Post)
         {
             try
             {

@@ -11,7 +11,7 @@ namespace PayPal.Sdk.Checkout.Payments
     /// </summary>
     public class AuthorizationsReauthorizeRequest : BaseHttpRequest<Authorization, ReauthorizeRequest>, IConfigurePrefer, IConfigurePayPalRequestId
     {
-        public AuthorizationsReauthorizeRequest(string authorizationId) : base("/v2/payments/authorizations/{authorization_id}/reauthorize?", HttpMethod.Post)
+        public AuthorizationsReauthorizeRequest(string authorizationId) : base("/v2/payments/authorizations/{authorization_id}/reauthorize", HttpMethod.Post)
         {
             try
             {

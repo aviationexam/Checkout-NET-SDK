@@ -10,7 +10,7 @@ namespace PayPal.Sdk.Checkout.Payments
     /// </summary>
     public class AuthorizationsGetRequest : BaseHttpRequest<Authorization>
     {
-        public AuthorizationsGetRequest(string authorizationId) : base("/v2/payments/authorizations/{authorization_id}?", HttpMethod.Get)
+        public AuthorizationsGetRequest(string authorizationId) : base("/v2/payments/authorizations/{authorization_id}", HttpMethod.Get)
         {
             try
             {
