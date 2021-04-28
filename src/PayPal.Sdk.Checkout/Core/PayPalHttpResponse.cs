@@ -1,9 +1,10 @@
+using PayPal.Sdk.Checkout.Core.Interfaces;
 using System.Net;
 using System.Net.Http.Headers;
 
 namespace PayPal.Sdk.Checkout.Core
 {
-    public class PayPalHttpResponse
+    public class PayPalHttpResponse : IPayPalHttpResponse
     {
         public HttpResponseHeaders ResponseHeaders { get; }
 
@@ -19,7 +20,7 @@ namespace PayPal.Sdk.Checkout.Core
         }
     }
 
-    public class PayPalHttpResponse<TResponse> : PayPalHttpResponse
+    public class PayPalHttpResponse<TResponse> : PayPalHttpResponse, IPayPalHttpResponse<TResponse>
     {
         public TResponse? ResponseBody { get; }
 

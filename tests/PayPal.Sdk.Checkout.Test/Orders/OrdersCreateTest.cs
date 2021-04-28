@@ -1,6 +1,5 @@
 using PayPal.Sdk.Checkout.Authentication;
 using PayPal.Sdk.Checkout.ContractEnums;
-using PayPal.Sdk.Checkout.Core;
 using PayPal.Sdk.Checkout.Core.Interfaces;
 using PayPal.Sdk.Checkout.Extensions;
 using PayPal.Sdk.Checkout.Orders;
@@ -49,7 +48,7 @@ namespace PayPal.Sdk.Checkout.Test.Orders
             return order;
         }
 
-        public static async Task<PayPalHttpResponse<Order>> CreateOrder(IPayPalHttpClient payPalHttpClient, AccessToken accessToken)
+        public static async Task<IPayPalHttpResponse<Order>> CreateOrder(IPayPalHttpClient payPalHttpClient, AccessToken accessToken)
         {
             var response = await payPalHttpClient.CreateOrderRawAsync(accessToken, request =>
             {

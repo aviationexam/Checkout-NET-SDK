@@ -136,7 +136,7 @@ namespace PayPal.Sdk.Checkout.Core
             throw new PayPalHttpException(response.StatusCode, response.Headers, responseBodyContent);
         }
 
-        public virtual async Task<PayPalHttpResponse<TResponse>> ExecuteAsync<TRequest, TRequestBody, TResponse>(
+        public virtual async Task<IPayPalHttpResponse<TResponse>> ExecuteAsync<TRequest, TRequestBody, TResponse>(
             TRequest request,
             AccessToken? accessToken,
             CancellationToken cancellationToken
@@ -163,7 +163,7 @@ namespace PayPal.Sdk.Checkout.Core
             return await ProcessResponseAsync<TResponse>(response, cancellationToken);
         }
 
-        public virtual async Task<PayPalHttpResponse<TResponse>> ExecuteAsync<TRequest, TResponse>(
+        public virtual async Task<IPayPalHttpResponse<TResponse>> ExecuteAsync<TRequest, TResponse>(
             TRequest request,
             AccessToken? accessToken,
             CancellationToken cancellationToken
@@ -183,7 +183,7 @@ namespace PayPal.Sdk.Checkout.Core
             return await ProcessResponseAsync<TResponse>(response, cancellationToken);
         }
 
-        public virtual async Task<PayPalHttpResponse> ExecuteVoidAsync<TRequest, TRequestBody>(
+        public virtual async Task<IPayPalHttpResponse> ExecuteVoidAsync<TRequest, TRequestBody>(
             TRequest request,
             AccessToken? accessToken,
             CancellationToken cancellationToken
@@ -209,7 +209,7 @@ namespace PayPal.Sdk.Checkout.Core
             return await ProcessResponseAsync(response, cancellationToken);
         }
 
-        public virtual async Task<PayPalHttpResponse> ExecuteVoidAsync<TRequest>(
+        public virtual async Task<IPayPalHttpResponse> ExecuteVoidAsync<TRequest>(
             TRequest request,
             AccessToken? accessToken,
             CancellationToken cancellationToken

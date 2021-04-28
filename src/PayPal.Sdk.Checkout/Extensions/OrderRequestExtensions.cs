@@ -11,7 +11,7 @@ namespace PayPal.Sdk.Checkout.Extensions
 {
     public static class OrderRequestExtensions
     {
-        public static Task<PayPalHttpResponse<Order>> CreateOrderRawAsync(
+        public static Task<IPayPalHttpResponse<Order>> CreateOrderRawAsync(
             this IPayPalHttpClient payPalHttpClient,
             AccessToken accessToken,
             Action<OrdersCreateRequest>? configureRequest = null,
@@ -44,7 +44,7 @@ namespace PayPal.Sdk.Checkout.Extensions
         /// <summary>
         /// Authorizes payment for an order. To successfully authorize payment for an order, the buyer must first approve the order or a valid payment_source must be provided in the request. A buyer can approve the order upon being redirected to the rel:approve URL that was returned in the HATEOAS links in the create order response.
         /// </summary>
-        public static Task<PayPalHttpResponse<Order>> AuthorizeOrderRawAsync(
+        public static Task<IPayPalHttpResponse<Order>> AuthorizeOrderRawAsync(
             this IPayPalHttpClient payPalHttpClient,
             AccessToken accessToken,
             string orderId,
@@ -83,7 +83,7 @@ namespace PayPal.Sdk.Checkout.Extensions
         /// <summary>
         /// Captures payment for an order. To successfully capture payment for an order, the buyer must first approve the order or a valid payment_source must be provided in the request. A buyer can approve the order upon being redirected to the rel:approve URL that was returned in the HATEOAS links in the create order response.
         /// </summary>
-        public static Task<PayPalHttpResponse<Order>> CaptureOrderRawAsync(
+        public static Task<IPayPalHttpResponse<Order>> CaptureOrderRawAsync(
             this IPayPalHttpClient payPalHttpClient,
             AccessToken accessToken,
             string orderId,
@@ -119,7 +119,7 @@ namespace PayPal.Sdk.Checkout.Extensions
             return response.ResponseBody;
         }
 
-        public static Task<PayPalHttpResponse<Order>> GetOrderRawAsync(
+        public static Task<IPayPalHttpResponse<Order>> GetOrderRawAsync(
             this IPayPalHttpClient payPalHttpClient,
             AccessToken accessToken,
             string orderId,
@@ -152,7 +152,7 @@ namespace PayPal.Sdk.Checkout.Extensions
             return response.ResponseBody;
         }
 
-        public static async Task<PayPalHttpResponse> OrdersPatchRequestRawAsync<TPatch>(
+        public static async Task<IPayPalHttpResponse> OrdersPatchRequestRawAsync<TPatch>(
             this IPayPalHttpClient payPalHttpClient,
             AccessToken accessToken,
             string orderId,
@@ -182,7 +182,7 @@ namespace PayPal.Sdk.Checkout.Extensions
             return payPalHttpClient.OrdersPatchRequestRawAsync(accessToken, orderId, patchObjects, configureRequest, cancellationToken);
         }
 
-        public static async Task<PayPalHttpResponse<Order>> ValidateOrderRawAsync(
+        public static async Task<IPayPalHttpResponse<Order>> ValidateOrderRawAsync(
             this IPayPalHttpClient payPalHttpClient,
             AccessToken accessToken,
             string orderId,
