@@ -29,15 +29,20 @@ namespace PayPal.Sdk.Checkout.Core.MessageSerializers
             serializer.Converters.Add(new StringEnumConverter());
 
             var memoryStream = new MemoryStream();
-            await using var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8, -1, leaveOpen: true);
-            using var jsonTextWriter = new JsonTextWriter(streamWriter)
+            await using (var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8, -1, leaveOpen: true))
             {
-                Formatting = Formatting.Indented,
-                CloseOutput = false,
-            };
+                using var jsonTextWriter = new JsonTextWriter(streamWriter)
+                {
+                    Formatting = Formatting.Indented,
+                    CloseOutput = false,
+                };
 
-            // ReSharper disable once HeapView.PossibleBoxingAllocation
-            serializer.Serialize(jsonTextWriter, body, typeof(TRequestBody));
+                // ReSharper disable once HeapView.PossibleBoxingAllocation
+                serializer.Serialize(jsonTextWriter, body, typeof(TRequestBody));
+
+                await jsonTextWriter.FlushAsync(cancellationToken);
+                await streamWriter.FlushAsync();
+            }
 
             memoryStream.Seek(0, SeekOrigin.Begin);
 
