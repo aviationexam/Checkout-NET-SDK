@@ -49,4 +49,4 @@ jobs:
       - name: Tool restore with .Net
         run: dotnet tool restore
       - name: .Net Format
-        run: dotnet format --check -v diag
+        run: dotnet format --verify-no-changes -v diag
