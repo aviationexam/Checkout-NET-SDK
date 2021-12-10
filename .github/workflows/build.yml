@@ -23,8 +23,10 @@ jobs:
         with:
           dotnet-version: '6.0.x'
       - uses: actions/checkout@v2.4.0
+      - name: Retore
+        run: dotnet restore --nologo
       - name: Build
-        run: dotnet build --configuration Release
+        run: dotnet build --no-restore --nologo --configuration Release
       - name: Test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -49,4 +51,4 @@ jobs:
       - name: Tool restore with .Net
         run: dotnet tool restore
       - name: .Net Format
-        run: dotnet format --verify-no-changes -v diag
+        run: dotnet format --no-restore --verify-no-changes -v diag
