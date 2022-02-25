@@ -15,11 +15,11 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
     steps:
       - name: Setup .Net 5.0.x
-        uses: actions/setup-dotnet@v1.9.1
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '5.0.x'
       - name: Setup .Net 6.0.x
-        uses: actions/setup-dotnet@v1.9.1
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.0.x'
       - uses: actions/checkout@v2.4.0
@@ -41,11 +41,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2.4.0
       - name: Setup .Net 5.0.x
-        uses: actions/setup-dotnet@v1.9.1
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '5.0.x'
       - name: Setup .Net 6.0.x
-        uses: actions/setup-dotnet@v1.9.1
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.0.x'
       - name: Tool restore with .Net
