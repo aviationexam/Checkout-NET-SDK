@@ -12,6 +12,8 @@
     <Title>PayPalCheckoutSdk</Title>
     <Authors>PayPal, Aviationexams</Authors>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
