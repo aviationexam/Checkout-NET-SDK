@@ -1,0 +1,8 @@
+mode: ContinuousDeployment
+continuous-delivery-fallback-tag: nightly
+branches:
+  develop:
+    tag: nightly
+ignore:
+  sha: []
+merge-message-formats: {}
