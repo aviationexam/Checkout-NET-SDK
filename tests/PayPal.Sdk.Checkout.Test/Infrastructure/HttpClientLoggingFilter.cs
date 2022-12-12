@@ -28,10 +28,9 @@ namespace PayPal.Sdk.Checkout.Test.Infrastructure
                 next(builder);
 
                 var name = builder.Name;
-                var i = name.IndexOf(',');
-                if (i > 0)
+                if (name?.IndexOf(',') is { } commaAt and > 0)
                 {
-                    name = name.Substring(0, name.IndexOf(','));
+                    name = name[..commaAt];
                 }
 
                 var scopeLogger = _loggerFactory.CreateLogger($"System.Net.Http.HttpClient.{name}.RequestScope");
