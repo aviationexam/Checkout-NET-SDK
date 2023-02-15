@@ -36,7 +36,7 @@ jobs:
       - name: Build with .Net
         run: dotnet build --configuration Release --no-restore --nologo "-p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }}"
       - name: Pack with .Net
-        run: dotnet pack --nologo --no-build --configuration Release --output nuget-packages -p:PackageVersion=${{ steps.gitversion.outputs.NuGetVersionV2 }}
+        run: dotnet pack src\PayPal.Sdk.Checkout\PayPal.Sdk.Checkout.csproj --nologo --no-build --configuration Release --output nuget-packages -p:PackageVersion=${{ steps.gitversion.outputs.NuGetVersionV2 }}
       - uses: actions/upload-artifact@v3
         with:
           name: Nuget-packages-${{ steps.gitversion.outputs.NuGetVersionV2 }}
