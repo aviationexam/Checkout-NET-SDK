@@ -29,7 +29,7 @@ internal partial class PayPalPaymentsJsonSerializerContext : JsonSerializerConte
         Converters =
         {
             new JsonStringEnumConverterFactory(),
-        }
+        },
     };
 
     private static PayPalPaymentsJsonSerializerContext? _convertersContext;

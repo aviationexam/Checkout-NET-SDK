@@ -17,21 +17,20 @@ namespace PayPal.Sdk.Checkout.Core.MessageSerializers;
 [JsonSerializable(typeof(OrderActionRequest))]
 [JsonSerializable(typeof(OrderCaptureRequest))]
 [JsonSerializable(typeof(OrderRequest))]
-[JsonSerializable(typeof(OrdersValidateRequest))]
 internal partial class PayPalOrderJsonSerializerContext : JsonSerializerContext
 {
     private static JsonSerializerOptions ConvertersContextOptions { get; } = new()
     {
-        DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.Never,
+        DefaultIgnoreCondition = JsonIgnoreCondition.Never,
         IgnoreReadOnlyFields = false,
         IgnoreReadOnlyProperties = false,
         IncludeFields = false,
         WriteIndented = true,
-        PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         Converters =
         {
             new JsonStringEnumConverterFactory(),
-        }
+        },
     };
 
     private static PayPalOrderJsonSerializerContext? _convertersContext;

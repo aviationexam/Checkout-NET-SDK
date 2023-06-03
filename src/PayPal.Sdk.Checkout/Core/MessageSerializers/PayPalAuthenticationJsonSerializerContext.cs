@@ -25,7 +25,7 @@ internal partial class PayPalAuthenticationJsonSerializerContext : JsonSerialize
         Converters =
         {
             new JsonStringEnumConverterFactory(),
-        }
+        },
     };
 
     private static PayPalAuthenticationJsonSerializerContext? _convertersContext;
