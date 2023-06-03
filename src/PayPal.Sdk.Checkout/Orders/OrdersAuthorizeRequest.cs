@@ -19,8 +19,8 @@ public class OrdersAuthorizeRequest : PayPalHttpRequest
 {
     public OrdersAuthorizeRequest(string orderId) : base(
         "/v2/checkout/orders/{order_id}/authorize", HttpMethod.Post,
-        PayPalOrderJsonSerializerContext.Default.Order,
-        PayPalOrderJsonSerializerContext.Default.AuthorizeRequest
+        PayPalOrderJsonSerializerContext.CustomConverters.Order,
+        PayPalOrderJsonSerializerContext.CustomConverters.AuthorizeRequest
     )
     {
         try

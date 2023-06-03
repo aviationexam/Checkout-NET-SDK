@@ -14,7 +14,7 @@ public class CapturesGetRequest : PayPalHttpRequest
 {
     public CapturesGetRequest(string captureId) : base(
         "/v2/payments/captures/{capture_id}",
-        PayPalPaymentsJsonSerializerContext.Default.Capture
+        PayPalPaymentsJsonSerializerContext.CustomConverters.Capture
         )
     {
         try

@@ -17,8 +17,8 @@ public class AuthorizationsReauthorizeRequest : PayPalHttpRequest
 {
     public AuthorizationsReauthorizeRequest(string authorizationId) : base(
         "/v2/payments/authorizations/{authorization_id}/reauthorize", HttpMethod.Post,
-        PayPalPaymentsJsonSerializerContext.Default.Authorization,
-        PayPalPaymentsJsonSerializerContext.Default.ReauthorizeRequest
+        PayPalPaymentsJsonSerializerContext.CustomConverters.Authorization,
+        PayPalPaymentsJsonSerializerContext.CustomConverters.ReauthorizeRequest
     )
     {
         try

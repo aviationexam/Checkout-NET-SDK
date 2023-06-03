@@ -13,7 +13,7 @@ public class OrdersStringPatchRequest : OrdersPatchRequest<string, StringPatch>
 {
     public OrdersStringPatchRequest(
         string orderId
-    ) : base(orderId, PayPalOrderJsonSerializerContext.Default.IReadOnlyCollectionStringPatch)
+    ) : base(orderId, PayPalOrderJsonSerializerContext.CustomConverters.IReadOnlyCollectionStringPatch)
     {
     }
 }

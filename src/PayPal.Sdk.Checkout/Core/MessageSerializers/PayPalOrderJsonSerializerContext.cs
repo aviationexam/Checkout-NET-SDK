@@ -1,10 +1,13 @@
-﻿using PayPal.Sdk.Checkout.Orders;
+﻿using PayPal.Sdk.Checkout.Core.Converters;
+using PayPal.Sdk.Checkout.Orders;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace PayPal.Sdk.Checkout.Core.MessageSerializers;
 
 [JsonSourceGenerationOptions(
+    WriteIndented = true,
     PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
     GenerationMode = JsonSourceGenerationMode.Serialization
 )]
@@ -17,4 +20,27 @@ namespace PayPal.Sdk.Checkout.Core.MessageSerializers;
 [JsonSerializable(typeof(OrdersValidateRequest))]
 internal partial class PayPalOrderJsonSerializerContext : JsonSerializerContext
 {
+    private static JsonSerializerOptions ConvertersContextOptions { get; } = new()
+    {
+        DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.Never,
+        IgnoreReadOnlyFields = false,
+        IgnoreReadOnlyProperties = false,
+        IncludeFields = false,
+        WriteIndented = true,
+        PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase,
+        Converters =
+        {
+            new JsonStringEnumConverterFactory(),
+        }
+    };
+
+    private static PayPalOrderJsonSerializerContext? _convertersContext;
+
+    /// <summary>
+    /// The default <see cref="global::System.Text.Json.Serialization.JsonSerializerContext"/> associated with a default <see cref="global::System.Text.Json.JsonSerializerOptions"/> instance.
+    /// </summary>
+    public static PayPalOrderJsonSerializerContext CustomConverters => _convertersContext
+        ??= new PayPalOrderJsonSerializerContext(
+            new JsonSerializerOptions(ConvertersContextOptions)
+        );
 }

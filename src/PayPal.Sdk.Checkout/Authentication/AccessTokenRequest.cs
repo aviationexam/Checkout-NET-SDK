@@ -14,7 +14,10 @@ public class AccessTokenRequest : PayPalHttpRequest
     public AccessTokenRequest(
         PayPalOptions options,
         string? refreshToken = null
-    ) : base("/v1/oauth2/token", HttpMethod.Post, PayPalAuthenticationJsonSerializerContext.Default.AccessToken)
+    ) : base(
+        "/v1/oauth2/token", HttpMethod.Post,
+        PayPalAuthenticationJsonSerializerContext.CustomConverters.AccessToken
+    )
     {
         Authorization = new AuthenticationHeaderValue("Basic", options.AuthorizationString());
         ContentType = FormEncodedSerializer.ApplicationXForm;

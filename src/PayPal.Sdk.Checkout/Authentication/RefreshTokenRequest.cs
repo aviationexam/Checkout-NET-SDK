@@ -13,7 +13,10 @@ public class RefreshTokenRequest : PayPalHttpRequest
 {
     public RefreshTokenRequest(
         PayPalOptions options, string code
-    ) : base("/v1/identity/openidconnect/tokenservice", HttpMethod.Post, PayPalAuthenticationJsonSerializerContext.Default.RefreshToken)
+    ) : base(
+        "/v1/identity/openidconnect/tokenservice", HttpMethod.Post,
+        PayPalAuthenticationJsonSerializerContext.CustomConverters.RefreshToken
+    )
     {
         Authorization = new AuthenticationHeaderValue("Basic", options.AuthorizationString());
         ContentType = FormEncodedSerializer.ApplicationXForm;
