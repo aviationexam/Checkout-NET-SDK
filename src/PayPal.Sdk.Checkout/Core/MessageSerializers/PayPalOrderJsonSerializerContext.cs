@@ -1,4 +1,4 @@
-﻿using PayPal.Sdk.Checkout.Core.Converters;
+using PayPal.Sdk.Checkout.Core.Converters;
 using PayPal.Sdk.Checkout.Orders;
 using System.Collections.Generic;
 using System.Text.Json;

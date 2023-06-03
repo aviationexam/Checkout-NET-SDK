@@ -9,7 +9,7 @@ public interface IPayPalRequestWithResponseBody
 
 public interface IPayPalRequestWithResponseBody<
     [SuppressMessage("ReSharper", "UnusedTypeParameter")]
-    TResponseType
+TResponseType
 > : IPayPalRequestWithResponseBody
     where TResponseType : notnull
 {

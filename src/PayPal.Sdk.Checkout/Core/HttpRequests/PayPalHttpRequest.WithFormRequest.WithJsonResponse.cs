@@ -1,4 +1,4 @@
-﻿using PayPal.Sdk.Checkout.RequestInterfaces;
+using PayPal.Sdk.Checkout.RequestInterfaces;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;

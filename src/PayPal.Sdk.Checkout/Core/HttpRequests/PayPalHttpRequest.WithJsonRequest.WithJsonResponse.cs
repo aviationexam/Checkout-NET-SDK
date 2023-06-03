@@ -1,4 +1,4 @@
-﻿using PayPal.Sdk.Checkout.RequestInterfaces;
+using PayPal.Sdk.Checkout.RequestInterfaces;
 using System.Net.Http;
 using System.Text.Json.Serialization.Metadata;
 
