@@ -11,7 +11,7 @@ namespace PayPal.Sdk.Checkout.Orders
     {
         public OrdersCreateRequest() : base("/v2/checkout/orders", HttpMethod.Post)
         {
-            ContentType = JsonSerializer.ApplicationJson;
+            ContentType = JsonMessageSerializer.ApplicationJson;
         }
     }
 }

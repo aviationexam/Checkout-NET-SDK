@@ -20,7 +20,7 @@ namespace PayPal.Sdk.Checkout.Payments
             {
             }
 
-            ContentType = JsonSerializer.ApplicationJson;
+            ContentType = JsonMessageSerializer.ApplicationJson;
         }
     }
 }

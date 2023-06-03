@@ -1,17 +1,16 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using PayPal.Sdk.Checkout.Core.Converters;
 using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using NewtonsoftJsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace PayPal.Sdk.Checkout.Core.MessageSerializers
 {
-    public class JsonSerializer : IMessageSerializer
+    public class JsonMessageSerializer : IMessageSerializer
     {
         public const string ApplicationJson = "application/json";
 
@@ -19,30 +18,28 @@ namespace PayPal.Sdk.Checkout.Core.MessageSerializers
             TRequestBody body, string contentType
         ) where TRequestBody : notnull => contentType == ApplicationJson;
 
+        private JsonSerializerOptions GetJsonSerializerOptions()
+        {
+            var jsonSerializerOptions = new JsonSerializerOptions();
+            jsonSerializerOptions.Converters.Add(new JsonStringEnumConverterFactory());
+
+            return jsonSerializerOptions;
+        }
+
         public async Task<HttpContent> SerializeAsync<TRequestBody>(
             TRequestBody body, string contentType,
             CancellationToken cancellationToken
         )
             where TRequestBody : notnull
         {
-            var serializer = new NewtonsoftJsonSerializer();
-            serializer.Converters.Add(new StringEnumConverter());
-
             var memoryStream = new MemoryStream();
-            await using (var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8, -1, leaveOpen: true))
-            {
-                using var jsonTextWriter = new JsonTextWriter(streamWriter)
-                {
-                    Formatting = Formatting.Indented,
-                    CloseOutput = false,
-                };
 
-                // ReSharper disable once HeapView.PossibleBoxingAllocation
-                serializer.Serialize(jsonTextWriter, body, typeof(TRequestBody));
-
-                await jsonTextWriter.FlushAsync(cancellationToken);
-                await streamWriter.FlushAsync();
-            }
+            await JsonSerializer.SerializeAsync(
+                memoryStream,
+                body,
+                GetJsonSerializerOptions(),
+                cancellationToken
+            );
 
             memoryStream.Seek(0, SeekOrigin.Begin);
 
@@ -66,18 +63,18 @@ namespace PayPal.Sdk.Checkout.Core.MessageSerializers
             where TResponse : notnull
         {
             var stream = await response.ReadAsStreamAsync(
-#if NET5_0
+#if NET7_0_OR_GREATER
                 cancellationToken
 #endif
             );
 
-            var serializer = new NewtonsoftJsonSerializer();
-            serializer.Converters.Add(new StringEnumConverter());
+            var deserializedResponse = await JsonSerializer.DeserializeAsync<TResponse>(
+                stream,
+                GetJsonSerializerOptions(),
+                cancellationToken
+            );
 
-            using var streamReader = new StreamReader(stream);
-            using var jsonTextReader = new JsonTextReader(streamReader);
-
-            return serializer.Deserialize<TResponse>(jsonTextReader) ?? throw new NullReferenceException("Deserialize of the HttpContent is null");
+            return deserializedResponse ?? throw new NullReferenceException("Deserialize of the HttpContent is null");
         }
     }
 }

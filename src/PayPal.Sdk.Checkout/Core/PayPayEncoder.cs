@@ -20,7 +20,7 @@ public class PayPayEncoder : IPayPayEncoder
         _messageSerializers = new Collection<IMessageSerializer>
         {
             new FormEncodedSerializer(),
-            new JsonSerializer(),
+            new JsonMessageSerializer(),
             new TextSerializer(),
         };
     }
