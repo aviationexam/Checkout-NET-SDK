@@ -1,5 +1,6 @@
 using PayPal.Sdk.Checkout.Extensions;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace PayPal.Sdk.Checkout.Samples.CaptureIntentExamples;
 public static class RunAll
 {
     //Rename to Main1 => Main
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     private static async Task Main1()
     {
         var payPalHttpClient = SampleHttpClientFactory.CreateHttpClient();
