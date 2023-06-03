@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace PayPal.Sdk.Checkout.Authentication;
 
@@ -17,9 +18,19 @@ public class AccessToken
 
     private DateTime ReceivedDate { get; }
 
-    public AccessToken(DateTime? now = null)
+    [JsonConstructor]
+    public AccessToken(
+        string token, string tokenType, int expiresIn
+    ) : this()
     {
-        ReceivedDate = now ?? DateTime.Now;
+        Token = token;
+        TokenType = tokenType;
+        ExpiresIn = expiresIn;
+    }
+
+    public AccessToken(DateTime? receivedDate = null)
+    {
+        ReceivedDate = receivedDate ?? DateTime.Now;
     }
 
     public bool IsExpired(DateTime? now = null)
