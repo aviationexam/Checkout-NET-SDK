@@ -1,11 +1,10 @@
 using System.Runtime.Serialization;
 
-namespace PayPal.Sdk.Checkout.Orders
+namespace PayPal.Sdk.Checkout.Orders;
+
+[DataContract]
+public enum EPayerSelected : byte
 {
-    [DataContract]
-    public enum EPayerSelected : byte
-    {
-        [EnumMember(Value = "PAYPAL")]
-        PayPal,
-    }
+    [EnumMember(Value = "PAYPAL")]
+    PayPal,
 }

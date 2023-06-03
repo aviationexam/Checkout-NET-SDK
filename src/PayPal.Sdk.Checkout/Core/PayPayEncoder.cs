@@ -9,49 +9,48 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PayPal.Sdk.Checkout.Core
+namespace PayPal.Sdk.Checkout.Core;
+
+public class PayPayEncoder : IPayPayEncoder
 {
-    public class PayPayEncoder : IPayPayEncoder
+    private readonly IReadOnlyCollection<IMessageSerializer> _messageSerializers;
+
+    public PayPayEncoder()
     {
-        private readonly IReadOnlyCollection<IMessageSerializer> _messageSerializers;
-
-        public PayPayEncoder()
+        _messageSerializers = new Collection<IMessageSerializer>
         {
-            _messageSerializers = new Collection<IMessageSerializer>
-            {
-                new FormEncodedSerializer(),
-                new JsonSerializer(),
-                new TextSerializer(),
-            };
+            new FormEncodedSerializer(),
+            new JsonSerializer(),
+            new TextSerializer(),
+        };
+    }
+
+    public async Task<HttpContent> SerializeRequestAsync<TRequestBody>(
+        TRequestBody body, string contentType,
+        CancellationToken cancellationToken
+    )
+        where TRequestBody : notnull
+    {
+        var serializer = _messageSerializers.FirstOrDefault(x => x.CanSerialize(body, contentType));
+
+        if (serializer != null)
+        {
+            return await serializer.SerializeAsync(body, contentType, cancellationToken);
         }
 
-        public async Task<HttpContent> SerializeRequestAsync<TRequestBody>(
-            TRequestBody body, string contentType,
-            CancellationToken cancellationToken
-        )
-            where TRequestBody : notnull
+        throw new ArgumentException($"Not found serializer for message {contentType}");
+    }
+
+    public async Task<TResponse> DeserializeResponseAsync<TResponse>(HttpContent httpContent, MediaTypeHeaderValue mediaTypeHeaderValue, CancellationToken cancellationToken)
+        where TResponse : notnull
+    {
+        var serializer = _messageSerializers.FirstOrDefault(x => x.CanDeserialize<TResponse>(httpContent, mediaTypeHeaderValue));
+
+        if (serializer != null)
         {
-            var serializer = _messageSerializers.FirstOrDefault(x => x.CanSerialize(body, contentType));
-
-            if (serializer != null)
-            {
-                return await serializer.SerializeAsync(body, contentType, cancellationToken);
-            }
-
-            throw new ArgumentException($"Not found serializer for message {contentType}");
+            return await serializer.DeserializeAsync<TResponse>(httpContent, mediaTypeHeaderValue, cancellationToken);
         }
 
-        public async Task<TResponse> DeserializeResponseAsync<TResponse>(HttpContent httpContent, MediaTypeHeaderValue mediaTypeHeaderValue, CancellationToken cancellationToken)
-            where TResponse : notnull
-        {
-            var serializer = _messageSerializers.FirstOrDefault(x => x.CanDeserialize<TResponse>(httpContent, mediaTypeHeaderValue));
-
-            if (serializer != null)
-            {
-                return await serializer.DeserializeAsync<TResponse>(httpContent, mediaTypeHeaderValue, cancellationToken);
-            }
-
-            throw new ArgumentException($"Not found serializer for message CharSet={mediaTypeHeaderValue.CharSet} MediaType={mediaTypeHeaderValue.MediaType}");
-        }
+        throw new ArgumentException($"Not found serializer for message CharSet={mediaTypeHeaderValue.CharSet} MediaType={mediaTypeHeaderValue.MediaType}");
     }
 }

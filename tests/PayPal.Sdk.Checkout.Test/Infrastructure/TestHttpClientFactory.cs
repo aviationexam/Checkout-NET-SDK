@@ -11,50 +11,49 @@ using Xunit;
 
 [assembly: CollectionBehavior(MaxParallelThreads = -1)]
 
-namespace PayPal.Sdk.Checkout.Test.Infrastructure
+namespace PayPal.Sdk.Checkout.Test.Infrastructure;
+
+public static class TestHttpClientFactory
 {
-    public static class TestHttpClientFactory
+    private static IServiceProvider CreateServiceProvider()
     {
-        private static IServiceProvider CreateServiceProvider()
+        var configurationBuilder = new ConfigurationBuilder();
+
+        var currentDirectory = Directory.GetCurrentDirectory();
+        configurationBuilder.SetBasePath(currentDirectory + "/../../..");
+        configurationBuilder.AddJsonFile("appsettings.json5", optional: false, reloadOnChange: false);
+        configurationBuilder.AddJsonFile("user.appsettings.json5", optional: true, reloadOnChange: false);
+        configurationBuilder.AddEnvironmentVariables(prefix: "PAYPAL_");
+
+        var configuration = configurationBuilder.Build();
+
+        var serviceCollection = new ServiceCollection();
+
+        serviceCollection.AddPayPalCheckout(c => configuration.Bind(c));
+
+        serviceCollection.AddLogging(loggingBuilder =>
         {
-            var configurationBuilder = new ConfigurationBuilder();
+            loggingBuilder
+                .AddFilter("System.Net.Http.HttpClient.IPayPalHttpClient.RequestScope", LogLevel.Trace)
+                .AddFilter("System.Net.Http.HttpClient.IPayPalHttpClient.RequestLogger", LogLevel.Trace);
 
-            var currentDirectory = Directory.GetCurrentDirectory();
-            configurationBuilder.SetBasePath(currentDirectory + "/../../..");
-            configurationBuilder.AddJsonFile("appsettings.json5", optional: false, reloadOnChange: false);
-            configurationBuilder.AddJsonFile("user.appsettings.json5", optional: true, reloadOnChange: false);
-            configurationBuilder.AddEnvironmentVariables(prefix: "PAYPAL_");
+            loggingBuilder
+                .AddDebug()
+                .AddConsole();
+        });
 
-            var configuration = configurationBuilder.Build();
-
-            var serviceCollection = new ServiceCollection();
-
-            serviceCollection.AddPayPalCheckout(c => configuration.Bind(c));
-
-            serviceCollection.AddLogging(loggingBuilder =>
-            {
-                loggingBuilder
-                    .AddFilter("System.Net.Http.HttpClient.IPayPalHttpClient.RequestScope", LogLevel.Trace)
-                    .AddFilter("System.Net.Http.HttpClient.IPayPalHttpClient.RequestLogger", LogLevel.Trace);
-
-                loggingBuilder
-                    .AddDebug()
-                    .AddConsole();
-            });
-
-            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("IS_AZURE_DEVOPS")))
-            {
-                serviceCollection.Replace(ServiceDescriptor.Singleton<IHttpMessageHandlerBuilderFilter, HttpClientLoggingFilter>());
-            }
-
-            return serviceCollection.BuildServiceProvider();
+        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("IS_AZURE_DEVOPS")))
+        {
+            serviceCollection.Replace(ServiceDescriptor.Singleton<IHttpMessageHandlerBuilderFilter, HttpClientLoggingFilter>());
         }
 
-        public static IPayPalHttpClient CreateHttpClient()
-        {
-            var serviceProvider = CreateServiceProvider();
+        return serviceCollection.BuildServiceProvider();
+    }
 
-            return serviceProvider.GetRequiredService<IPayPalHttpClient>();
-        }
+    public static IPayPalHttpClient CreateHttpClient()
+    {
+        var serviceProvider = CreateServiceProvider();
+
+        return serviceProvider.GetRequiredService<IPayPalHttpClient>();
     }
 }

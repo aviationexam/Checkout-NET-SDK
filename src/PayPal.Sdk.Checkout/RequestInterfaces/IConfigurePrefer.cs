@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 
-namespace PayPal.Sdk.Checkout.RequestInterfaces
+namespace PayPal.Sdk.Checkout.RequestInterfaces;
+
+public interface IConfigurePrefer
 {
-    public interface IConfigurePrefer
-    {
-        IDictionary<string, ICollection<string>> Headers { get; }
-    }
+    IDictionary<string, ICollection<string>> Headers { get; }
 }

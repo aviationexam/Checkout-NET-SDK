@@ -5,33 +5,32 @@ using PayPal.Sdk.Checkout.Extensions;
 using System;
 using System.IO;
 
-namespace PayPal.Sdk.Checkout.Samples
+namespace PayPal.Sdk.Checkout.Samples;
+
+public static class SampleHttpClientFactory
 {
-    public static class SampleHttpClientFactory
+    private static IServiceProvider CreateServiceProvider()
     {
-        private static IServiceProvider CreateServiceProvider()
-        {
-            var configurationBuilder = new ConfigurationBuilder();
+        var configurationBuilder = new ConfigurationBuilder();
 
-            var currentDirectory = Directory.GetCurrentDirectory();
-            configurationBuilder.SetBasePath(currentDirectory + "/../../..");
-            configurationBuilder.AddJsonFile("appsettings.json5", optional: false, reloadOnChange: false);
-            configurationBuilder.AddJsonFile("user.appsettings.json5", optional: true, reloadOnChange: false);
+        var currentDirectory = Directory.GetCurrentDirectory();
+        configurationBuilder.SetBasePath(currentDirectory + "/../../..");
+        configurationBuilder.AddJsonFile("appsettings.json5", optional: false, reloadOnChange: false);
+        configurationBuilder.AddJsonFile("user.appsettings.json5", optional: true, reloadOnChange: false);
 
-            var configuration = configurationBuilder.Build();
+        var configuration = configurationBuilder.Build();
 
-            var serviceCollection = new ServiceCollection();
+        var serviceCollection = new ServiceCollection();
 
-            serviceCollection.AddPayPalCheckout(c => configuration.Bind(c));
+        serviceCollection.AddPayPalCheckout(c => configuration.Bind(c));
 
-            return serviceCollection.BuildServiceProvider();
-        }
+        return serviceCollection.BuildServiceProvider();
+    }
 
-        public static IPayPalHttpClient CreateHttpClient()
-        {
-            var serviceProvider = CreateServiceProvider();
+    public static IPayPalHttpClient CreateHttpClient()
+    {
+        var serviceProvider = CreateServiceProvider();
 
-            return serviceProvider.GetRequiredService<IPayPalHttpClient>();
-        }
+        return serviceProvider.GetRequiredService<IPayPalHttpClient>();
     }
 }

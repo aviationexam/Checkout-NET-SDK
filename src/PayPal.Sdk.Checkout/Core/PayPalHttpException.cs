@@ -2,25 +2,24 @@ using System;
 using System.Net;
 using System.Net.Http.Headers;
 
-namespace PayPal.Sdk.Checkout.Core
+namespace PayPal.Sdk.Checkout.Core;
+
+public class PayPalHttpException : Exception
 {
-    public class PayPalHttpException : Exception
+    public HttpStatusCode ResponseStatusCode { get; }
+
+    public HttpResponseHeaders ResponseHeaders { get; }
+
+    public string ResponseBodyContent { get; }
+
+    public PayPalHttpException(
+        HttpStatusCode responseStatusCode,
+        HttpResponseHeaders responseHeaders,
+        string responseBodyContent
+    ) : base(responseStatusCode.ToString())
     {
-        public HttpStatusCode ResponseStatusCode { get; }
-
-        public HttpResponseHeaders ResponseHeaders { get; }
-
-        public string ResponseBodyContent { get; }
-
-        public PayPalHttpException(
-            HttpStatusCode responseStatusCode,
-            HttpResponseHeaders responseHeaders,
-            string responseBodyContent
-        ) : base(responseStatusCode.ToString())
-        {
-            ResponseStatusCode = responseStatusCode;
-            ResponseHeaders = responseHeaders;
-            ResponseBodyContent = responseBodyContent;
-        }
+        ResponseStatusCode = responseStatusCode;
+        ResponseHeaders = responseHeaders;
+        ResponseBodyContent = responseBodyContent;
     }
 }

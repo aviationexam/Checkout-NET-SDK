@@ -1,8 +1,7 @@
-namespace PayPal.Sdk.Checkout.ContractEnums
+namespace PayPal.Sdk.Checkout.ContractEnums;
+
+public enum EPreferReturn : byte
 {
-    public enum EPreferReturn : byte
-    {
-        Representation = 0,
-        Minimal = 1,
-    }
+    Representation = 0,
+    Minimal = 1,
 }

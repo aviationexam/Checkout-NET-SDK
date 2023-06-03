@@ -20,7 +20,7 @@ jobs:
           dotnet-version: |
             7.0.x
       - uses: actions/checkout@v3
-      - name: Retore
+      - name: Restore
         run: dotnet restore --nologo
       - name: Build
         run: dotnet build --no-restore --nologo --configuration Release

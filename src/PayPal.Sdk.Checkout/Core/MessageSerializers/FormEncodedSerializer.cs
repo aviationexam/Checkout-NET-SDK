@@ -5,41 +5,40 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PayPal.Sdk.Checkout.Core.MessageSerializers
+namespace PayPal.Sdk.Checkout.Core.MessageSerializers;
+
+public class FormEncodedSerializer : IMessageSerializer
 {
-    public class FormEncodedSerializer : IMessageSerializer
+    public const string ApplicationXForm = "application/x-www-form-urlencoded";
+
+    public bool CanSerialize<TRequestBody>(
+        TRequestBody body, string contentType
+    ) where TRequestBody : notnull => contentType == ApplicationXForm;
+
+    public Task<HttpContent> SerializeAsync<TRequestBody>(
+        TRequestBody body, string contentType,
+        CancellationToken cancellationToken
+    )
+        where TRequestBody : notnull
     {
-        public const string ApplicationXForm = "application/x-www-form-urlencoded";
-
-        public bool CanSerialize<TRequestBody>(
-            TRequestBody body, string contentType
-        ) where TRequestBody : notnull => contentType == ApplicationXForm;
-
-        public Task<HttpContent> SerializeAsync<TRequestBody>(
-            TRequestBody body, string contentType,
-            CancellationToken cancellationToken
-        )
-            where TRequestBody : notnull
+        if (body is IDictionary<string?, string?> dictionary)
         {
-            if (body is IDictionary<string?, string?> dictionary)
-            {
-                return Task.FromResult((HttpContent) new FormUrlEncodedContent(dictionary));
-            }
-
-            throw new ArgumentException("Request requestBody must be IDictionary<string, string> when Content-Type is application/x-www-form-urlencoded");
+            return Task.FromResult((HttpContent) new FormUrlEncodedContent(dictionary));
         }
 
-        public bool CanDeserialize<TResponse>(
-            HttpContent response, MediaTypeHeaderValue contentType
-        ) where TResponse : notnull => false;
+        throw new ArgumentException("Request requestBody must be IDictionary<string, string> when Content-Type is application/x-www-form-urlencoded");
+    }
 
-        public Task<TResponse> DeserializeAsync<TResponse>(
-            HttpContent response, MediaTypeHeaderValue contentType,
-            CancellationToken cancellationToken
-        )
-            where TResponse : notnull
-        {
-            throw new NotSupportedException($"{nameof(FormEncodedSerializer)}.{nameof(DeserializeAsync)} is not supported");
-        }
+    public bool CanDeserialize<TResponse>(
+        HttpContent response, MediaTypeHeaderValue contentType
+    ) where TResponse : notnull => false;
+
+    public Task<TResponse> DeserializeAsync<TResponse>(
+        HttpContent response, MediaTypeHeaderValue contentType,
+        CancellationToken cancellationToken
+    )
+        where TResponse : notnull
+    {
+        throw new NotSupportedException($"{nameof(FormEncodedSerializer)}.{nameof(DeserializeAsync)} is not supported");
     }
 }
