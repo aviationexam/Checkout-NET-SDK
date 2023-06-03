@@ -20,12 +20,17 @@ namespace PayPal.Sdk.Checkout.Test.Orders
 
             Assert.NotNull(accessToken);
 
-            var orderResponse = await OrdersCreateTest.CreateOrder(payPalHttpClient, accessToken!);
-            var createdOrderId = orderResponse.ResponseBody!.Id;
+            var orderResponse = await OrdersCreateTest.CreateOrder(payPalHttpClient, accessToken);
 
-            var getOrderResponse = await payPalHttpClient.GetOrderRawAsync(accessToken!, createdOrderId);
+            Assert.NotNull(orderResponse.ResponseBody);
 
-            if (getOrderResponse.ResponseBody!.CheckoutPaymentIntent == EOrderIntent.Authorize)
+            var createdOrderId = orderResponse.ResponseBody.Id;
+
+            var getOrderResponse = await payPalHttpClient.GetOrderRawAsync(accessToken, createdOrderId);
+
+            Assert.NotNull(getOrderResponse.ResponseBody);
+
+            if (getOrderResponse.ResponseBody.CheckoutPaymentIntent == EOrderIntent.Authorize)
             {
                 var request = new OrdersCaptureRequest(createdOrderId);
                 request.SetPreferReturn(EPreferReturn.Representation);

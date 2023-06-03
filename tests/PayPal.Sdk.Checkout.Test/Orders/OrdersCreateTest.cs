@@ -68,14 +68,14 @@ namespace PayPal.Sdk.Checkout.Test.Orders
 
             Assert.NotNull(accessToken);
 
-            var response = await CreateOrder(payPalHttpClient, accessToken!);
+            var response = await CreateOrder(payPalHttpClient, accessToken);
 
             Assert.Equal(HttpStatusCode.Created, response.ResponseStatusCode);
             Assert.NotNull(response.ResponseBody);
 
             var createdOrder = response.ResponseBody;
             Assert.NotNull(createdOrder);
-            Assert.NotNull(createdOrder!.Id);
+            Assert.NotNull(createdOrder.Id);
             Assert.NotNull(createdOrder.PurchaseUnits);
             Assert.Single(createdOrder.PurchaseUnits);
 

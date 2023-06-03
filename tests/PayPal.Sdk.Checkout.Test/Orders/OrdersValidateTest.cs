@@ -18,12 +18,13 @@ namespace PayPal.Sdk.Checkout.Test.Orders
 
             Assert.NotNull(accessToken);
 
-            var orderResponse = await OrdersCreateTest.CreateOrder(payPalHttpClient, accessToken!);
+            var orderResponse = await OrdersCreateTest.CreateOrder(payPalHttpClient, accessToken);
+            Assert.NotNull(orderResponse.ResponseBody);
             var createdOrder = orderResponse.ResponseBody;
 
             var response = await payPalHttpClient.ValidateOrderRawAsync(
-                accessToken!,
-                createdOrder!.Id,
+                accessToken,
+                createdOrder.Id,
                 request =>
                 {
                     request.SetRequestBody(new OrderActionRequest

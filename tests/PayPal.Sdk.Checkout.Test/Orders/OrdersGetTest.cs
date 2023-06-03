@@ -26,14 +26,18 @@ namespace PayPal.Sdk.Checkout.Test.Orders
 
             Assert.NotNull(accessToken);
 
-            var orderResponse = await OrdersCreateTest.CreateOrder(payPalHttpClient, accessToken!);
+            var orderResponse = await OrdersCreateTest.CreateOrder(payPalHttpClient, accessToken);
+
+            Assert.NotNull(orderResponse.ResponseBody);
             var createdOrder = orderResponse.ResponseBody;
 
-            var getOrderResponse = await payPalHttpClient.GetOrderRawAsync(accessToken!, createdOrder!.Id);
+            var getOrderResponse = await payPalHttpClient.GetOrderRawAsync(accessToken, createdOrder.Id);
 
             Assert.Equal(HttpStatusCode.OK, getOrderResponse.ResponseStatusCode);
 
-            var retrievedOrder = getOrderResponse.ResponseBody!;
+            Assert.NotNull(getOrderResponse.ResponseBody);
+
+            var retrievedOrder = getOrderResponse.ResponseBody;
             Assert.NotNull(retrievedOrder);
 
             Assert.Equal(retrievedOrder.Id, createdOrder.Id);
@@ -44,7 +48,7 @@ namespace PayPal.Sdk.Checkout.Test.Orders
             {
                 var createdOrderPurchaseUnit = Assert.Single(createdOrder.PurchaseUnits, x => x.ReferenceId == purchaseUnit.ReferenceId);
 
-                Assert.Equal(purchaseUnit.ReferenceId, createdOrderPurchaseUnit!.ReferenceId);
+                Assert.Equal(purchaseUnit.ReferenceId, createdOrderPurchaseUnit.ReferenceId);
                 Assert.Equal(purchaseUnit.AmountWithBreakdown.CurrencyCode, createdOrderPurchaseUnit.AmountWithBreakdown.CurrencyCode);
                 Assert.Equal(purchaseUnit.AmountWithBreakdown.Value, createdOrderPurchaseUnit.AmountWithBreakdown.Value);
             }

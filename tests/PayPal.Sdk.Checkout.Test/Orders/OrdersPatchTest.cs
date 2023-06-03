@@ -33,22 +33,25 @@ namespace PayPal.Sdk.Checkout.Test.Orders
 
             Assert.NotNull(accessToken);
 
-            var response = await OrdersCreateTest.CreateOrder(payPalHttpClient, accessToken!);
-            var createdOrder = response.ResponseBody!;
+            var response = await OrdersCreateTest.CreateOrder(payPalHttpClient, accessToken);
+
+            Assert.NotNull(response.ResponseBody);
+            var createdOrder = response.ResponseBody;
 
             var patchResponse = await payPalHttpClient.OrdersPatchRequestRawAsync(
-                accessToken!,
+                accessToken,
                 createdOrder.Id,
                 BuildRequestBody()
             );
 
             Assert.Equal(HttpStatusCode.NoContent, patchResponse.ResponseStatusCode);
 
-            var getOrderResponse = await payPalHttpClient.GetOrderRawAsync(accessToken!, createdOrder!.Id);
+            var getOrderResponse = await payPalHttpClient.GetOrderRawAsync(accessToken, createdOrder.Id);
 
             Assert.Equal(HttpStatusCode.OK, getOrderResponse.ResponseStatusCode);
 
-            var getOrder = getOrderResponse.ResponseBody!;
+            Assert.NotNull(getOrderResponse.ResponseBody);
+            var getOrder = getOrderResponse.ResponseBody;
 
             var firstPurchaseUnit = getOrder.PurchaseUnits.Single();
             Assert.Equal("test_ref_id1", firstPurchaseUnit.ReferenceId);

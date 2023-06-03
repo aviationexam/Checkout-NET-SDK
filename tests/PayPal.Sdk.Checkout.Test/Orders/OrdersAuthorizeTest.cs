@@ -21,7 +21,7 @@ namespace PayPal.Sdk.Checkout.Test.Orders
             var createdOrder = orderResponse.ResponseBody!;
 
             var response = await payPalHttpClient.AuthorizeOrderRawAsync(
-                accessToken!,
+                accessToken,
                 createdOrder.Id,
                 request =>
                 {
