@@ -151,30 +151,30 @@ public static class OrderRequestExtensions
         return response.ResponseBody;
     }
 
-    public static async Task<IPayPalHttpResponse> OrdersPatchRequestRawAsync<TPatch>(
+    public static async Task<IPayPalHttpResponse> OrdersPatchRequestRawAsync(
         this IPayPalHttpClient payPalHttpClient,
         AccessToken accessToken,
         string orderId,
-        ICollection<Patch<TPatch>> patchObjects,
-        Action<OrdersPatchRequest<TPatch>>? configureRequest = null,
+        IReadOnlyCollection<StringPatch> patchObjects,
+        Action<OrdersStringPatchRequest>? configureRequest = null,
         CancellationToken cancellationToken = default
     )
     {
-        var request = new OrdersPatchRequest<TPatch>(orderId);
+        var request = new OrdersStringPatchRequest(orderId);
 
         request.SetRequestBody(patchObjects);
 
         configureRequest?.Invoke(request);
 
-        return await payPalHttpClient.ExecuteVoidAsync<OrdersPatchRequest<TPatch>, ICollection<Patch<TPatch>>>(request, accessToken, cancellationToken);
+        return await payPalHttpClient.ExecuteVoidAsync<OrdersStringPatchRequest, IReadOnlyCollection<StringPatch>>(request, accessToken, cancellationToken);
     }
 
-    public static Task OrdersPatchRequestAsync<TPatch>(
+    public static Task OrdersPatchRequestAsync(
         this IPayPalHttpClient payPalHttpClient,
         AccessToken accessToken,
         string orderId,
-        ICollection<Patch<TPatch>> patchObjects,
-        Action<OrdersPatchRequest<TPatch>>? configureRequest = null,
+        IReadOnlyCollection<StringPatch> patchObjects,
+        Action<OrdersStringPatchRequest>? configureRequest = null,
         CancellationToken cancellationToken = default
     )
     {

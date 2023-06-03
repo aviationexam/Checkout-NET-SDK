@@ -1,16 +1,21 @@
+using PayPal.Sdk.Checkout.Core.HttpRequests;
 using PayPal.Sdk.Checkout.Core.MessageSerializers;
 using System;
 using System.IO;
-using System.Net.Http;
 
 namespace PayPal.Sdk.Checkout.Payments;
 
 /// <summary>
 /// Shows details for an authorized payment, by ID.
 /// </summary>
-public class AuthorizationsGetRequest : BaseHttpRequest<Authorization>
+public class AuthorizationsGetRequest : PayPalHttpRequest
+    .WithGetRequest
+    .WithJsonResponse<Authorization>
 {
-    public AuthorizationsGetRequest(string authorizationId) : base("/v2/payments/authorizations/{authorization_id}", HttpMethod.Get)
+    public AuthorizationsGetRequest(string authorizationId) : base(
+        "/v2/payments/authorizations/{authorization_id}",
+        PayPalPaymentsJsonSerializerContext.Default.Authorization
+    )
     {
         try
         {

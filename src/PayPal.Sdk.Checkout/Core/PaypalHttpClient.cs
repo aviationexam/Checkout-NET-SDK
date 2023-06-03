@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Options;
 using PayPal.Sdk.Checkout.Authentication;
 using PayPal.Sdk.Checkout.Configuration;
+using PayPal.Sdk.Checkout.Core.HttpRequests;
 using PayPal.Sdk.Checkout.Core.Interfaces;
 using PayPal.Sdk.Checkout.RequestInterfaces;
 using System;

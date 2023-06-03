@@ -1,10 +1,22 @@
+using PayPal.Sdk.Checkout.Core.HttpRequests;
 using PayPal.Sdk.Checkout.Core.MessageSerializers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Text.Json.Serialization.Metadata;
 
 namespace PayPal.Sdk.Checkout.Orders;
+
+/// <inheritdoc />
+public class OrdersStringPatchRequest : OrdersPatchRequest<string, StringPatch>
+{
+    public OrdersStringPatchRequest(
+        string orderId
+    ) : base(orderId, PayPalOrderJsonSerializerContext.Default.IReadOnlyCollectionStringPatch)
+    {
+    }
+}
 
 /// <summary>
 /// Updates an order that has the `CREATED` or `APPROVED` status. You cannot update an order with `COMPLETED` status.
@@ -19,9 +31,18 @@ namespace PayPal.Sdk.Checkout.Orders;
 /// <tr><td><code>purchase_units[].soft_descriptor</code></td><td align="left">Replace, add, remove</td></tr>
 /// <tr><td><code>purchase_units[].amount</code></td><td align="left">Replace</td></tr><tr><td><code>purchase_units[].invoice_id</code></td><td align="left">Replace, add, remove</td></tr></tbody></table>
 /// </summary>
-public class OrdersPatchRequest<T> : BaseVoidHttpRequest<ICollection<Patch<T>>>
+public abstract class OrdersPatchRequest<T, TPathType> : PayPalHttpRequest
+    .WithJsonRequest<IReadOnlyCollection<TPathType>>
+    .WithoutResponse
+    where TPathType : Patch<T>
 {
-    public OrdersPatchRequest(string orderId) : base("/v2/checkout/orders/{order_id}", HttpMethod.Patch)
+    protected OrdersPatchRequest(
+        string orderId,
+        JsonTypeInfo<IReadOnlyCollection<TPathType>> jsonTypeInfoForRequestBody
+    ) : base(
+        "/v2/checkout/orders/{order_id}", HttpMethod.Patch,
+        jsonTypeInfoForRequestBody
+    )
     {
         try
         {

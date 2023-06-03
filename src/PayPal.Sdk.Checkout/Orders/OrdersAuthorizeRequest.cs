@@ -1,3 +1,4 @@
+using PayPal.Sdk.Checkout.Core.HttpRequests;
 using PayPal.Sdk.Checkout.Core.MessageSerializers;
 using PayPal.Sdk.Checkout.RequestInterfaces;
 using System;
@@ -11,9 +12,16 @@ namespace PayPal.Sdk.Checkout.Orders;
 /// the buyer must first approve the order or a valid payment_source must be provided in the request.
 /// A buyer can approve the order upon being redirected to the rel:approve URL that was returned in the HATEOAS links in the create order response.
 /// </summary>
-public class OrdersAuthorizeRequest : BaseHttpRequest<Order, AuthorizeRequest>, IConfigurePrefer, IConfigurePayPalRequestId, IConfigurePayPalMetadataId
+public class OrdersAuthorizeRequest : PayPalHttpRequest
+    .WithJsonRequest<AuthorizeRequest>
+    .WithJsonResponse<Order>,
+    IConfigurePrefer, IConfigurePayPalRequestId, IConfigurePayPalMetadataId
 {
-    public OrdersAuthorizeRequest(string orderId) : base("/v2/checkout/orders/{order_id}/authorize", HttpMethod.Post)
+    public OrdersAuthorizeRequest(string orderId) : base(
+        "/v2/checkout/orders/{order_id}/authorize", HttpMethod.Post,
+        PayPalOrderJsonSerializerContext.Default.Order,
+        PayPalOrderJsonSerializerContext.Default.AuthorizeRequest
+    )
     {
         try
         {

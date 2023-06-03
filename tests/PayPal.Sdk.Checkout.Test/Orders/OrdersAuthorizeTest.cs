@@ -17,7 +17,7 @@ public class OrdersAuthorizeTest
 
         Assert.NotNull(accessToken);
 
-        var orderResponse = await OrdersCreateTest.CreateOrder(payPalHttpClient, accessToken!);
+        var orderResponse = await OrdersCreateTest.CreateOrder(payPalHttpClient, accessToken);
         var createdOrder = orderResponse.ResponseBody!;
 
         var response = await payPalHttpClient.AuthorizeOrderRawAsync(
@@ -27,10 +27,8 @@ public class OrdersAuthorizeTest
             {
                 request.SetRequestBody(new AuthorizeRequest
                 {
-                    Amount = new Money { },
-                    PaymentSource = new PaymentSource
-                    {
-                    },
+                    Amount = new Money(),
+                    PaymentSource = new PaymentSource(),
                     ReferenceId = "ReferenceId",
                 });
             }

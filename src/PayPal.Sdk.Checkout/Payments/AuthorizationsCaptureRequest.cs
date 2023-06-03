@@ -1,3 +1,4 @@
+using PayPal.Sdk.Checkout.Core.HttpRequests;
 using PayPal.Sdk.Checkout.Core.MessageSerializers;
 using PayPal.Sdk.Checkout.RequestInterfaces;
 using System;
@@ -9,9 +10,16 @@ namespace PayPal.Sdk.Checkout.Payments;
 /// <summary>
 /// Captures an authorized payment, by ID.
 /// </summary>
-public class AuthorizationsCaptureRequest : BaseHttpRequest<Capture, CaptureRequest>, IConfigurePrefer, IConfigurePayPalRequestId
+public class AuthorizationsCaptureRequest : PayPalHttpRequest
+    .WithJsonRequest<CaptureRequest>
+    .WithJsonResponse<Capture>,
+    IConfigurePrefer, IConfigurePayPalRequestId
 {
-    public AuthorizationsCaptureRequest(string authorizationId) : base("/v2/payments/authorizations/{authorization_id}/capture", HttpMethod.Post)
+    public AuthorizationsCaptureRequest(string authorizationId) : base(
+        "/v2/payments/authorizations/{authorization_id}/capture", HttpMethod.Post,
+        PayPalPaymentsJsonSerializerContext.Default.Capture,
+        PayPalPaymentsJsonSerializerContext.Default.CaptureRequest
+    )
     {
         try
         {

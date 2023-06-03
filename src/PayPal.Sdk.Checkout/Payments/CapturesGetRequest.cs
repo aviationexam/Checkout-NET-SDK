@@ -1,16 +1,21 @@
+using PayPal.Sdk.Checkout.Core.HttpRequests;
 using PayPal.Sdk.Checkout.Core.MessageSerializers;
 using System;
 using System.IO;
-using System.Net.Http;
 
 namespace PayPal.Sdk.Checkout.Payments;
 
 /// <summary>
 /// Shows details for a captured payment, by ID.
 /// </summary>
-public class CapturesGetRequest : BaseHttpRequest<Capture>
+public class CapturesGetRequest : PayPalHttpRequest
+    .WithGetRequest
+    .WithJsonResponse<Capture>
 {
-    public CapturesGetRequest(string captureId) : base("/v2/payments/captures/{capture_id}", HttpMethod.Get)
+    public CapturesGetRequest(string captureId) : base(
+        "/v2/payments/captures/{capture_id}",
+        PayPalPaymentsJsonSerializerContext.Default.Capture
+        )
     {
         try
         {

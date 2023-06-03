@@ -1,16 +1,21 @@
+using PayPal.Sdk.Checkout.Core.HttpRequests;
 using PayPal.Sdk.Checkout.Core.MessageSerializers;
 using System;
 using System.IO;
-using System.Net.Http;
 
 namespace PayPal.Sdk.Checkout.Payments;
 
 /// <summary>
 /// Shows details for a refund, by ID.
 /// </summary>
-public class RefundsGetRequest : BaseHttpRequest<Refund>
+public class RefundsGetRequest : PayPalHttpRequest
+    .WithGetRequest
+    .WithJsonResponse<Refund>
 {
-    public RefundsGetRequest(string refundId) : base("/v2/payments/refunds/{refund_id}", HttpMethod.Get)
+    public RefundsGetRequest(string refundId) : base(
+        "/v2/payments/refunds/{refund_id}",
+        PayPalPaymentsJsonSerializerContext.Default.Refund
+    )
     {
         try
         {

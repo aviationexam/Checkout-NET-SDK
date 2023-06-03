@@ -1,5 +1,6 @@
 using PayPal.Sdk.Checkout.Authentication;
 using PayPal.Sdk.Checkout.Configuration;
+using PayPal.Sdk.Checkout.Core.HttpRequests;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

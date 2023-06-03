@@ -14,9 +14,9 @@ namespace PayPal.Sdk.Checkout.Samples
         /**
             This method can be used to build the patch request body.
          */
-        private static ICollection<Patch<string>> BuildPatches()
+        private static IReadOnlyCollection<StringPatch> BuildPatches()
         {
-            var patches = new List<Patch<string>>
+            var patches = new List<StringPatch>
             {
                 new()
                 {

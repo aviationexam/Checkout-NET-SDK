@@ -1,3 +1,4 @@
+using PayPal.Sdk.Checkout.Core.HttpRequests;
 using PayPal.Sdk.Checkout.Core.MessageSerializers;
 using PayPal.Sdk.Checkout.RequestInterfaces;
 using System;
@@ -9,9 +10,15 @@ namespace PayPal.Sdk.Checkout.Orders;
 /// <summary>
 /// Validates a payment method and checks it for contingencies.
 /// </summary>
-public class OrdersValidateRequest : BaseHttpRequest<Order, OrderActionRequest>, IConfigurePayPalMetadataId
+public class OrdersValidateRequest : PayPalHttpRequest
+    .WithJsonRequest<OrderActionRequest>
+    .WithJsonResponse<Order>, IConfigurePayPalMetadataId
 {
-    public OrdersValidateRequest(string orderId) : base("/v2/checkout/orders/{order_id}/validate-payment-method", HttpMethod.Post)
+    public OrdersValidateRequest(string orderId) : base(
+        "/v2/checkout/orders/{order_id}/validate-payment-method", HttpMethod.Post,
+        PayPalOrderJsonSerializerContext.Default.Order,
+        PayPalOrderJsonSerializerContext.Default.OrderActionRequest
+    )
     {
         try
         {

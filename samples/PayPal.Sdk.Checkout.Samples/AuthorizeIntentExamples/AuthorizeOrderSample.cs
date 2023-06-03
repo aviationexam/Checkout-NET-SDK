@@ -38,6 +38,7 @@ public static class AuthorizeOrderSample
                 Console.WriteLine("\t{0}: {1}\tCall Type: {2}", link.Rel, link.Href, link.Method);
             }
 
+            // ReSharper disable once UnusedVariable
             var amount = response.PurchaseUnits.Single().AmountWithBreakdown;
             Console.WriteLine("Buyer:");
             Console.WriteLine("\tEmail Address: {0}", response.Payer.Email);

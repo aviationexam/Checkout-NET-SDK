@@ -2,10 +2,14 @@ using System.Text.Json.Serialization;
 
 namespace PayPal.Sdk.Checkout.Orders;
 
+public class StringPatch : Patch<string>
+{
+}
+
 /// <summary>
 /// The JSON patch object to apply partial updates to resources.
 /// </summary>
-public class Patch<T>
+public abstract class Patch<T>
 {
     /// <summary>
     /// The <a href="https://tools.ietf.org/html/rfc6901">JSON Pointer</a> to the target document location from which to move the value. Required for the <code>move</code> operation.

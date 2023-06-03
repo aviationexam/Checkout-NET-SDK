@@ -11,11 +11,11 @@ namespace PayPal.Sdk.Checkout.Test.Orders;
 [Collection("Orders")]
 public class OrdersPatchTest
 {
-    private ICollection<Patch<string>> BuildRequestBody()
+    private IReadOnlyCollection<StringPatch> BuildRequestBody()
     {
-        return new[]
+        return new StringPatch[]
         {
-            new Patch<string>
+            new()
             {
                 Op = "add",
                 Path = "/purchase_units/@reference_id=='test_ref_id1'/description",

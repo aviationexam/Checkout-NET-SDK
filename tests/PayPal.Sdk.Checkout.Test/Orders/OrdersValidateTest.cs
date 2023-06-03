@@ -31,8 +31,8 @@ public class OrdersValidateTest
                 {
                     PaymentSource = new PaymentSource
                     {
-                        Card = new Card { },
-                        Token = new Token { },
+                        Card = new Card(),
+                        Token = new Token(),
                     }
                 });
             }
