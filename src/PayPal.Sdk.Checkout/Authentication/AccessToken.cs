@@ -1,19 +1,17 @@
 using System;
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace PayPal.Sdk.Checkout.Authentication;
 
-[DataContract]
 public class AccessToken
 {
-    [DataMember(Name = "access_token")]
+    [JsonPropertyName("access_token")]
     public string Token { get; set; } = null!;
 
-    [DataMember(Name = "token_type")]
+    [JsonPropertyName("token_type")]
     public string TokenType { get; set; } = null!;
 
-    [DataMember(Name = "expires_in")]
+    [JsonPropertyName("expires_in")]
     public int ExpiresIn { get; set; }
 
     private DateTime ReceivedDate { get; }

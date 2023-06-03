@@ -1,84 +1,76 @@
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace PayPal.Sdk.Checkout.Orders;
 
 /// <summary>
 /// The request data or link target.
 /// </summary>
-[DataContract]
 public class LinkSchema<T>
 {
     /// <summary>
-    /// Required default constructor
     /// </summary>
-    public LinkSchema()
-    {
-    }
-
-    /// <summary>
-    /// </summary>
-    [DataMember(Name = "additionalItems", EmitDefaultValue = false)]
+    [JsonPropertyName("additionalItems")]
     public T AdditionalItems { get; set; } = default!;
 
     // /// <summary>
     // /// An array of sub-schemas. The data must validate against all sub-schemas.
     // /// </summary>
-    // [DataMember(Name="allOf", EmitDefaultValue = false)]
+    // [DataMember(Name="allOf")]
     // public ICollection<AllOfItem> AllOf { get; set; } = null!;
     // /// <summary>
     // /// An array of sub-schemas. The data must validate against one or more sub-schemas.
     // /// </summary>
-    // [DataMember(Name="anyOf", EmitDefaultValue = false)]
+    // [DataMember(Name="anyOf")]
     // public ICollection<AnyOfItem> AnyOf { get; set; } = null!;
     /// <summary>
     /// </summary>
-    [DataMember(Name = "definitions", EmitDefaultValue = false)]
+    [JsonPropertyName("definitions")]
     public T Definitions { get; set; } = default!;
 
     /// <summary>
     /// </summary>
-    [DataMember(Name = "dependencies", EmitDefaultValue = false)]
+    [JsonPropertyName("dependencies")]
     public T Dependencies { get; set; } = default!;
 
     /// <summary>
     /// </summary>
-    [DataMember(Name = "fragmentResolution", EmitDefaultValue = false)]
+    [JsonPropertyName("fragmentResolution")]
     public string FragmentResolution { get; set; } = null!;
 
     /// <summary>
     /// An item.
     /// </summary>
-    [DataMember(Name = "items", EmitDefaultValue = false)]
+    [JsonPropertyName("items")]
     public T Items { get; set; } = default!;
 
     // /// <summary>
     // /// An array of links.
     // /// </summary>
-    // [DataMember(Name="links", EmitDefaultValue = false)]
+    // [DataMember(Name="links")]
     // public ICollection<Link> Links { get; set; } = null!;
     /// <summary>
     /// </summary>
-    [DataMember(Name = "not", EmitDefaultValue = false)]
+    [JsonPropertyName("not")]
     public T Not { get; set; } = default!;
 
     // /// <summary>
     // /// An array of sub-schemas. The data must validate against one sub-schema.
     // /// </summary>
-    // [DataMember(Name="oneOf", EmitDefaultValue = false)]
+    // [DataMember(Name="oneOf")]
     // public ICollection<OneOfItem> OneOf { get; set; } = null!;
     /// <summary>
     /// To apply this schema to the instances' URIs, start the URIs with this value.
     /// </summary>
-    [DataMember(Name = "pathStart", EmitDefaultValue = false)]
+    [JsonPropertyName("pathStart")]
     public string PathStart { get; set; } = null!;
 
     /// <summary>
     /// </summary>
-    [DataMember(Name = "patternProperties", EmitDefaultValue = false)]
+    [JsonPropertyName("patternProperties")]
     public T PatternProperties { get; set; } = default!;
 
     /// <summary>
     /// </summary>
-    [DataMember(Name = "properties", EmitDefaultValue = false)]
+    [JsonPropertyName("properties")]
     public T Properties { get; set; } = default!;
 }
