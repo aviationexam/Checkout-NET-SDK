@@ -98,7 +98,7 @@ public class PayPalHttpClient : IPayPalHttpClient
         }
 
         var responseBodyContent = await response.Content.ReadAsStringAsync(
-#if NET5_0
+#if NET7_0_OR_GREATER
                 cancellationToken
 #endif
         );
@@ -128,7 +128,7 @@ public class PayPalHttpClient : IPayPalHttpClient
         }
 
         var responseBodyContent = await response.Content.ReadAsStringAsync(
-#if NET5_0
+#if NET7_0_OR_GREATER
                 cancellationToken
 #endif
         );
