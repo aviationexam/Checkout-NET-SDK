@@ -1,8 +1,7 @@
-namespace PayPal.Sdk.Checkout.Configuration
+namespace PayPal.Sdk.Checkout.Configuration;
+
+public enum EPayPalEnvironment : byte
 {
-    public enum EPayPalEnvironment : byte
-    {
-        Sandbox = 0,
-        Live = 1,
-    }
+    Sandbox = 0,
+    Live = 1,
 }

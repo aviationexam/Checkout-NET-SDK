@@ -1,17 +1,16 @@
 using System.Net;
 using System.Net.Http.Headers;
 
-namespace PayPal.Sdk.Checkout.Core.Interfaces
+namespace PayPal.Sdk.Checkout.Core.Interfaces;
+
+public interface IPayPalHttpResponse
 {
-    public interface IPayPalHttpResponse
-    {
-        HttpResponseHeaders ResponseHeaders { get; }
+    HttpResponseHeaders ResponseHeaders { get; }
 
-        HttpStatusCode ResponseStatusCode { get; }
-    }
+    HttpStatusCode ResponseStatusCode { get; }
+}
 
-    public interface IPayPalHttpResponse<out TResponse> : IPayPalHttpResponse
-    {
-        TResponse? ResponseBody { get; }
-    }
+public interface IPayPalHttpResponse<out TResponse> : IPayPalHttpResponse
+{
+    TResponse? ResponseBody { get; }
 }

@@ -1,15 +1,14 @@
-namespace PayPal.Sdk.Checkout.RequestInterfaces
+namespace PayPal.Sdk.Checkout.RequestInterfaces;
+
+public interface IPayPalRequestWithRequestBody
 {
-    public interface IPayPalRequestWithRequestBody
-    {
-        string ContentType { get; }
+    string ContentType { get; }
 
-        string PayPalRequestId { get; }
-    }
+    string PayPalRequestId { get; }
+}
 
-    public interface IPayPalRequestWithRequestBody<out TRequestBody> : IPayPalRequestWithRequestBody
-        where TRequestBody : notnull
-    {
-        TRequestBody Body { get; }
-    }
+public interface IPayPalRequestWithRequestBody<out TRequestBody> : IPayPalRequestWithRequestBody
+    where TRequestBody : notnull
+{
+    TRequestBody Body { get; }
 }

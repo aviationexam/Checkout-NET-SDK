@@ -1,24 +1,23 @@
 using System.Runtime.Serialization;
 
-namespace PayPal.Sdk.Checkout.Orders
+namespace PayPal.Sdk.Checkout.Orders;
+
+/// <summary>
+/// The total order amount with an optional breakdown that provides details, such as the total item amount, total tax amount, shipping, handling, insurance, and discounts, if any.<br/>If you specify `amount.breakdown`, the amount equals `item_total` plus `tax_total` plus `shipping` plus `handling` plus `insurance` minus `shipping_discount` minus discount.<br/>The amount must be a positive number. For listed of supported currencies and decimal precision, see the PayPal REST APIs <a href="/docs/integration/direct/rest/currency-codes/">Currency Codes</a>.
+/// </summary>
+[DataContract]
+public class AmountWithBreakdown : Money
 {
     /// <summary>
-    /// The total order amount with an optional breakdown that provides details, such as the total item amount, total tax amount, shipping, handling, insurance, and discounts, if any.<br/>If you specify `amount.breakdown`, the amount equals `item_total` plus `tax_total` plus `shipping` plus `handling` plus `insurance` minus `shipping_discount` minus discount.<br/>The amount must be a positive number. For listed of supported currencies and decimal precision, see the PayPal REST APIs <a href="/docs/integration/direct/rest/currency-codes/">Currency Codes</a>.
+    /// Required default constructor
     /// </summary>
-    [DataContract]
-    public class AmountWithBreakdown : Money
+    public AmountWithBreakdown()
     {
-        /// <summary>
-        /// Required default constructor
-        /// </summary>
-        public AmountWithBreakdown()
-        {
-        }
-
-        /// <summary>
-        /// The breakdown of the amount. Breakdown provides details such as total item amount, total tax amount, shipping, handling, insurance, and discounts, if any.
-        /// </summary>
-        [DataMember(Name = "breakdown", EmitDefaultValue = false)]
-        public AmountBreakdown? AmountBreakdown { get; set; }
     }
+
+    /// <summary>
+    /// The breakdown of the amount. Breakdown provides details such as total item amount, total tax amount, shipping, handling, insurance, and discounts, if any.
+    /// </summary>
+    [DataMember(Name = "breakdown", EmitDefaultValue = false)]
+    public AmountBreakdown? AmountBreakdown { get; set; }
 }
