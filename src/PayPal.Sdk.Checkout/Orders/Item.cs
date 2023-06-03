@@ -1,62 +1,54 @@
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace PayPal.Sdk.Checkout.Orders;
 
 /// <summary>
 /// The details for the items to be purchased.
 /// </summary>
-[DataContract]
 public class Item
 {
     /// <summary>
-    /// Required default constructor
-    /// </summary>
-    public Item()
-    {
-    }
-
-    /// <summary>
     /// The item category type.
     /// </summary>
-    [DataMember(Name = "category", EmitDefaultValue = false)]
+    [JsonPropertyName("category")]
     public EItemCategory? Category { get; set; }
 
     /// <summary>
     /// REQUIRED
     /// The item name or title.
     /// </summary>
-    [DataMember(Name = "name", EmitDefaultValue = false)]
+    [JsonPropertyName("name")]
     public string Name { get; set; } = null!;
 
     /// <summary>
     /// The detailed item description.
     /// </summary>
-    [DataMember(Name = "description", EmitDefaultValue = false)]
+    [JsonPropertyName("description")]
     public string? Description { get; set; }
 
     /// <summary>
     /// REQUIRED
     /// The item quantity. Must be a whole number.
     /// </summary>
-    [DataMember(Name = "quantity", EmitDefaultValue = false)]
+    [JsonPropertyName("quantity")]
     public string Quantity { get; set; } = null!;
 
     /// <summary>
     /// The stock keeping unit (SKU) for the item.
     /// </summary>
-    [DataMember(Name = "sku", EmitDefaultValue = false)]
+    [JsonPropertyName("sku")]
     public string? Sku { get; set; }
 
     /// <summary>
     /// The currency and amount for a financial transaction, such as a balance or payment due.
     /// </summary>
-    [DataMember(Name = "tax", EmitDefaultValue = false)]
+    [JsonPropertyName("tax")]
     public Money? Tax { get; set; }
 
     /// <summary>
     /// REQUIRED
     /// The currency and amount for a financial transaction, such as a balance or payment due.
     /// </summary>
-    [DataMember(Name = "unit_amount", EmitDefaultValue = false)]
+    [JsonPropertyName("unit_amount")]
     public Money UnitAmount { get; set; } = null!;
 }

@@ -2,7 +2,6 @@ using System.Runtime.Serialization;
 
 namespace PayPal.Sdk.Checkout.Orders;
 
-[DataContract]
 public enum EPhoneType : byte
 {
     [EnumMember(Value = "FAX")]

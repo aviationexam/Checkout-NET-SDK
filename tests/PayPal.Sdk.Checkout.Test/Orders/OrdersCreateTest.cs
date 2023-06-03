@@ -10,93 +10,92 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace PayPal.Sdk.Checkout.Test.Orders
+namespace PayPal.Sdk.Checkout.Test.Orders;
+
+[Collection("Orders")]
+public class OrdersCreateTest
 {
-    [Collection("Orders")]
-    public class OrdersCreateTest
+    private readonly ITestOutputHelper _testOutputHelper;
+
+    public OrdersCreateTest(ITestOutputHelper testOutputHelper)
     {
-        private readonly ITestOutputHelper _testOutputHelper;
+        _testOutputHelper = testOutputHelper;
+    }
 
-        public OrdersCreateTest(ITestOutputHelper testOutputHelper)
+    private static OrderRequest BuildRequestBody()
+    {
+        var order = new OrderRequest
         {
-            _testOutputHelper = testOutputHelper;
-        }
-
-        private static OrderRequest BuildRequestBody()
-        {
-            var order = new OrderRequest
+            CheckoutPaymentIntent = EOrderIntent.Capture,
+            PurchaseUnits = new PurchaseUnitRequest[]
             {
-                CheckoutPaymentIntent = EOrderIntent.Capture,
-                PurchaseUnits = new PurchaseUnitRequest[]
+                new()
                 {
-                    new()
+                    ReferenceId = "test_ref_id1",
+                    AmountWithBreakdown = new AmountWithBreakdown
                     {
-                        ReferenceId = "test_ref_id1",
-                        AmountWithBreakdown = new AmountWithBreakdown
-                        {
-                            CurrencyCode = "USD",
-                            Value = "100.00"
-                        }
+                        CurrencyCode = "USD",
+                        Value = "100.00"
                     }
-                },
-                ApplicationContext = new ApplicationContext
-                {
-                    ReturnUrl = "https://www.example.com",
-                    CancelUrl = "https://www.example.com"
-                },
-            };
-            return order;
-        }
-
-        public static async Task<IPayPalHttpResponse<Order>> CreateOrder(IPayPalHttpClient payPalHttpClient, AccessToken accessToken)
-        {
-            var response = await payPalHttpClient.CreateOrderRawAsync(accessToken, request =>
+                }
+            },
+            ApplicationContext = new ApplicationContext
             {
-                request.SetPreferReturn(EPreferReturn.Representation);
-                request.SetRequestBody(BuildRequestBody());
-            });
+                ReturnUrl = "https://www.example.com",
+                CancelUrl = "https://www.example.com"
+            },
+        };
+        return order;
+    }
 
-            return response;
-        }
-
-        [Fact]
-        public async void TestOrdersCreateRequest()
+    public static async Task<IPayPalHttpResponse<Order>> CreateOrder(IPayPalHttpClient payPalHttpClient, AccessToken accessToken)
+    {
+        var response = await payPalHttpClient.CreateOrderRawAsync(accessToken, request =>
         {
-            using var payPalHttpClient = TestHttpClientFactory.CreateHttpClient();
+            request.SetPreferReturn(EPreferReturn.Representation);
+            request.SetRequestBody(BuildRequestBody());
+        });
 
-            var accessToken = await payPalHttpClient.AuthenticateAsync();
+        return response;
+    }
 
-            Assert.NotNull(accessToken);
+    [Fact]
+    public async void TestOrdersCreateRequest()
+    {
+        using var payPalHttpClient = TestHttpClientFactory.CreateHttpClient();
 
-            var response = await CreateOrder(payPalHttpClient, accessToken!);
+        var accessToken = await payPalHttpClient.AuthenticateAsync();
 
-            Assert.Equal(HttpStatusCode.Created, response.ResponseStatusCode);
-            Assert.NotNull(response.ResponseBody);
+        Assert.NotNull(accessToken);
 
-            var createdOrder = response.ResponseBody;
-            Assert.NotNull(createdOrder);
-            Assert.NotNull(createdOrder!.Id);
-            Assert.NotNull(createdOrder.PurchaseUnits);
-            Assert.Single(createdOrder.PurchaseUnits);
+        var response = await CreateOrder(payPalHttpClient, accessToken);
 
-            var firstPurchaseUnit = createdOrder.PurchaseUnits.Single();
-            Assert.Equal("test_ref_id1", firstPurchaseUnit.ReferenceId);
-            Assert.Equal("USD", firstPurchaseUnit.AmountWithBreakdown.CurrencyCode);
-            Assert.Equal("100.00", firstPurchaseUnit.AmountWithBreakdown.Value);
+        Assert.Equal(HttpStatusCode.Created, response.ResponseStatusCode);
+        Assert.NotNull(response.ResponseBody);
 
-            Assert.NotNull(createdOrder.CreateTime);
+        var createdOrder = response.ResponseBody;
+        Assert.NotNull(createdOrder);
+        Assert.NotNull(createdOrder.Id);
+        Assert.NotNull(createdOrder.PurchaseUnits);
+        Assert.Single(createdOrder.PurchaseUnits);
 
-            Assert.NotNull(createdOrder.Links);
+        var firstPurchaseUnit = createdOrder.PurchaseUnits.Single();
+        Assert.Equal("test_ref_id1", firstPurchaseUnit.ReferenceId);
+        Assert.Equal("USD", firstPurchaseUnit.AmountWithBreakdown.CurrencyCode);
+        Assert.Equal("100.00", firstPurchaseUnit.AmountWithBreakdown.Value);
 
-            Assert.Contains(createdOrder.Links, x => x.Rel == "approve");
-            var approveUrl = createdOrder.Links.First(x => x.Rel == "approve");
-            Assert.NotNull(approveUrl.Href);
-            Assert.Equal(EHttpMethod.Get, approveUrl.Method);
+        Assert.NotNull(createdOrder.CreateTime);
 
-            _testOutputHelper.WriteLine("OrderId: {0}", createdOrder.Id);
-            _testOutputHelper.WriteLine("ApproveUrl: {0}", approveUrl.Href);
+        Assert.NotNull(createdOrder.Links);
 
-            Assert.Equal(EOrderStatus.Created, createdOrder.Status);
-        }
+        Assert.Contains(createdOrder.Links, x => x.Rel == "approve");
+        var approveUrl = createdOrder.Links.First(x => x.Rel == "approve");
+        Assert.NotNull(approveUrl.Href);
+        Assert.Equal(EHttpMethod.Get, approveUrl.Method);
+
+        _testOutputHelper.WriteLine("OrderId: {0}", createdOrder.Id);
+        _testOutputHelper.WriteLine("ApproveUrl: {0}", approveUrl.Href);
+
+        Assert.Equal(EOrderStatus.Created, createdOrder.Status);
     }
 }

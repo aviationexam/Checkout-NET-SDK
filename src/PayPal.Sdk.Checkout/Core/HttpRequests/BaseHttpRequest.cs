@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
-namespace PayPal.Sdk.Checkout;
+namespace PayPal.Sdk.Checkout.Core.HttpRequests;
 
 public abstract class BaseHttpRequest
 {
@@ -28,12 +28,15 @@ public abstract class BaseHttpRequest
 public abstract class BaseHttpRequest<TResponseType> : BaseHttpRequest, IPayPalRequestWithResponseBody<TResponseType>
     where TResponseType : notnull
 {
-    protected BaseHttpRequest(string path, HttpMethod method) : base(path, method)
+    protected BaseHttpRequest(
+        string path, HttpMethod method
+    ) : base(path, method)
     {
     }
 }
 
-public abstract class BaseHttpRequest<TResponseType, TRequestBody> : BaseHttpRequest<TResponseType>, IPayPalRequestWithRequestBody<TRequestBody>
+public abstract class BaseHttpRequest<TResponseType, TRequestBody> : BaseHttpRequest<TResponseType>,
+    IPayPalRequestWithRequestBody<TRequestBody>
     where TResponseType : notnull
     where TRequestBody : notnull
 {
@@ -41,7 +44,9 @@ public abstract class BaseHttpRequest<TResponseType, TRequestBody> : BaseHttpReq
 
     public TRequestBody Body { get; private set; } = default!;
 
-    protected BaseHttpRequest(string path, HttpMethod method) : base(path, method)
+    protected BaseHttpRequest(
+        string path, HttpMethod method
+    ) : base(path, method)
     {
         PayPalRequestId = Guid.NewGuid().ToString();
     }
@@ -60,7 +65,9 @@ public abstract class BaseVoidHttpRequest<TRequestBody> : BaseHttpRequest, IPayP
 
     public TRequestBody Body { get; private set; } = default!;
 
-    protected BaseVoidHttpRequest(string path, HttpMethod method) : base(path, method)
+    protected BaseVoidHttpRequest(
+        string path, HttpMethod method
+    ) : base(path, method)
     {
         PayPalRequestId = Guid.NewGuid().ToString();
     }

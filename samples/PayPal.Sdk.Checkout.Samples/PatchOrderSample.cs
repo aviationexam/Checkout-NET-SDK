@@ -7,81 +7,81 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PayPal.Sdk.Checkout.Samples
+namespace PayPal.Sdk.Checkout.Samples;
+
+public static class PatchOrderSample
 {
-    public static class PatchOrderSample
-    {
-        /**
+    /**
             This method can be used to build the patch request body.
          */
-        private static ICollection<Patch<string>> BuildPatches()
+    private static IReadOnlyCollection<StringPatch> BuildPatches()
+    {
+        var patches = new List<StringPatch>
         {
-            var patches = new List<Patch<string>>
+            new()
             {
-                new()
-                {
-                    Op = "replace",
-                    Path = "/intent",
-                    Value = "CAPTURE"
-                },
-                new()
-                {
-                    Op = "replace",
-                    Path = "/purchase_units/@reference_id=='PUHF'/description",
-                    Value = "Physical Goods"
-                }
-            };
-            return patches;
-        }
+                Op = "replace",
+                Path = "/intent",
+                Value = "CAPTURE"
+            },
+            new()
+            {
+                Op = "replace",
+                Path = "/purchase_units/@reference_id=='PUHF'/description",
+                Value = "Physical Goods"
+            }
+        };
+        return patches;
+    }
 
-        /*
-            This method cn be used to patch an order by passing the order id.
-         */
-        public static async Task<Order?> PatchOrder(this IPayPalHttpClient httpClient, AccessToken accessToken, string orderId, bool debug = false)
+    /*
+        This method cn be used to patch an order by passing the order id.
+     */
+    public static async Task<Order?> PatchOrder(this IPayPalHttpClient httpClient, AccessToken accessToken,
+        string orderId, bool debug = false)
+    {
+        await httpClient.OrdersPatchRequestAsync(
+            accessToken,
+            orderId,
+            BuildPatches()
+        );
+
+        var response = await httpClient.GetOrderAsync(
+            accessToken,
+            orderId
+        );
+
+        if (debug && response != null)
         {
-            await httpClient.OrdersPatchRequestAsync(
-                accessToken,
-                orderId,
-                BuildPatches()
-            );
-
-            var response = await httpClient.GetOrderAsync(
-                accessToken,
-                orderId
-            );
-
-            if (debug && response != null)
+            Console.WriteLine("Retrieved Order Status After Patch");
+            Console.WriteLine("Status: {0}", response.Status);
+            Console.WriteLine("Order Id: {0}", response.Id);
+            Console.WriteLine("Intent: {0}", response.CheckoutPaymentIntent);
+            Console.WriteLine("Links:");
+            foreach (var link in response.Links)
             {
-                Console.WriteLine("Retrieved Order Status After Patch");
-                Console.WriteLine("Status: {0}", response.Status);
-                Console.WriteLine("Order Id: {0}", response.Id);
-                Console.WriteLine("Intent: {0}", response.CheckoutPaymentIntent);
-                Console.WriteLine("Links:");
-                foreach (var link in response.Links)
-                {
-                    Console.WriteLine("\t{0}: {1}\tCall Type: {2}", link.Rel, link.Href, link.Method);
-                }
-
-                var amount = response.PurchaseUnits.Single().AmountWithBreakdown;
-                Console.WriteLine("Total Amount: {0} {1}", amount.CurrencyCode, amount.Value);
-                Console.WriteLine("Response JSON: \n {0}", response.AsJson());
+                Console.WriteLine("\t{0}: {1}\tCall Type: {2}", link.Rel, link.Href, link.Method);
             }
 
-            return response;
+            var amount = response.PurchaseUnits.Single().AmountWithBreakdown;
+            Console.WriteLine("Total Amount: {0} {1}", amount.CurrencyCode, amount.Value);
+            Console.WriteLine("Response JSON: \n {0}", response.AsJson());
         }
 
-        /*
-            This is the driver method which invokes the patchOrder function with Order Id
-            to patch an order details.
-
-            To get the new Order id, we are using the createOrder to create new order
-            and then we are using the newly created order id.
-         */
-        // static void Main(string[] args)
-        // {
-        //     HttpResponse createdResponse = CreateOrderSample.CreateOrder(true).Result;
-        //     Console.WriteLine("\nAfter PATCH (Changed Intent and Amount):");
-        //     PatchOrder(createdResponse.Result<Order>().Id, true).Wait();
-        // }
+        return response;
     }
+
+    /*
+        This is the driver method which invokes the patchOrder function with Order Id
+        to patch an order details.
+
+        To get the new Order id, we are using the createOrder to create new order
+        and then we are using the newly created order id.
+     */
+    // static void Main(string[] args)
+    // {
+    //     HttpResponse createdResponse = CreateOrderSample.CreateOrder(true).Result;
+    //     Console.WriteLine("\nAfter PATCH (Changed Intent and Amount):");
+    //     PatchOrder(createdResponse.Result<Order>().Id, true).Wait();
+    // }
 }

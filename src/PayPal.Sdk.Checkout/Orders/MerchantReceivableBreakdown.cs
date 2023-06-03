@@ -1,41 +1,33 @@
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace PayPal.Sdk.Checkout.Orders;
 
 /// <summary>
 /// The detailed breakdown of the captured payment.
 /// </summary>
-[DataContract]
 public class MerchantReceivableBreakdown
 {
     /// <summary>
-    /// Required default constructor
-    /// </summary>
-    public MerchantReceivableBreakdown()
-    {
-    }
-
-    /// <summary>
     /// The currency and amount for a financial transaction, such as a balance or payment due.
     /// </summary>
-    [DataMember(Name = "gross_amount", EmitDefaultValue = false)]
+    [JsonPropertyName("gross_amount")]
     public Money GrossAmount { get; set; } = null!;
 
     /// <summary>
     /// The currency and amount for a financial transaction, such as a balance or payment due.
     /// </summary>
-    [DataMember(Name = "net_amount", EmitDefaultValue = false)]
+    [JsonPropertyName("net_amount")]
     public Money NetAmount { get; set; } = null!;
 
     /// <summary>
     /// The currency and amount for a financial transaction, such as a balance or payment due.
     /// </summary>
-    [DataMember(Name = "paypal_fee", EmitDefaultValue = false)]
+    [JsonPropertyName("paypal_fee")]
     public Money PaypalFee { get; set; } = null!;
 
     /// <summary>
     /// The currency and amount for a financial transaction, such as a balance or payment due.
     /// </summary>
-    [DataMember(Name = "receivable_amount", EmitDefaultValue = false)]
+    [JsonPropertyName("receivable_amount")]
     public Money ReceivableAmount { get; set; } = null!;
 }

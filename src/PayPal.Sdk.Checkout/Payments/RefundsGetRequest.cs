@@ -1,26 +1,30 @@
+using PayPal.Sdk.Checkout.Core.HttpRequests;
 using PayPal.Sdk.Checkout.Core.MessageSerializers;
 using System;
 using System.IO;
-using System.Net.Http;
 
-namespace PayPal.Sdk.Checkout.Payments
+namespace PayPal.Sdk.Checkout.Payments;
+
+/// <summary>
+/// Shows details for a refund, by ID.
+/// </summary>
+public class RefundsGetRequest : PayPalHttpRequest
+    .WithGetRequest
+    .WithJsonResponse<Refund>
 {
-    /// <summary>
-    /// Shows details for a refund, by ID.
-    /// </summary>
-    public class RefundsGetRequest : BaseHttpRequest<Refund>
+    public RefundsGetRequest(string refundId) : base(
+        "/v2/payments/refunds/{refund_id}",
+        PayPalPaymentsJsonSerializerContext.CustomConverters.Refund
+    )
     {
-        public RefundsGetRequest(string refundId) : base("/v2/payments/refunds/{refund_id}", HttpMethod.Get)
+        try
         {
-            try
-            {
-                Path = Path.Replace("{refund_id}", Uri.EscapeDataString(Convert.ToString(refundId)));
-            }
-            catch (IOException)
-            {
-            }
-
-            ContentType = JsonSerializer.ApplicationJson;
+            Path = Path.Replace("{refund_id}", Uri.EscapeDataString(Convert.ToString(refundId)));
         }
+        catch (IOException)
+        {
+        }
+
+        ContentType = JsonMessageSerializer.ApplicationJson;
     }
 }

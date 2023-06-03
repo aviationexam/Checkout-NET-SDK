@@ -1,23 +1,15 @@
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace PayPal.Sdk.Checkout.Orders;
 
 /// <summary>
 /// Completes an capture payment for an order.
 /// </summary>
-[DataContract]
 public class OrderCaptureRequest
 {
     /// <summary>
-    /// Required default constructor
-    /// </summary>
-    public OrderCaptureRequest()
-    {
-    }
-
-    /// <summary>
     /// The payment source definition.
     /// </summary>
-    [DataMember(Name = "payment_source", EmitDefaultValue = false)]
+    [JsonPropertyName("payment_source")]
     public PaymentSource PaymentSource { get; set; } = null!;
 }
