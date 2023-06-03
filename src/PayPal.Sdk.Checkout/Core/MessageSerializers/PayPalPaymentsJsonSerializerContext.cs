@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 namespace PayPal.Sdk.Checkout.Core.MessageSerializers;
 
 [JsonSourceGenerationOptions(
+    WriteIndented = true,
     PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
     GenerationMode = JsonSourceGenerationMode.Serialization
 )]
