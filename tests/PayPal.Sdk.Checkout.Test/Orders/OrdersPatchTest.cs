@@ -6,58 +6,57 @@ using System.Linq;
 using System.Net;
 using Xunit;
 
-namespace PayPal.Sdk.Checkout.Test.Orders
+namespace PayPal.Sdk.Checkout.Test.Orders;
+
+[Collection("Orders")]
+public class OrdersPatchTest
 {
-    [Collection("Orders")]
-    public class OrdersPatchTest
+    private ICollection<Patch<string>> BuildRequestBody()
     {
-        private ICollection<Patch<string>> BuildRequestBody()
+        return new[]
         {
-            return new[]
+            new Patch<string>
             {
-                new Patch<string>
-                {
-                    Op = "add",
-                    Path = "/purchase_units/@reference_id=='test_ref_id1'/description",
-                    Value = "added_description"
-                }
-            };
-        }
+                Op = "add",
+                Path = "/purchase_units/@reference_id=='test_ref_id1'/description",
+                Value = "added_description"
+            }
+        };
+    }
 
-        [Fact]
-        public async void TestOrdersPatchRequest()
-        {
-            using var payPalHttpClient = TestHttpClientFactory.CreateHttpClient();
+    [Fact]
+    public async void TestOrdersPatchRequest()
+    {
+        using var payPalHttpClient = TestHttpClientFactory.CreateHttpClient();
 
-            var accessToken = await payPalHttpClient.AuthenticateAsync();
+        var accessToken = await payPalHttpClient.AuthenticateAsync();
 
-            Assert.NotNull(accessToken);
+        Assert.NotNull(accessToken);
 
-            var response = await OrdersCreateTest.CreateOrder(payPalHttpClient, accessToken);
+        var response = await OrdersCreateTest.CreateOrder(payPalHttpClient, accessToken);
 
-            Assert.NotNull(response.ResponseBody);
-            var createdOrder = response.ResponseBody;
+        Assert.NotNull(response.ResponseBody);
+        var createdOrder = response.ResponseBody;
 
-            var patchResponse = await payPalHttpClient.OrdersPatchRequestRawAsync(
-                accessToken,
-                createdOrder.Id,
-                BuildRequestBody()
-            );
+        var patchResponse = await payPalHttpClient.OrdersPatchRequestRawAsync(
+            accessToken,
+            createdOrder.Id,
+            BuildRequestBody()
+        );
 
-            Assert.Equal(HttpStatusCode.NoContent, patchResponse.ResponseStatusCode);
+        Assert.Equal(HttpStatusCode.NoContent, patchResponse.ResponseStatusCode);
 
-            var getOrderResponse = await payPalHttpClient.GetOrderRawAsync(accessToken, createdOrder.Id);
+        var getOrderResponse = await payPalHttpClient.GetOrderRawAsync(accessToken, createdOrder.Id);
 
-            Assert.Equal(HttpStatusCode.OK, getOrderResponse.ResponseStatusCode);
+        Assert.Equal(HttpStatusCode.OK, getOrderResponse.ResponseStatusCode);
 
-            Assert.NotNull(getOrderResponse.ResponseBody);
-            var getOrder = getOrderResponse.ResponseBody;
+        Assert.NotNull(getOrderResponse.ResponseBody);
+        var getOrder = getOrderResponse.ResponseBody;
 
-            var firstPurchaseUnit = getOrder.PurchaseUnits.Single();
-            Assert.Equal("test_ref_id1", firstPurchaseUnit.ReferenceId);
-            Assert.Equal("USD", firstPurchaseUnit.AmountWithBreakdown.CurrencyCode);
-            Assert.Equal("100.00", firstPurchaseUnit.AmountWithBreakdown.Value);
-            Assert.Equal("added_description", firstPurchaseUnit.Description);
-        }
+        var firstPurchaseUnit = getOrder.PurchaseUnits.Single();
+        Assert.Equal("test_ref_id1", firstPurchaseUnit.ReferenceId);
+        Assert.Equal("USD", firstPurchaseUnit.AmountWithBreakdown.CurrencyCode);
+        Assert.Equal("100.00", firstPurchaseUnit.AmountWithBreakdown.Value);
+        Assert.Equal("added_description", firstPurchaseUnit.Description);
     }
 }

@@ -4,41 +4,40 @@ using PayPal.Sdk.Checkout.Test.Infrastructure;
 using System.Net;
 using Xunit;
 
-namespace PayPal.Sdk.Checkout.Test.Orders
+namespace PayPal.Sdk.Checkout.Test.Orders;
+
+[Collection("Orders")]
+public class OrdersValidateTest
 {
-    [Collection("Orders")]
-    public class OrdersValidateTest
+    [Fact(Skip = "This test is an example. In production, you will need a credit card")]
+    public async void TestOrdersValidateRequest()
     {
-        [Fact(Skip = "This test is an example. In production, you will need a credit card")]
-        public async void TestOrdersValidateRequest()
-        {
-            using var payPalHttpClient = TestHttpClientFactory.CreateHttpClient();
+        using var payPalHttpClient = TestHttpClientFactory.CreateHttpClient();
 
-            var accessToken = await payPalHttpClient.AuthenticateAsync();
+        var accessToken = await payPalHttpClient.AuthenticateAsync();
 
-            Assert.NotNull(accessToken);
+        Assert.NotNull(accessToken);
 
-            var orderResponse = await OrdersCreateTest.CreateOrder(payPalHttpClient, accessToken);
-            Assert.NotNull(orderResponse.ResponseBody);
-            var createdOrder = orderResponse.ResponseBody;
+        var orderResponse = await OrdersCreateTest.CreateOrder(payPalHttpClient, accessToken);
+        Assert.NotNull(orderResponse.ResponseBody);
+        var createdOrder = orderResponse.ResponseBody;
 
-            var response = await payPalHttpClient.ValidateOrderRawAsync(
-                accessToken,
-                createdOrder.Id,
-                request =>
+        var response = await payPalHttpClient.ValidateOrderRawAsync(
+            accessToken,
+            createdOrder.Id,
+            request =>
+            {
+                request.SetRequestBody(new OrderActionRequest
                 {
-                    request.SetRequestBody(new OrderActionRequest
+                    PaymentSource = new PaymentSource
                     {
-                        PaymentSource = new PaymentSource
-                        {
-                            Card = new Card { },
-                            Token = new Token { },
-                        }
-                    });
-                }
-            );
-            Assert.Equal(HttpStatusCode.OK, response.ResponseStatusCode);
-            Assert.NotNull(response.ResponseBody);
-        }
+                        Card = new Card { },
+                        Token = new Token { },
+                    }
+                });
+            }
+        );
+        Assert.Equal(HttpStatusCode.OK, response.ResponseStatusCode);
+        Assert.NotNull(response.ResponseBody);
     }
 }
