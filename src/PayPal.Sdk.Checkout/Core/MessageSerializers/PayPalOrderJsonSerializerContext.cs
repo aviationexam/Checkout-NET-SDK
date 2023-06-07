@@ -9,7 +9,7 @@ namespace PayPal.Sdk.Checkout.Core.MessageSerializers;
 [JsonSourceGenerationOptions(
     WriteIndented = true,
     PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
-    GenerationMode = JsonSourceGenerationMode.Serialization
+    GenerationMode = JsonSourceGenerationMode.Metadata
 )]
 [JsonSerializable(typeof(AuthorizeRequest))]
 [JsonSerializable(typeof(IReadOnlyCollection<StringPatch>))]
