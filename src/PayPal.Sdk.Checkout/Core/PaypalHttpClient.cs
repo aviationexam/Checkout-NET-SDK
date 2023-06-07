@@ -7,6 +7,7 @@ using PayPal.Sdk.Checkout.RequestInterfaces;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -84,7 +85,12 @@ public class PayPalHttpClient : IPayPalHttpClient
     {
         if (request is IPayPalRequestWithRequestBody<TRequestBody> requestWithRequestBody)
         {
-            return await _payPayEncoder.SerializeRequestAsync(requestWithRequestBody.Body, requestWithRequestBody.ContentType);
+            return await _payPayEncoder.SerializeRequestAsync(
+                requestWithRequestBody.Body,
+                (request as IPayPalRequestWithJsonRequestBody<TRequestBody>)?.JsonTypeInfoForRequestBody,
+                requestWithRequestBody.ContentType,
+                cancellationToken
+            );
         }
 
         throw new ArgumentException(
@@ -109,7 +115,9 @@ public class PayPalHttpClient : IPayPalHttpClient
     }
 
     protected virtual async Task<PayPalHttpResponse<TResponse>> ProcessResponseAsync<TResponse>(
-        HttpResponseMessage response, CancellationToken cancellationToken
+        HttpResponseMessage response,
+        JsonTypeInfo<TResponse>? jsonTypeInfoForResponseType,
+        CancellationToken cancellationToken
     )
         where TResponse : notnull
     {
@@ -119,8 +127,9 @@ public class PayPalHttpClient : IPayPalHttpClient
 
             if (response.Content.Headers.ContentType != null)
             {
-                responseBody = await _payPayEncoder.DeserializeResponseAsync<TResponse>(
+                responseBody = await _payPayEncoder.DeserializeResponseAsync(
                     response.Content,
+                    jsonTypeInfoForResponseType,
                     response.Content.Headers.ContentType,
                     cancellationToken
                 );
@@ -163,7 +172,11 @@ public class PayPalHttpClient : IPayPalHttpClient
             response = await _httpClient.SendAsync(httpRequest, cancellationToken);
         }
 
-        return await ProcessResponseAsync<TResponse>(response, cancellationToken);
+        return await ProcessResponseAsync(
+            response,
+            (request as IPayPalRequestWithJsonResponseBody<TResponse>)?.JsonTypeInfoForResponseType,
+            cancellationToken
+        );
     }
 
     public virtual async Task<IPayPalHttpResponse<TResponse>> ExecuteAsync<TRequest, TResponse>(
@@ -185,7 +198,11 @@ public class PayPalHttpClient : IPayPalHttpClient
 
         var response = await _httpClient.SendAsync(httpRequest, cancellationToken);
 
-        return await ProcessResponseAsync<TResponse>(response, cancellationToken);
+        return await ProcessResponseAsync(
+            response,
+            (request as IPayPalRequestWithJsonResponseBody<TResponse>)?.JsonTypeInfoForResponseType,
+            cancellationToken
+        );
     }
 
     public virtual async Task<IPayPalHttpResponse> ExecuteVoidAsync<TRequest, TRequestBody>(

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ public interface IPayPayEncoder
 {
     Task<HttpContent> SerializeRequestAsync<TRequestBody>(
         TRequestBody body,
+        JsonTypeInfo<TRequestBody>? requestBodyJsonTypeInfo,
         string contentType,
         CancellationToken cancellationToken = default
     )
@@ -16,6 +18,7 @@ public interface IPayPayEncoder
 
     Task<TResponse> DeserializeResponseAsync<TResponse>(
         HttpContent httpContent,
+        JsonTypeInfo<TResponse>? responseJsonTypeInfo,
         MediaTypeHeaderValue mediaTypeHeaderValue,
         CancellationToken cancellationToken = default
     ) where TResponse : notnull;
