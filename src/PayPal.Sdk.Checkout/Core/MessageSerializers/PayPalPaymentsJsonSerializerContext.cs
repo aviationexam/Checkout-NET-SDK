@@ -1,4 +1,3 @@
-using PayPal.Sdk.Checkout.Core.Converters;
 using PayPal.Sdk.Checkout.Payments;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -18,20 +17,6 @@ namespace PayPal.Sdk.Checkout.Core.MessageSerializers;
 [JsonSerializable(typeof(RefundRequest))]
 internal partial class PayPalPaymentsJsonSerializerContext : JsonSerializerContext
 {
-    private static JsonSerializerOptions ConvertersContextOptions { get; } = new()
-    {
-        DefaultIgnoreCondition = JsonIgnoreCondition.Never,
-        IgnoreReadOnlyFields = false,
-        IgnoreReadOnlyProperties = false,
-        IncludeFields = false,
-        WriteIndented = true,
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        Converters =
-        {
-            new JsonStringEnumConverterFactory(),
-        },
-    };
-
     private static PayPalPaymentsJsonSerializerContext? _convertersContext;
 
     /// <summary>
@@ -39,6 +24,6 @@ internal partial class PayPalPaymentsJsonSerializerContext : JsonSerializerConte
     /// </summary>
     public static PayPalPaymentsJsonSerializerContext CustomConverters => _convertersContext
         ??= new PayPalPaymentsJsonSerializerContext(
-            new JsonSerializerOptions(ConvertersContextOptions)
+            new JsonSerializerOptions(JsonSerializerOptionsForJsonSerializerContext.ConvertersContextOptions)
         );
 }

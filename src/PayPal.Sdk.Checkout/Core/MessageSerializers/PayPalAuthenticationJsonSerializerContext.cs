@@ -14,20 +14,6 @@ namespace PayPal.Sdk.Checkout.Core.MessageSerializers;
 [JsonSerializable(typeof(RefreshToken))]
 internal partial class PayPalAuthenticationJsonSerializerContext : JsonSerializerContext
 {
-    private static JsonSerializerOptions ConvertersContextOptions { get; } = new()
-    {
-        DefaultIgnoreCondition = JsonIgnoreCondition.Never,
-        IgnoreReadOnlyFields = false,
-        IgnoreReadOnlyProperties = false,
-        IncludeFields = false,
-        WriteIndented = true,
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        Converters =
-        {
-            new JsonStringEnumConverterFactory(),
-        },
-    };
-
     private static PayPalAuthenticationJsonSerializerContext? _convertersContext;
 
     /// <summary>
@@ -35,6 +21,6 @@ internal partial class PayPalAuthenticationJsonSerializerContext : JsonSerialize
     /// </summary>
     public static PayPalAuthenticationJsonSerializerContext CustomConverters => _convertersContext
         ??= new PayPalAuthenticationJsonSerializerContext(
-            new JsonSerializerOptions(ConvertersContextOptions)
+            new JsonSerializerOptions(JsonSerializerOptionsForJsonSerializerContext.ConvertersContextOptions)
         );
 }
