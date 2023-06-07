@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,7 +27,9 @@ public class PayPayEncoder : IPayPayEncoder
     }
 
     public async Task<HttpContent> SerializeRequestAsync<TRequestBody>(
-        TRequestBody body, string contentType,
+        TRequestBody body,
+        JsonTypeInfo<TRequestBody>? requestBodyJsonTypeInfo,
+        string contentType,
         CancellationToken cancellationToken
     )
         where TRequestBody : notnull
@@ -35,22 +38,41 @@ public class PayPayEncoder : IPayPayEncoder
 
         if (serializer != null)
         {
-            return await serializer.SerializeAsync(body, contentType, cancellationToken);
+            return await serializer.SerializeAsync(
+                body,
+                requestBodyJsonTypeInfo,
+                contentType,
+                cancellationToken
+            );
         }
 
         throw new ArgumentException($"Not found serializer for message {contentType}");
     }
 
-    public async Task<TResponse> DeserializeResponseAsync<TResponse>(HttpContent httpContent, MediaTypeHeaderValue mediaTypeHeaderValue, CancellationToken cancellationToken)
+    public async Task<TResponse> DeserializeResponseAsync<TResponse>(
+        HttpContent httpContent,
+        JsonTypeInfo<TResponse>? responseJsonTypeInfo,
+        MediaTypeHeaderValue mediaTypeHeaderValue,
+        CancellationToken cancellationToken
+    )
         where TResponse : notnull
     {
-        var serializer = _messageSerializers.FirstOrDefault(x => x.CanDeserialize<TResponse>(httpContent, mediaTypeHeaderValue));
+        var serializer = _messageSerializers.FirstOrDefault(
+            x => x.CanDeserialize<TResponse>(httpContent, mediaTypeHeaderValue)
+        );
 
         if (serializer != null)
         {
-            return await serializer.DeserializeAsync<TResponse>(httpContent, mediaTypeHeaderValue, cancellationToken);
+            return await serializer.DeserializeAsync(
+                httpContent,
+                responseJsonTypeInfo,
+                mediaTypeHeaderValue,
+                cancellationToken
+            );
         }
 
-        throw new ArgumentException($"Not found serializer for message CharSet={mediaTypeHeaderValue.CharSet} MediaType={mediaTypeHeaderValue.MediaType}");
+        throw new ArgumentException(
+            $"Not found serializer for message CharSet={mediaTypeHeaderValue.CharSet} MediaType={mediaTypeHeaderValue.MediaType}"
+        );
     }
 }
