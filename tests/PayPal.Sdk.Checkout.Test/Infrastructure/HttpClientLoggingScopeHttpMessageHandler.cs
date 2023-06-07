@@ -144,9 +144,7 @@ public class HttpClientLoggingScopeHttpMessageHandler : DelegatingHandler
                     compressionStream, Encoding.UTF8, detectEncodingFromByteOrderMarks: false, bufferSize: -1, leaveOpen: true
                 );
                 var content = await reader.ReadToEndAsync(
-#if NET7_0_OR_GREATER
                     cancellationToken
-#endif
                 );
 
                 stream.Seek(0, SeekOrigin.Begin);
@@ -189,9 +187,7 @@ public class HttpClientLoggingScopeHttpMessageHandler : DelegatingHandler
                         streamContent, Encoding.UTF8, detectEncodingFromByteOrderMarks: false, bufferSize: -1, leaveOpen: true
                     );
                     var stringContent = await reader.ReadToEndAsync(
-#if NET7_0_OR_GREATER
                         cancellationToken
-#endif
                     );
 
                     streamContent.Seek(0, SeekOrigin.Begin);

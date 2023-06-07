@@ -40,9 +40,7 @@ public class TextSerializer : IMessageSerializer
         where TResponse : notnull
     {
         return (TResponse) (object) await response.ReadAsStringAsync(
-#if NET7_0_OR_GREATER
                 cancellationToken
-#endif
         );
     }
 }

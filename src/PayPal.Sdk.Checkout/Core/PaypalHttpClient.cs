@@ -99,9 +99,7 @@ public class PayPalHttpClient : IPayPalHttpClient
         }
 
         var responseBodyContent = await response.Content.ReadAsStringAsync(
-#if NET7_0_OR_GREATER
-                cancellationToken
-#endif
+            cancellationToken
         );
 
         throw new PayPalHttpException(response.StatusCode, response.Headers, responseBodyContent);
@@ -129,9 +127,7 @@ public class PayPalHttpClient : IPayPalHttpClient
         }
 
         var responseBodyContent = await response.Content.ReadAsStringAsync(
-#if NET7_0_OR_GREATER
-                cancellationToken
-#endif
+            cancellationToken
         );
 
         throw new PayPalHttpException(response.StatusCode, response.Headers, responseBodyContent);

@@ -63,9 +63,7 @@ public class JsonMessageSerializer : IMessageSerializer
         where TResponse : notnull
     {
         var stream = await response.ReadAsStreamAsync(
-#if NET7_0_OR_GREATER
             cancellationToken
-#endif
         );
 
         var deserializedResponse = await JsonSerializer.DeserializeAsync<TResponse>(
