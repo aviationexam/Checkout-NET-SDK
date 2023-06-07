@@ -1,10 +1,10 @@
-using PayPal.Sdk.Checkout.Core.Converters;
 using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,26 +18,22 @@ public class JsonMessageSerializer : IMessageSerializer
         TRequestBody body, string contentType
     ) where TRequestBody : notnull => contentType == ApplicationJson;
 
-    private JsonSerializerOptions GetJsonSerializerOptions()
-    {
-        var jsonSerializerOptions = new JsonSerializerOptions();
-        jsonSerializerOptions.Converters.Add(new JsonStringEnumConverterFactory());
-
-        return jsonSerializerOptions;
-    }
-
     public async Task<HttpContent> SerializeAsync<TRequestBody>(
-        TRequestBody body, string contentType,
+        TRequestBody body,
+        JsonTypeInfo<TRequestBody>? requestBodyJsonTypeInfo,
+        string contentType,
         CancellationToken cancellationToken
     )
         where TRequestBody : notnull
     {
+        _ = requestBodyJsonTypeInfo ?? throw new ArgumentNullException(nameof(requestBodyJsonTypeInfo));
+
         var memoryStream = new MemoryStream();
 
         await JsonSerializer.SerializeAsync(
             memoryStream,
             body,
-            GetJsonSerializerOptions(),
+            requestBodyJsonTypeInfo,
             cancellationToken
         );
 
@@ -57,18 +53,22 @@ public class JsonMessageSerializer : IMessageSerializer
     ) where TResponse : notnull => contentType.MediaType == ApplicationJson;
 
     public async Task<TResponse> DeserializeAsync<TResponse>(
-        HttpContent response, MediaTypeHeaderValue contentType,
+        HttpContent response,
+        JsonTypeInfo<TResponse>? responseJsonTypeInfo,
+        MediaTypeHeaderValue contentType,
         CancellationToken cancellationToken
     )
         where TResponse : notnull
     {
+        _ = responseJsonTypeInfo ?? throw new ArgumentNullException(nameof(responseJsonTypeInfo));
+
         var stream = await response.ReadAsStreamAsync(
             cancellationToken
         );
 
-        var deserializedResponse = await JsonSerializer.DeserializeAsync<TResponse>(
+        var deserializedResponse = await JsonSerializer.DeserializeAsync(
             stream,
-            GetJsonSerializerOptions(),
+            responseJsonTypeInfo,
             cancellationToken
         );
 

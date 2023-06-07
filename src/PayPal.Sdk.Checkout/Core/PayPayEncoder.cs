@@ -38,7 +38,12 @@ public class PayPayEncoder : IPayPayEncoder
 
         if (serializer != null)
         {
-            return await serializer.SerializeAsync(body, contentType, cancellationToken);
+            return await serializer.SerializeAsync(
+                body,
+                requestBodyJsonTypeInfo,
+                contentType,
+                cancellationToken
+            );
         }
 
         throw new ArgumentException($"Not found serializer for message {contentType}");
@@ -58,7 +63,12 @@ public class PayPayEncoder : IPayPayEncoder
 
         if (serializer != null)
         {
-            return await serializer.DeserializeAsync<TResponse>(httpContent, mediaTypeHeaderValue, cancellationToken);
+            return await serializer.DeserializeAsync(
+                httpContent,
+                responseJsonTypeInfo,
+                mediaTypeHeaderValue,
+                cancellationToken
+            );
         }
 
         throw new ArgumentException(

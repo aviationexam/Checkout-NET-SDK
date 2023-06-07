@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json.Serialization.Metadata;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +17,9 @@ public class TextSerializer : IMessageSerializer
     ) where TRequestBody : notnull => _contentTypeRegex.Match(contentType).Success;
 
     public Task<HttpContent> SerializeAsync<TRequestBody>(
-        TRequestBody body, string contentType,
+        TRequestBody body,
+        JsonTypeInfo<TRequestBody>? requestBodyJsonTypeInfo,
+        string contentType,
         CancellationToken cancellationToken
     )
         where TRequestBody : notnull
@@ -34,13 +37,15 @@ public class TextSerializer : IMessageSerializer
     ) where TResponse : notnull => _contentTypeRegex.Match(contentType.MediaType!).Success;
 
     public async Task<TResponse> DeserializeAsync<TResponse>(
-        HttpContent response, MediaTypeHeaderValue contentType,
+        HttpContent response,
+        JsonTypeInfo<TResponse>? responseJsonTypeInfo,
+        MediaTypeHeaderValue contentType,
         CancellationToken cancellationToken
     )
         where TResponse : notnull
     {
         return (TResponse) (object) await response.ReadAsStringAsync(
-                cancellationToken
+            cancellationToken
         );
     }
 }

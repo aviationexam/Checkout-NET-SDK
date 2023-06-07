@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +17,9 @@ public class FormEncodedSerializer : IMessageSerializer
     ) where TRequestBody : notnull => contentType == ApplicationXForm;
 
     public Task<HttpContent> SerializeAsync<TRequestBody>(
-        TRequestBody body, string contentType,
+        TRequestBody body,
+        JsonTypeInfo<TRequestBody>? requestBodyJsonTypeInfo,
+        string contentType,
         CancellationToken cancellationToken
     )
         where TRequestBody : notnull
@@ -26,7 +29,9 @@ public class FormEncodedSerializer : IMessageSerializer
             return Task.FromResult((HttpContent) new FormUrlEncodedContent(dictionary));
         }
 
-        throw new ArgumentException("Request requestBody must be IDictionary<string, string> when Content-Type is application/x-www-form-urlencoded");
+        throw new ArgumentException(
+            "Request requestBody must be IDictionary<string, string> when Content-Type is application/x-www-form-urlencoded"
+        );
     }
 
     public bool CanDeserialize<TResponse>(
@@ -34,7 +39,9 @@ public class FormEncodedSerializer : IMessageSerializer
     ) where TResponse : notnull => false;
 
     public Task<TResponse> DeserializeAsync<TResponse>(
-        HttpContent response, MediaTypeHeaderValue contentType,
+        HttpContent response,
+        JsonTypeInfo<TResponse>? responseJsonTypeInfo,
+        MediaTypeHeaderValue contentType,
         CancellationToken cancellationToken
     )
         where TResponse : notnull
