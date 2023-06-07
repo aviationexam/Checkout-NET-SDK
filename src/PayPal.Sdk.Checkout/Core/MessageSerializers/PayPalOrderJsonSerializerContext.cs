@@ -9,7 +9,7 @@ namespace PayPal.Sdk.Checkout.Core.MessageSerializers;
 [JsonSourceGenerationOptions(
     WriteIndented = true,
     PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
-    GenerationMode = JsonSourceGenerationMode.Serialization
+    GenerationMode = JsonSourceGenerationMode.Metadata
 )]
 [JsonSerializable(typeof(AuthorizeRequest))]
 [JsonSerializable(typeof(IReadOnlyCollection<StringPatch>))]
@@ -19,20 +19,6 @@ namespace PayPal.Sdk.Checkout.Core.MessageSerializers;
 [JsonSerializable(typeof(OrderRequest))]
 internal partial class PayPalOrderJsonSerializerContext : JsonSerializerContext
 {
-    private static JsonSerializerOptions ConvertersContextOptions { get; } = new()
-    {
-        DefaultIgnoreCondition = JsonIgnoreCondition.Never,
-        IgnoreReadOnlyFields = false,
-        IgnoreReadOnlyProperties = false,
-        IncludeFields = false,
-        WriteIndented = true,
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        Converters =
-        {
-            new JsonStringEnumConverterFactory(),
-        },
-    };
-
     private static PayPalOrderJsonSerializerContext? _convertersContext;
 
     /// <summary>
@@ -40,6 +26,6 @@ internal partial class PayPalOrderJsonSerializerContext : JsonSerializerContext
     /// </summary>
     public static PayPalOrderJsonSerializerContext CustomConverters => _convertersContext
         ??= new PayPalOrderJsonSerializerContext(
-            new JsonSerializerOptions(ConvertersContextOptions)
+            new JsonSerializerOptions(JsonSerializerOptionsForJsonSerializerContext.ConvertersContextOptions)
         );
 }
