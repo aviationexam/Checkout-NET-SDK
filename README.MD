@@ -3,6 +3,7 @@
 [![Build Status](https://github.com/aviationexam/PayPal.Sdk.Checkout/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/aviationexam/PayPal.Sdk.Checkout/actions/workflows/build.yml)
 [![NuGet](https://img.shields.io/nuget/v/PayPal.Sdk.Checkout.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/PayPal.Sdk.Checkout/)
 [![MyGet](https://img.shields.io/myget/paypal-sdk-checkout/vpre/PayPal.Sdk.Checkout?label=MyGet)](https://www.myget.org/feed/paypal-sdk-checkout/package/nuget/PayPal.Sdk.Checkout)
+[![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Ff.feedz.io%2Faviationexam%2Fpaypal-sdk-checkout%2Fshield%2FPayPal.Sdk.Checkout%2Flatest&label=PayPal.Sdk.Checkout)](https://f.feedz.io/aviationexam/paypal-sdk-checkout/packages/PayPal.Sdk.Checkout/latest/download)
 
 
 ![Home Image](homepage.jpg)
