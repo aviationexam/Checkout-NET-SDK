@@ -27,4 +27,13 @@ namespace PayPal.Sdk.Checkout.Core.MessageSerializers;
 [JsonSerializable(typeof(PayPalPayments.RefundRequest))]
 internal partial class PayPalJsonSerializerContext : JsonSerializerContext
 {
+    static PayPalJsonSerializerContext()
+    {
+        // register generated converters to options
+        UseEnumConverters(s_defaultOptions.Converters);
+
+#if NET8_0_OR_GREATER
+        Default = new PayPalJsonSerializerContext(new System.Text.Json.JsonSerializerOptions(s_defaultOptions));
+#endif
+    }
 }
