@@ -12,7 +12,7 @@ namespace PayPal.Sdk.Checkout.Payments;
 /// </summary>
 public class AuthorizationsCaptureRequest : PayPalHttpRequest
     .WithJsonRequest<CaptureRequest>
-    .WithJsonResponse<Capture>,
+    .WithJsonResponse<PaymentCapture>,
     IConfigurePrefer, IConfigurePayPalRequestId
 {
     public AuthorizationsCaptureRequest(string authorizationId) : base(

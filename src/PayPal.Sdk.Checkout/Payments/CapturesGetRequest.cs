@@ -10,7 +10,7 @@ namespace PayPal.Sdk.Checkout.Payments;
 /// </summary>
 public class CapturesGetRequest : PayPalHttpRequest
     .WithGetRequest
-    .WithJsonResponse<Capture>
+    .WithJsonResponse<PaymentCapture>
 {
     public CapturesGetRequest(string captureId) : base(
         "/v2/payments/captures/{capture_id}",

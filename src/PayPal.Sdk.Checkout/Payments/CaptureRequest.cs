@@ -11,7 +11,7 @@ public class CaptureRequest
     /// The currency and amount for a financial transaction, such as a balance or payment due.
     /// </summary>
     [JsonPropertyName("amount")]
-    public Money Amount { get; set; } = null!;
+    public PaymentMoney Amount { get; set; } = null!;
 
     /// <summary>
     /// Indicates whether you can make additional captures against the authorized payment. Set to `true` if you do not intend to capture additional payments against the authorization. Set to `false` if you intend to capture additional payments against the authorization.

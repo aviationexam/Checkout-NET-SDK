@@ -9,7 +9,7 @@ namespace PayPal.Sdk.Checkout.Extensions;
 
 public static class PaymentRequestExtensions
 {
-    public static async Task<Capture?> CapturePaymentAsync(
+    public static async Task<PaymentCapture?> CapturePaymentAsync(
         this IPayPalHttpClient payPalHttpClient,
         AccessToken accessToken,
         string authorizationId,
@@ -21,12 +21,12 @@ public static class PaymentRequestExtensions
 
         configureRequest?.Invoke(request);
 
-        var response = await payPalHttpClient.ExecuteAsync<AuthorizationsCaptureRequest, CaptureRequest, Capture>(request, accessToken, cancellationToken);
+        var response = await payPalHttpClient.ExecuteAsync<AuthorizationsCaptureRequest, CaptureRequest, PaymentCapture>(request, accessToken, cancellationToken);
 
         return response.ResponseBody;
     }
 
-    public static async Task<Refund?> CapturesRefundAsync(
+    public static async Task<PaymentRefund?> CapturesRefundAsync(
         this IPayPalHttpClient payPalHttpClient,
         AccessToken accessToken,
         string captureId,
@@ -38,7 +38,7 @@ public static class PaymentRequestExtensions
 
         configureRequest?.Invoke(request);
 
-        var response = await payPalHttpClient.ExecuteAsync<CapturesRefundRequest, RefundRequest, Refund>(request, accessToken, cancellationToken);
+        var response = await payPalHttpClient.ExecuteAsync<CapturesRefundRequest, RefundRequest, PaymentRefund>(request, accessToken, cancellationToken);
 
         return response.ResponseBody;
     }

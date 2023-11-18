@@ -12,7 +12,7 @@ public class PlatformFee
     /// The currency and amount for a financial transaction, such as a balance or payment due.
     /// </summary>
     [JsonPropertyName("amount")]
-    public Money Amount { get; set; } = null!;
+    public PaymentMoney Amount { get; set; } = null!;
 
     /// <summary>
     /// The details for the merchant who receives the funds and fulfills the order. The merchant is also known as the payee.

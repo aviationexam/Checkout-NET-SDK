@@ -6,7 +6,7 @@ namespace PayPal.Sdk.Checkout.Payments;
 /// <summary>
 /// The level of protection offered as defined by [PayPal Seller Protection for Merchants](https://www.paypal.com/us/webapps/mpp/security/seller-protection).
 /// </summary>
-public class SellerProtection
+public class PaymentSellerProtection
 {
     /// <summary>
     /// An array of conditions that are covered for the transaction.

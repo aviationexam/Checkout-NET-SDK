@@ -5,13 +5,13 @@ namespace PayPal.Sdk.Checkout.Payments;
 /// <summary>
 /// The net amount. Returned when the currency of the refund is different from the currency of the PayPal account where the merchant holds their funds.
 /// </summary>
-public class NetAmountBreakdownItem
+public class PaymentNetAmountBreakdownItem
 {
     /// <summary>
     /// The currency and amount for a financial transaction, such as a balance or payment due.
     /// </summary>
     [JsonPropertyName("converted_amount")]
-    public Money ConvertedAmount { get; set; } = null!;
+    public PaymentMoney ConvertedAmount { get; set; } = null!;
 
     /// <summary>
     /// The exchange rate that determines the amount to convert from one currency to another currency.
@@ -23,5 +23,5 @@ public class NetAmountBreakdownItem
     /// The currency and amount for a financial transaction, such as a balance or payment due.
     /// </summary>
     [JsonPropertyName("payable_amount")]
-    public Money PayableAmount { get; set; } = null!;
+    public PaymentMoney PayableAmount { get; set; } = null!;
 }

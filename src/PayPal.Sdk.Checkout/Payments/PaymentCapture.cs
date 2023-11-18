@@ -4,15 +4,15 @@ using System.Text.Json.Serialization;
 namespace PayPal.Sdk.Checkout.Payments;
 
 /// <summary>
-/// The refund information.
+/// A captured payment.
 /// </summary>
-public class Refund
+public class PaymentCapture
 {
     /// <summary>
     /// The currency and amount for a financial transaction, such as a balance or payment due.
     /// </summary>
     [JsonPropertyName("amount")]
-    public Money Amount { get; set; } = null!;
+    public PaymentMoney Amount { get; set; } = null!;
 
     /// <summary>
     /// The date and time, in [Internet date and time format](https://tools.ietf.org/html/rfc3339#section-5.6). Seconds are required while fractional seconds are optional.<blockquote><strong>Note:</strong> The regular expression provides guidance but does not reject all invalid dates.</blockquote>
@@ -21,7 +21,19 @@ public class Refund
     public string CreateTime { get; set; } = null!;
 
     /// <summary>
-    /// The PayPal-generated ID for the refund.
+    /// The funds that are held on behalf of the merchant.
+    /// </summary>
+    [JsonPropertyName("disbursement_mode")]
+    public string DisbursementMode { get; set; } = null!;
+
+    /// <summary>
+    /// Indicates whether you can make additional captures against the authorized payment. Set to `true` if you do not intend to capture additional payments against the authorization. Set to `false` if you intend to capture additional payments against the authorization.
+    /// </summary>
+    [JsonPropertyName("final_capture")]
+    public bool? FinalCapture { get; set; } = null!;
+
+    /// <summary>
+    /// The PayPal-generated ID for the captured payment.
     /// </summary>
     [JsonPropertyName("id")]
     public string Id { get; set; } = null!;
@@ -36,28 +48,28 @@ public class Refund
     /// An array of related [HATEOAS links](/docs/api/overview/#hateoas-links).
     /// </summary>
     [JsonPropertyName("links")]
-    public ICollection<LinkDescription> Links { get; set; } = null!;
+    public ICollection<PaymentLinkDescription> Links { get; set; } = null!;
 
     /// <summary>
-    /// The reason for the refund. Appears in both the payer's transaction history and the emails that the payer receives.
+    /// The level of protection offered as defined by [PayPal Seller Protection for Merchants](https://www.paypal.com/us/webapps/mpp/security/seller-protection).
     /// </summary>
-    [JsonPropertyName("note_to_payer")]
-    public string NoteToPayer { get; set; } = null!;
+    [JsonPropertyName("seller_protection")]
+    public PaymentSellerProtection SellerProtection { get; set; } = null!;
 
     /// <summary>
-    /// The breakdown of the refund.
+    /// The detailed breakdown of the captured payment.
     /// </summary>
-    [JsonPropertyName("seller_payable_breakdown")]
-    public MerchantPayableBreakdown SellerPayableBreakdown { get; set; } = null!;
+    [JsonPropertyName("seller_receivable_breakdown")]
+    public PaymentMerchantReceivableBreakdown SellerReceivableBreakdown { get; set; } = null!;
 
     /// <summary>
-    /// The status of the capture.
+    /// The status of the captured payment.
     /// </summary>
     [JsonPropertyName("status")]
     public string Status { get; set; } = null!;
 
     /// <summary>
-    /// The details of the refund status.
+    /// The details of the captured payment status.
     /// </summary>
     [JsonPropertyName("status_details")]
     public StatusDetails StatusDetails { get; set; } = null!;

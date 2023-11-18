@@ -12,7 +12,7 @@ namespace PayPal.Sdk.Checkout.Payments;
 /// </summary>
 public class AuthorizationsReauthorizeRequest : PayPalHttpRequest
     .WithJsonRequest<ReauthorizeRequest>
-    .WithJsonResponse<Authorization>,
+    .WithJsonResponse<PaymentAuthorization>,
     IConfigurePrefer, IConfigurePayPalRequestId
 {
     public AuthorizationsReauthorizeRequest(string authorizationId) : base(

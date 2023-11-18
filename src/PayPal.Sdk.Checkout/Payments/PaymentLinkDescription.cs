@@ -5,7 +5,7 @@ namespace PayPal.Sdk.Checkout.Payments;
 /// <summary>
 /// The request-related [HATEOAS link](/docs/api/overview/#hateoas-links) information.
 /// </summary>
-public class LinkDescription
+public class PaymentLinkDescription
 {
     /// <summary>
     /// The media type in which to submit the request data.
