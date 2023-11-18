@@ -9,7 +9,7 @@ using System.Net.Http;
 
 namespace PayPal.Sdk.Checkout.Extensions;
 
-public static class IoCExtensions
+public static class DependencyInjectionExtensions
 {
     public static IServiceCollection AddPayPalCheckout(
         this IServiceCollection services,
