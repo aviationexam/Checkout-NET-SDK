@@ -16,6 +16,10 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
+  <PropertyGroup Label="Enable AOT">
+    <IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
+
   <PropertyGroup>
     <!-- DefaultJsonSerializerContext configuration is required to generate UseEnumConverters method -->
     <AVI_EJC_DefaultJsonSerializerContext_ClassAccessibility>internal</AVI_EJC_DefaultJsonSerializerContext_ClassAccessibility>
