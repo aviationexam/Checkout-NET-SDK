@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aviationexam.GeneratedJsonConverters.SourceGenerator" Version="0.1.12" />
+    <PackageReference Include="Aviationexam.GeneratedJsonConverters.SourceGenerator" Version="0.1.13" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net7.0' ">
