@@ -15,7 +15,27 @@ internal static class UserAgent
     public static string GetUserAgentHeader()
     {
         var header = new StringBuilder("PayPalSDK/PayPal-NET-SDK ");
-        header.Append(Version.VERSION);
+        if (
+            GitInfo.TagMajor is { } major
+            && GitInfo.TagMinor is { } minor
+            && GitInfo.TagBuild is { } build
+        )
+        {
+            header.Append(major);
+            header.Append('.');
+            header.Append(minor);
+            header.Append('.');
+            header.Append(build);
+        }
+        else if (GitInfo.Tag is { } tag)
+        {
+            header.Append(tag);
+        }
+        else
+        {
+            header.Append(GitInfo.CommitHash);
+        }
+
         header.Append(" (");
         header.Append(string.Join(";", new[]
         {
