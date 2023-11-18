@@ -48,7 +48,7 @@ public class PurchaseUnitRequest
     /// Any additional payment instructions for PayPal for Partner customers. Enables features for partners and marketplaces, such as delayed disbursement and collection of a platform fee. Applies during order creation for captured payments or during capture of authorized payments.
     /// </summary>
     [JsonPropertyName("payment_instruction")]
-    public PaymentInstruction? PaymentInstruction { get; set; }
+    public OrderPaymentInstruction? PaymentInstruction { get; set; }
 
     /// <summary>
     /// The API caller-provided external ID for the purchase unit. Required for multiple purchase units when you must update the order through `PATCH`. If you omit this value and the order contains only one purchase unit, PayPal sets this value to `default`.
