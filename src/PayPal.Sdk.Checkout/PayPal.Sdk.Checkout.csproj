@@ -27,7 +27,7 @@
     <AVI_EJC_DefaultJsonSerializerContext_ClassName>PayPalJsonSerializerContext</AVI_EJC_DefaultJsonSerializerContext_ClassName>
 
     <!-- Allowed options BackingType, FirstEnumName. Default value FirstEnumName -->
-    <AVI_EJC_DefaultEnumSerializationStrategy>BackingType</AVI_EJC_DefaultEnumSerializationStrategy>
+    <AVI_EJC_DefaultEnumSerializationStrategy>FirstEnumName</AVI_EJC_DefaultEnumSerializationStrategy>
 
     <!-- Allowed options UseBackingType, UseEnumName, or UseBackingType|UseEnumName (DeserializationStrategy is Flags enum). Default value UseEnumName -->
     <AVI_EJC_DefaultEnumDeserializationStrategy>UseBackingType|UseEnumName</AVI_EJC_DefaultEnumDeserializationStrategy>
