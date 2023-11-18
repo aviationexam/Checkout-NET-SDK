@@ -14,7 +14,7 @@ public class RefundsGetRequest : PayPalHttpRequest
 {
     public RefundsGetRequest(string refundId) : base(
         "/v2/payments/refunds/{refund_id}",
-        PayPalPaymentsJsonSerializerContext.CustomConverters.Refund
+        PayPalJsonSerializerContext.Default.PaymentRefund
     )
     {
         try

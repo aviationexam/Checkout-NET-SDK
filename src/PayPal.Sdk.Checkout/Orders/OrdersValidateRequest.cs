@@ -16,8 +16,8 @@ public class OrdersValidateRequest : PayPalHttpRequest
 {
     public OrdersValidateRequest(string orderId) : base(
         "/v2/checkout/orders/{order_id}/validate-payment-method", HttpMethod.Post,
-        PayPalOrderJsonSerializerContext.CustomConverters.Order,
-        PayPalOrderJsonSerializerContext.CustomConverters.OrderActionRequest
+        PayPalJsonSerializerContext.Default.Order,
+        PayPalJsonSerializerContext.Default.OrderActionRequest
     )
     {
         try

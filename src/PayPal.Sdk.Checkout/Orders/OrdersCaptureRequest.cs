@@ -18,8 +18,8 @@ public class OrdersCaptureRequest : PayPalHttpRequest
 {
     public OrdersCaptureRequest(string orderId) : base(
         "/v2/checkout/orders/{order_id}/capture", HttpMethod.Post,
-        PayPalOrderJsonSerializerContext.CustomConverters.Order,
-        PayPalOrderJsonSerializerContext.CustomConverters.OrderActionRequest
+        PayPalJsonSerializerContext.Default.Order,
+        PayPalJsonSerializerContext.Default.OrderActionRequest
     )
     {
         try

@@ -14,7 +14,7 @@ public class OrdersGetRequest : PayPalHttpRequest
 {
     public OrdersGetRequest(string orderId) : base(
         "/v2/checkout/orders/{order_id}",
-        PayPalOrderJsonSerializerContext.CustomConverters.Order
+        PayPalJsonSerializerContext.Default.Order
     )
     {
         try

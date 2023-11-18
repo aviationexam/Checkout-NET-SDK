@@ -14,7 +14,7 @@ public class AuthorizationsGetRequest : PayPalHttpRequest
 {
     public AuthorizationsGetRequest(string authorizationId) : base(
         "/v2/payments/authorizations/{authorization_id}",
-        PayPalPaymentsJsonSerializerContext.CustomConverters.Authorization
+        PayPalJsonSerializerContext.Default.PaymentAuthorization
     )
     {
         try

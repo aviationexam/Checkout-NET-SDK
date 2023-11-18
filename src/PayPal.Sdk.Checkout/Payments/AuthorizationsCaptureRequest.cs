@@ -17,8 +17,8 @@ public class AuthorizationsCaptureRequest : PayPalHttpRequest
 {
     public AuthorizationsCaptureRequest(string authorizationId) : base(
         "/v2/payments/authorizations/{authorization_id}/capture", HttpMethod.Post,
-        PayPalPaymentsJsonSerializerContext.CustomConverters.Capture,
-        PayPalPaymentsJsonSerializerContext.CustomConverters.CaptureRequest
+        PayPalJsonSerializerContext.Default.PaymentCapture,
+        PayPalJsonSerializerContext.Default.CaptureRequest
     )
     {
         try

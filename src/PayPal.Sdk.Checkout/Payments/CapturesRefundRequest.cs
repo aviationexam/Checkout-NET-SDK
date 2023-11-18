@@ -17,8 +17,8 @@ public class CapturesRefundRequest : PayPalHttpRequest
 {
     public CapturesRefundRequest(string captureId) : base(
         "/v2/payments/captures/{capture_id}/refund", HttpMethod.Post,
-        PayPalPaymentsJsonSerializerContext.CustomConverters.Refund,
-        PayPalPaymentsJsonSerializerContext.CustomConverters.RefundRequest
+        PayPalJsonSerializerContext.Default.PaymentRefund,
+        PayPalJsonSerializerContext.Default.RefundRequest
     )
     {
         try
