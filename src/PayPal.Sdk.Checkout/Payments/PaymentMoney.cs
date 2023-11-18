@@ -5,7 +5,7 @@ namespace PayPal.Sdk.Checkout.Payments;
 /// <summary>
 /// The currency and amount for a financial transaction, such as a balance or payment due.
 /// </summary>
-public class Money
+public class PaymentMoney
 {
     /// <summary>
     /// REQUIRED

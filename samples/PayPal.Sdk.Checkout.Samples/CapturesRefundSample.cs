@@ -13,7 +13,7 @@ public static class CapturesRefundSample
     /// <summary>
     /// Method for refund the capture. Valid capture Id should be passed an argument to this method.
     /// </summary>
-    public static async Task<Refund?> CapturesRefund(this IPayPalHttpClient httpClient, AccessToken accessToken,
+    public static async Task<PaymentRefund?> CapturesRefund(this IPayPalHttpClient httpClient, AccessToken accessToken,
         string captureId, bool debug = false)
     {
         var response = await httpClient.CapturesRefundAsync(
@@ -24,7 +24,7 @@ public static class CapturesRefundSample
                 request.SetPreferReturn(EPreferReturn.Representation);
                 request.SetRequestBody(new RefundRequest
                 {
-                    Amount = new Money
+                    Amount = new PaymentMoney
                     {
                         Value = "20.00",
                         CurrencyCode = "USD"

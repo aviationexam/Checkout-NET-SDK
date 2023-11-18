@@ -13,7 +13,7 @@ public static class CaptureOrderSample
     /// <summary>
     /// This method can be used to capture the payment on the approved authorization.
     /// </summary>
-    public static async Task<Capture?> CaptureOrder(this IPayPalHttpClient httpClient, AccessToken accessToken, string authorizationId, bool debug = false)
+    public static async Task<PaymentCapture?> CaptureOrder(this IPayPalHttpClient httpClient, AccessToken accessToken, string authorizationId, bool debug = false)
     {
         var response = await httpClient.CapturePaymentAsync(
             accessToken,

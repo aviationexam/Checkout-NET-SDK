@@ -12,13 +12,13 @@ namespace PayPal.Sdk.Checkout.Payments;
 /// </summary>
 public class AuthorizationsCaptureRequest : PayPalHttpRequest
     .WithJsonRequest<CaptureRequest>
-    .WithJsonResponse<Capture>,
+    .WithJsonResponse<PaymentCapture>,
     IConfigurePrefer, IConfigurePayPalRequestId
 {
     public AuthorizationsCaptureRequest(string authorizationId) : base(
         "/v2/payments/authorizations/{authorization_id}/capture", HttpMethod.Post,
-        PayPalPaymentsJsonSerializerContext.CustomConverters.Capture,
-        PayPalPaymentsJsonSerializerContext.CustomConverters.CaptureRequest
+        PayPalJsonSerializerContext.Default.PaymentCapture,
+        PayPalJsonSerializerContext.Default.CaptureRequest
     )
     {
         try

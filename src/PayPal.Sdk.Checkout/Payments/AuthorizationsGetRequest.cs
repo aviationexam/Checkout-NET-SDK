@@ -10,11 +10,11 @@ namespace PayPal.Sdk.Checkout.Payments;
 /// </summary>
 public class AuthorizationsGetRequest : PayPalHttpRequest
     .WithGetRequest
-    .WithJsonResponse<Authorization>
+    .WithJsonResponse<PaymentAuthorization>
 {
     public AuthorizationsGetRequest(string authorizationId) : base(
         "/v2/payments/authorizations/{authorization_id}",
-        PayPalPaymentsJsonSerializerContext.CustomConverters.Authorization
+        PayPalJsonSerializerContext.Default.PaymentAuthorization
     )
     {
         try

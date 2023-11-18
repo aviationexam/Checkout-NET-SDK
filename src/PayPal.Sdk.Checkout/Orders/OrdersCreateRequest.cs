@@ -15,8 +15,8 @@ public class OrdersCreateRequest : PayPalHttpRequest
 {
     public OrdersCreateRequest() : base(
         "/v2/checkout/orders", HttpMethod.Post,
-        PayPalOrderJsonSerializerContext.CustomConverters.Order,
-        PayPalOrderJsonSerializerContext.CustomConverters.OrderRequest
+        PayPalJsonSerializerContext.Default.Order,
+        PayPalJsonSerializerContext.Default.OrderRequest
     )
     {
         ContentType = JsonMessageSerializer.ApplicationJson;

@@ -11,7 +11,7 @@ public class RefundRequest
     /// The currency and amount for a financial transaction, such as a balance or payment due.
     /// </summary>
     [JsonPropertyName("amount")]
-    public Money Amount { get; set; } = null!;
+    public PaymentMoney Amount { get; set; } = null!;
 
     /// <summary>
     /// The API caller-provided external invoice number for this order. Appears in both the payer's transaction history and the emails that the payer receives.

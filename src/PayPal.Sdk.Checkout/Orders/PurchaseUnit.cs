@@ -54,7 +54,7 @@ public class PurchaseUnit
     /// Any additional payment instructions for PayPal for Partner customers. Enables features for partners and marketplaces, such as delayed disbursement and collection of a platform fee. Applies during order creation for captured payments or during capture of authorized payments.
     /// </summary>
     [JsonPropertyName("payment_instruction")]
-    public PaymentInstruction PaymentInstruction { get; set; } = null!;
+    public OrderPaymentInstruction PaymentInstruction { get; set; } = null!;
 
     /// <summary>
     /// The collection of payments, or transactions, for a purchase unit in an order. For example, authorized payments, captured payments, and refunds.

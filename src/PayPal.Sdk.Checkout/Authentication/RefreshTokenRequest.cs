@@ -15,7 +15,7 @@ public class RefreshTokenRequest : PayPalHttpRequest
         PayPalOptions options, string code
     ) : base(
         "/v1/identity/openidconnect/tokenservice", HttpMethod.Post,
-        PayPalAuthenticationJsonSerializerContext.CustomConverters.RefreshToken
+        PayPalJsonSerializerContext.Default.RefreshToken
     )
     {
         Authorization = new AuthenticationHeaderValue("Basic", options.AuthorizationString());

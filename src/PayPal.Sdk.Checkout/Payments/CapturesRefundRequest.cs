@@ -12,13 +12,13 @@ namespace PayPal.Sdk.Checkout.Payments;
 /// </summary>
 public class CapturesRefundRequest : PayPalHttpRequest
     .WithJsonRequest<RefundRequest>
-    .WithJsonResponse<Refund>,
+    .WithJsonResponse<PaymentRefund>,
     IConfigurePrefer, IConfigurePayPalRequestId
 {
     public CapturesRefundRequest(string captureId) : base(
         "/v2/payments/captures/{capture_id}/refund", HttpMethod.Post,
-        PayPalPaymentsJsonSerializerContext.CustomConverters.Refund,
-        PayPalPaymentsJsonSerializerContext.CustomConverters.RefundRequest
+        PayPalJsonSerializerContext.Default.PaymentRefund,
+        PayPalJsonSerializerContext.Default.RefundRequest
     )
     {
         try
