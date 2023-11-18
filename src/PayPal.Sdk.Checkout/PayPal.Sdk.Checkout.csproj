@@ -16,7 +16,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
-  <PropertyGroup Label="Enable AOT">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net8.0' " Label="Enable AOT">
     <IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
 
