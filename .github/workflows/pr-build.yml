@@ -21,6 +21,8 @@ jobs:
             7.0.x
             8.0.x
       - uses: actions/checkout@v4
+      - name: Fetch all history for all tags and branches
+        run: git fetch --prune --unshallow
       - name: Restore
         run: dotnet restore --nologo
       - name: Build
