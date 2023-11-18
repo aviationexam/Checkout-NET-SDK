@@ -16,8 +16,25 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- DefaultJsonSerializerContext configuration is required to generate UseEnumConverters method -->
+    <AVI_EJC_DefaultJsonSerializerContext_ClassAccessibility>internal</AVI_EJC_DefaultJsonSerializerContext_ClassAccessibility>
+    <AVI_EJC_DefaultJsonSerializerContext_Namespace>PayPal.Sdk.Checkout.Core.MessageSerializers</AVI_EJC_DefaultJsonSerializerContext_Namespace>
+    <AVI_EJC_DefaultJsonSerializerContext_ClassName>PayPalJsonSerializerContext</AVI_EJC_DefaultJsonSerializerContext_ClassName>
+
+    <!-- Allowed options BackingType, FirstEnumName. Default value FirstEnumName -->
+    <AVI_EJC_DefaultEnumSerializationStrategy>BackingType</AVI_EJC_DefaultEnumSerializationStrategy>
+
+    <!-- Allowed options UseBackingType, UseEnumName, or UseBackingType|UseEnumName (DeserializationStrategy is Flags enum). Default value UseEnumName -->
+    <AVI_EJC_DefaultEnumDeserializationStrategy>UseBackingType|UseEnumName</AVI_EJC_DefaultEnumDeserializationStrategy>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aviationexam.GeneratedJsonConverters.SourceGenerator" Version="0.1.12" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net7.0' ">
