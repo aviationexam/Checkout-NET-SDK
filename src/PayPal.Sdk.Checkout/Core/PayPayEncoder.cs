@@ -2,7 +2,6 @@ using PayPal.Sdk.Checkout.Core.Interfaces;
 using PayPal.Sdk.Checkout.Core.MessageSerializers;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -18,7 +17,7 @@ public class PayPayEncoder : IPayPayEncoder
 
     public PayPayEncoder()
     {
-        _messageSerializers = new Collection<IMessageSerializer>
+        _messageSerializers = new IMessageSerializer[]
         {
             new FormEncodedSerializer(),
             new JsonMessageSerializer(),
@@ -26,7 +25,7 @@ public class PayPayEncoder : IPayPayEncoder
         };
     }
 
-    public async Task<HttpContent> SerializeRequestAsync<TRequestBody>(
+    public Task<HttpContent> SerializeRequestAsync<TRequestBody>(
         TRequestBody body,
         JsonTypeInfo<TRequestBody>? requestBodyJsonTypeInfo,
         string contentType,
@@ -38,7 +37,7 @@ public class PayPayEncoder : IPayPayEncoder
 
         if (serializer != null)
         {
-            return await serializer.SerializeAsync(
+            return serializer.SerializeAsync(
                 body,
                 requestBodyJsonTypeInfo,
                 contentType,
@@ -49,7 +48,7 @@ public class PayPayEncoder : IPayPayEncoder
         throw new ArgumentException($"Not found serializer for message {contentType}");
     }
 
-    public async Task<TResponse> DeserializeResponseAsync<TResponse>(
+    public Task<TResponse> DeserializeResponseAsync<TResponse>(
         HttpContent httpContent,
         JsonTypeInfo<TResponse>? responseJsonTypeInfo,
         MediaTypeHeaderValue mediaTypeHeaderValue,
@@ -63,7 +62,7 @@ public class PayPayEncoder : IPayPayEncoder
 
         if (serializer != null)
         {
-            return await serializer.DeserializeAsync(
+            return serializer.DeserializeAsync(
                 httpContent,
                 responseJsonTypeInfo,
                 mediaTypeHeaderValue,

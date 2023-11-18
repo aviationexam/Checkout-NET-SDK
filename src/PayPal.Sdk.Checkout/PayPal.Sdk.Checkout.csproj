@@ -33,12 +33,29 @@
     <AVI_EJC_DefaultEnumDeserializationStrategy>UseBackingType|UseEnumName</AVI_EJC_DefaultEnumDeserializationStrategy>
   </PropertyGroup>
 
+  <PropertyGroup Label="Configure GitInfo">
+    <GitInfo_RootDirectory>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'PayPal.Sdk.Checkout.sln'))\.git</GitInfo_RootDirectory>
+
+    <GitInfo_Namespace>PayPal.Sdk.Checkout</GitInfo_Namespace>
+
+    <!-- optional, default value 9 -->
+    <GitInfo_CommitAbbreviatedLength>9</GitInfo_CommitAbbreviatedLength>
+
+    <!-- optional, default value true -->
+    <GitInfo_UseCache>true</GitInfo_UseCache>
+
+    <!-- optional, default value false -->
+    <!-- it check only cache existence, not that HEAD equals HEAD in cache -->
+    <GitInfo_UseAggressiveCache>false</GitInfo_UseAggressiveCache>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aviationexam.GeneratedJsonConverters.SourceGenerator" Version="0.1.13" PrivateAssets="All" />
+    <PackageReference Include="Aviationexam.GeneratedJsonConverters.SourceGenerator" Version="0.1.13" PrivateAssets="all" />
+    <PackageReference Include="GitReader.SourceGenerator" Version="0.1.8" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net7.0' ">
