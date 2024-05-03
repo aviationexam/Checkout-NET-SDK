@@ -2,6 +2,7 @@ using PayPal.Sdk.Checkout.Extensions;
 using PayPal.Sdk.Checkout.Orders;
 using PayPal.Sdk.Checkout.Test.Infrastructure;
 using System.Net;
+using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -18,7 +19,7 @@ public class OrdersGetTest
     }
 
     [Fact]
-    public async void TestOrdersGetRequest()
+    public async Task TestOrdersGetRequest()
     {
         using var payPalHttpClient = TestHttpClientFactory.CreateHttpClient();
 
