@@ -60,7 +60,7 @@ public class OrdersCreateTest
     }
 
     [Fact]
-    public async void TestOrdersCreateRequest()
+    public async Task TestOrdersCreateRequest()
     {
         using var payPalHttpClient = TestHttpClientFactory.CreateHttpClient();
 

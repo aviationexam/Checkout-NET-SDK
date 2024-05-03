@@ -2,6 +2,7 @@ using PayPal.Sdk.Checkout.Extensions;
 using PayPal.Sdk.Checkout.Orders;
 using PayPal.Sdk.Checkout.Test.Infrastructure;
 using System.Net;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace PayPal.Sdk.Checkout.Test.Orders;
@@ -10,7 +11,7 @@ namespace PayPal.Sdk.Checkout.Test.Orders;
 public class OrdersValidateTest
 {
     [Fact(Skip = "This test is an example. In production, you will need a credit card")]
-    public async void TestOrdersValidateRequest()
+    public async Task TestOrdersValidateRequest()
     {
         using var payPalHttpClient = TestHttpClientFactory.CreateHttpClient();
 
