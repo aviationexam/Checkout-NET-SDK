@@ -55,7 +55,7 @@
 
   <ItemGroup>
     <PackageReference Include="Aviationexam.GeneratedJsonConverters.SourceGenerator" Version="0.1.16" PrivateAssets="all" />
-    <PackageReference Include="GitReader.SourceGenerator" Version="0.1.9" PrivateAssets="all" />
+    <PackageReference Include="GitReader.SourceGenerator" Version="0.1.10" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net7.0' ">
