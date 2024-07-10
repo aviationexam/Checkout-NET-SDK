@@ -54,7 +54,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aviationexam.GeneratedJsonConverters.SourceGenerator" Version="0.1.16" PrivateAssets="all" />
+    <PackageReference Include="Aviationexam.GeneratedJsonConverters.SourceGenerator" Version="0.1.17" PrivateAssets="all" />
     <PackageReference Include="GitReader.SourceGenerator" Version="0.1.10" PrivateAssets="all" />
   </ItemGroup>
 
