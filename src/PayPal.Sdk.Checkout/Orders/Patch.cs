@@ -2,8 +2,6 @@ using System.Text.Json.Serialization;
 
 namespace PayPal.Sdk.Checkout.Orders;
 
-public class StringPatch : Patch<string>;
-
 /// <summary>
 /// The JSON patch object to apply partial updates to resources.
 /// </summary>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PayPal.Sdk.Checkout.Samples.CaptureIntentExamples;
 
-public static class RunAll
+public static class RunAllCaptureIntentFlow
 {
     //Rename to Main1 => Main
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
@@ -14,10 +14,10 @@ public static class RunAll
     {
         var payPalHttpClient = SampleHttpClientFactory.CreateHttpClient();
 
-        var accessToken = await payPalHttpClient.AuthenticateAsync();
+        var accessToken = await payPalHttpClient.AuthenticateAsync().ConfigureAwait(false);
 
         Console.WriteLine("Running Capture Intent Flow..");
-        var createOrderResponse = await payPalHttpClient.CreateOrder(accessToken!, true);
+        var createOrderResponse = await payPalHttpClient.CreateOrder(accessToken!, true).ConfigureAwait(false);
 
         Console.WriteLine("Status: {0}", createOrderResponse!.Status);
         Console.WriteLine("Order Id: {0}", createOrderResponse.Id);
@@ -35,7 +35,7 @@ public static class RunAll
         Console.Read();
 
         Console.WriteLine("Capturing the payment...");
-        var captureOrderResponse = await payPalHttpClient.CaptureOrder(accessToken!, createOrderResponse.Id, true);
+        var captureOrderResponse = await payPalHttpClient.CaptureOrder(accessToken!, createOrderResponse.Id, true).ConfigureAwait(false);
 
         var captureId = "";
         Console.WriteLine("Status: {0}", captureOrderResponse!.Status);
@@ -61,7 +61,7 @@ public static class RunAll
         Console.WriteLine("CaptureAmount: {0}", captureAmount);
 
         Console.WriteLine("Refunding the Order....");
-        var refundOrderResponse = await payPalHttpClient.CapturesRefund(accessToken!, captureId, true);
+        var refundOrderResponse = await payPalHttpClient.CapturesRefund(accessToken!, captureId, true).ConfigureAwait(false);
         Console.WriteLine("Status: {0}", refundOrderResponse!.Status);
         Console.WriteLine("Refund Id: {0}", refundOrderResponse.Id);
         Console.WriteLine("Links:");

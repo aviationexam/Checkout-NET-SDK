@@ -11,19 +11,13 @@ using System.Threading.Tasks;
 
 namespace PayPal.Sdk.Checkout.Test.Infrastructure;
 
-public class HttpClientLoggingScopeHttpMessageHandler : DelegatingHandler
+public class HttpClientLoggingScopeHttpMessageHandler(
+    ILogger scopeLogger,
+    ILogger requestLogger
+) : DelegatingHandler
 {
-    private readonly ILogger _scopeLogger;
-    private readonly ILogger _requestLogger;
-
-    public HttpClientLoggingScopeHttpMessageHandler(
-        ILogger scopeLogger,
-        ILogger requestLogger
-    )
-    {
-        _scopeLogger = scopeLogger ?? throw new ArgumentNullException(nameof(scopeLogger));
-        _requestLogger = requestLogger ?? throw new ArgumentNullException(nameof(requestLogger));
-    }
+    private readonly ILogger _scopeLogger = scopeLogger ?? throw new ArgumentNullException(nameof(scopeLogger));
+    private readonly ILogger _requestLogger = requestLogger ?? throw new ArgumentNullException(nameof(requestLogger));
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
@@ -34,9 +28,9 @@ public class HttpClientLoggingScopeHttpMessageHandler : DelegatingHandler
 
         using var log = Log.BeginRequestPipelineScope(_scopeLogger, request);
 
-        await log.RequestPipelineStart(_requestLogger, request, cancellationToken);
-        var response = await base.SendAsync(request, cancellationToken);
-        await log.RequestPipelineEnd(_requestLogger, response, cancellationToken);
+        await log.RequestPipelineStart(_requestLogger, request, cancellationToken).ConfigureAwait(false);
+        var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        await log.RequestPipelineEnd(_requestLogger, response, cancellationToken).ConfigureAwait(false);
 
         return response;
     }
@@ -96,7 +90,7 @@ public class HttpClientLoggingScopeHttpMessageHandler : DelegatingHandler
                 string? content = null;
                 if (request.Content != null)
                 {
-                    content = await GetContent(request.Content, cancellationToken);
+                    content = await GetContent(request.Content, cancellationToken).ConfigureAwait(false);
                 }
 
                 RequestPipelineStartDefine(logger, request.Method, request.RequestUri, correlationId, content, null);
@@ -107,7 +101,7 @@ public class HttpClientLoggingScopeHttpMessageHandler : DelegatingHandler
         {
             if (logger.IsEnabled(LogLevel.Trace))
             {
-                var content = await GetContent(response.Content, cancellationToken);
+                var content = await GetContent(response.Content, cancellationToken).ConfigureAwait(false);
 
                 RequestPipelineEndDefine(logger, response.StatusCode, content, null);
             }
@@ -129,23 +123,26 @@ public class HttpClientLoggingScopeHttpMessageHandler : DelegatingHandler
         {
             if (httpContent.Headers.ContentEncoding.Contains("gzip"))
             {
-                await httpContent.LoadIntoBufferAsync();
-                var stream = await httpContent.ReadAsStreamAsync(cancellationToken);
+                await httpContent.LoadIntoBufferAsync().ConfigureAwait(false);
+                var stream = await httpContent.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
                 if (!stream.CanSeek)
                 {
                     return "<Stream content unknown - can not seek>";
                 }
 
-                await using var compressionStream = new GZipStream(
+                var compressionStream = new GZipStream(
                     stream, CompressionMode.Decompress, leaveOpen: true
                 );
-
-                using var reader = new StreamReader(
-                    compressionStream, Encoding.UTF8, detectEncodingFromByteOrderMarks: false, bufferSize: -1, leaveOpen: true
-                );
-                var content = await reader.ReadToEndAsync(
-                    cancellationToken
-                );
+                string content;
+                await using (compressionStream.ConfigureAwait(false))
+                {
+                    using var reader = new StreamReader(
+                        compressionStream, Encoding.UTF8, detectEncodingFromByteOrderMarks: false, bufferSize: -1, leaveOpen: true
+                    );
+                    content = await reader.ReadToEndAsync(
+                        cancellationToken
+                    ).ConfigureAwait(false);
+                }
 
                 stream.Seek(0, SeekOrigin.Begin);
 
@@ -161,7 +158,7 @@ public class HttpClientLoggingScopeHttpMessageHandler : DelegatingHandler
                     sb.Append(contentDisposition);
                     sb.Append('\t');
 
-                    var content = await GetContent(innerContent, cancellationToken);
+                    var content = await GetContent(innerContent, cancellationToken).ConfigureAwait(false);
 
                     if (!string.IsNullOrEmpty(contentDisposition?.FileName))
                     {
@@ -176,8 +173,8 @@ public class HttpClientLoggingScopeHttpMessageHandler : DelegatingHandler
 
             if (httpContent is StreamContent streamHttpContent)
             {
-                await httpContent.LoadIntoBufferAsync();
-                var streamContent = await streamHttpContent.ReadAsStreamAsync(cancellationToken);
+                await httpContent.LoadIntoBufferAsync().ConfigureAwait(false);
+                var streamContent = await streamHttpContent.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
 
                 if (streamContent.CanSeek)
                 {
@@ -188,7 +185,7 @@ public class HttpClientLoggingScopeHttpMessageHandler : DelegatingHandler
                     );
                     var stringContent = await reader.ReadToEndAsync(
                         cancellationToken
-                    );
+                    ).ConfigureAwait(false);
 
                     streamContent.Seek(0, SeekOrigin.Begin);
 
@@ -196,7 +193,7 @@ public class HttpClientLoggingScopeHttpMessageHandler : DelegatingHandler
                 }
             }
 
-            return await httpContent.ReadAsStringAsync(cancellationToken);
+            return await httpContent.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }

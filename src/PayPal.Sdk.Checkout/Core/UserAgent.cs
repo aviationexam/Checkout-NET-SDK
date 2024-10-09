@@ -37,14 +37,13 @@ internal static class UserAgent
         }
 
         header.Append(" (");
-        header.Append(string.Join(";", new[]
-        {
+        header.Append(string.Join(";", [
             FormatUserAgentParameter("lang", "DOTNET"),
             FormatUserAgentParameter("v", DotNetVersion),
             FormatUserAgentParameter("clr", DotNetClrVersion),
             FormatUserAgentParameter("bit", OperatingSystemBitness),
-            FormatUserAgentParameter("os", OperatingSystemName)
-        }));
+            FormatUserAgentParameter("os", OperatingSystemName),
+        ]));
         header.Append(")");
 
         return header.ToString();

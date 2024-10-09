@@ -9,25 +9,19 @@ public static partial class PayPalHttpRequest
     public static partial class WithJsonRequest<TRequestBody>
         where TRequestBody : notnull
     {
-        public abstract class WithJsonResponse<TResponseType> :
-            BaseHttpRequest<TResponseType, TRequestBody>,
+        public abstract class WithJsonResponse<TResponseType>(
+            string path,
+            HttpMethod method,
+            JsonTypeInfo<TResponseType> jsonTypeInfoForResponseType,
+            JsonTypeInfo<TRequestBody> jsonTypeInfoForRequestBody
+        ) : BaseHttpRequest<TResponseType, TRequestBody>(path, method),
             IPayPalRequestWithJsonResponseBody<TResponseType>,
             IPayPalRequestWithJsonRequestBody<TRequestBody>
             where TResponseType : notnull
         {
-            public JsonTypeInfo<TResponseType> JsonTypeInfoForResponseType { get; }
+            public JsonTypeInfo<TResponseType> JsonTypeInfoForResponseType { get; } = jsonTypeInfoForResponseType;
 
-            public JsonTypeInfo<TRequestBody> JsonTypeInfoForRequestBody { get; }
-
-            protected WithJsonResponse(
-                string path, HttpMethod method,
-                JsonTypeInfo<TResponseType> jsonTypeInfoForResponseType,
-                JsonTypeInfo<TRequestBody> jsonTypeInfoForRequestBody
-            ) : base(path, method)
-            {
-                JsonTypeInfoForResponseType = jsonTypeInfoForResponseType;
-                JsonTypeInfoForRequestBody = jsonTypeInfoForRequestBody;
-            }
+            public JsonTypeInfo<TRequestBody> JsonTypeInfoForRequestBody { get; } = jsonTypeInfoForRequestBody;
         }
     }
 }

@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 
 namespace PayPal.Sdk.Checkout.Core.MessageSerializers;
 
-public class TextSerializer : IMessageSerializer
+public partial class TextSerializer : IMessageSerializer
 {
-    private readonly Regex _contentTypeRegex = new("^text/.*$");
+    [GeneratedRegex("^text/.*$", RegexOptions.None, matchTimeoutMilliseconds: 1000)]
+    private static partial Regex MyRegex();
 
     public bool CanSerialize<TRequestBody>(
         TRequestBody body, string contentType
-    ) where TRequestBody : notnull => _contentTypeRegex.Match(contentType).Success;
+    ) where TRequestBody : notnull => MyRegex().Match(contentType).Success;
 
     public Task<HttpContent> SerializeAsync<TRequestBody>(
         TRequestBody body,
@@ -29,12 +30,15 @@ public class TextSerializer : IMessageSerializer
             return Task.FromResult((HttpContent) new StringContent(bodyString));
         }
 
-        throw new ArgumentException("Request requestBody must be string when Content-Type is text/.*");
+        throw new ArgumentException(
+            "Request body must be string when Content-Type is text/.*",
+            nameof(body)
+        );
     }
 
     public bool CanDeserialize<TResponse>(
         HttpContent response, MediaTypeHeaderValue contentType
-    ) where TResponse : notnull => _contentTypeRegex.Match(contentType.MediaType!).Success;
+    ) where TResponse : notnull => MyRegex().Match(contentType.MediaType!).Success;
 
     public async Task<TResponse> DeserializeAsync<TResponse>(
         HttpContent response,
@@ -46,6 +50,6 @@ public class TextSerializer : IMessageSerializer
     {
         return (TResponse) (object) await response.ReadAsStringAsync(
             cancellationToken
-        );
+        ).ConfigureAwait(false);
     }
 }

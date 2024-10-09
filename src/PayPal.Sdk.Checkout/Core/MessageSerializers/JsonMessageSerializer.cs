@@ -16,7 +16,7 @@ public class JsonMessageSerializer : IMessageSerializer
 
     public bool CanSerialize<TRequestBody>(
         TRequestBody body, string contentType
-    ) where TRequestBody : notnull => contentType == ApplicationJson;
+    ) where TRequestBody : notnull => string.Equals(contentType, ApplicationJson, StringComparison.Ordinal);
 
     public async Task<HttpContent> SerializeAsync<TRequestBody>(
         TRequestBody body,
@@ -35,7 +35,7 @@ public class JsonMessageSerializer : IMessageSerializer
             body,
             requestBodyJsonTypeInfo,
             cancellationToken
-        );
+        ).ConfigureAwait(false);
 
         memoryStream.Seek(0, SeekOrigin.Begin);
 
@@ -50,7 +50,7 @@ public class JsonMessageSerializer : IMessageSerializer
 
     public bool CanDeserialize<TResponse>(
         HttpContent response, MediaTypeHeaderValue contentType
-    ) where TResponse : notnull => contentType.MediaType == ApplicationJson;
+    ) where TResponse : notnull => string.Equals(contentType.MediaType, ApplicationJson, StringComparison.Ordinal);
 
     public async Task<TResponse> DeserializeAsync<TResponse>(
         HttpContent response,
@@ -64,13 +64,13 @@ public class JsonMessageSerializer : IMessageSerializer
 
         var stream = await response.ReadAsStreamAsync(
             cancellationToken
-        );
+        ).ConfigureAwait(false);
 
         var deserializedResponse = await JsonSerializer.DeserializeAsync(
             stream,
             responseJsonTypeInfo,
             cancellationToken
-        );
+        ).ConfigureAwait(false);
 
         return deserializedResponse ?? throw new NullReferenceException("Deserialize of the HttpContent is null");
     }

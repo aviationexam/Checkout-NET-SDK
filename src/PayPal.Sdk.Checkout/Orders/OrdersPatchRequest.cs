@@ -8,19 +8,6 @@ using System.Text.Json.Serialization.Metadata;
 
 namespace PayPal.Sdk.Checkout.Orders;
 
-/// <inheritdoc />
-public class OrdersStringPatchRequest : OrdersPatchRequest<string, StringPatch>
-{
-    public OrdersStringPatchRequest(
-        string orderId
-    ) : base(
-        orderId,
-        PayPalJsonSerializerContext.Default.IReadOnlyCollectionStringPatch
-    )
-    {
-    }
-}
-
 /// <summary>
 /// Updates an order that has the `CREATED` or `APPROVED` status. You cannot update an order with `COMPLETED` status.
 /// You can patch these attributes and objects:

@@ -19,7 +19,7 @@ public static class GetOrderSample
         var response = await httpClient.GetOrderAsync(
             accessToken,
             orderId
-        );
+        ).ConfigureAwait(false);
 
         if (debug && response != null)
         {

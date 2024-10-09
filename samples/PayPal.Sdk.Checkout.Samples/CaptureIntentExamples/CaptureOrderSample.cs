@@ -17,7 +17,7 @@ public static class CaptureOrderSample
     public static async Task<Order?> CaptureOrder(this IPayPalHttpClient payPalHttpClient, AccessToken accessToken,
         string orderId, bool debug = false)
     {
-        var response = await payPalHttpClient.CaptureOrderAsync(accessToken, orderId);
+        var response = await payPalHttpClient.CaptureOrderAsync(accessToken, orderId).ConfigureAwait(false);
 
         if (debug && response != null)
         {

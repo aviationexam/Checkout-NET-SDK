@@ -13,6 +13,10 @@
     <ProjectReference Include="..\..\src\PayPal.Sdk.Checkout\PayPal.Sdk.Checkout.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Meziantou.Analyzer" Version="2.0.169" PrivateAssets="all" />
+  </ItemGroup>
+
   <ItemGroup Condition=" '$(TargetFramework)' == 'net8.0' ">
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />

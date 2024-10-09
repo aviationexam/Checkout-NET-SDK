@@ -9,15 +9,10 @@ using Xunit.Abstractions;
 namespace PayPal.Sdk.Checkout.Test.Orders;
 
 [Collection("Orders")]
-public class OrdersGetTest
+public class OrdersGetTest(
+    ITestOutputHelper testOutputHelper
+)
 {
-    private readonly ITestOutputHelper _testOutputHelper;
-
-    public OrdersGetTest(ITestOutputHelper testOutputHelper)
-    {
-        _testOutputHelper = testOutputHelper;
-    }
-
     [Fact]
     public async Task TestOrdersGetRequest()
     {
@@ -47,7 +42,7 @@ public class OrdersGetTest
 
         foreach (var purchaseUnit in retrievedOrder.PurchaseUnits)
         {
-            var createdOrderPurchaseUnit = Assert.Single(createdOrder.PurchaseUnits, x => x.ReferenceId == purchaseUnit.ReferenceId);
+            var createdOrderPurchaseUnit = Assert.Single(createdOrder.PurchaseUnits, x => string.Equals(x.ReferenceId, purchaseUnit.ReferenceId, System.StringComparison.Ordinal));
 
             Assert.Equal(purchaseUnit.ReferenceId, createdOrderPurchaseUnit.ReferenceId);
             Assert.Equal(purchaseUnit.AmountWithBreakdown.CurrencyCode, createdOrderPurchaseUnit.AmountWithBreakdown.CurrencyCode);
@@ -60,16 +55,16 @@ public class OrdersGetTest
         var foundApproveUrl = false;
         foreach (var linkDescription in createdOrder.Links)
         {
-            if (linkDescription.Rel == "approve")
+            if (string.Equals(linkDescription.Rel, "approve", System.StringComparison.Ordinal))
             {
                 foundApproveUrl = true;
                 Assert.NotNull(linkDescription.Href);
                 Assert.Equal(EHttpMethod.Get, linkDescription.Method);
-                _testOutputHelper.WriteLine(linkDescription.Href);
+                testOutputHelper.WriteLine(linkDescription.Href);
             }
         }
 
-        _testOutputHelper.WriteLine(createdOrder.Id);
+        testOutputHelper.WriteLine(createdOrder.Id);
         Assert.True(foundApproveUrl);
         Assert.Equal(EOrderStatus.Created, createdOrder.Status);
     }

@@ -24,7 +24,7 @@ public static class AuthorizeOrderSample
                 request.SetPreferReturn(EPreferReturn.Representation);
                 request.SetRequestBody(new AuthorizeRequest());
             }
-        );
+        ).ConfigureAwait(false);
 
         if (debug && response != null)
         {

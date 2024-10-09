@@ -29,9 +29,9 @@ public static class CreateOrderSample
                 UserAction = EUserAction.Continue,
                 ShippingPreference = EShippingPreference.SetProvidedAddress,
             },
-            PurchaseUnits = new List<PurchaseUnitRequest>
-            {
-                new()
+            PurchaseUnits =
+            [
+                new PurchaseUnitRequest
                 {
                     ReferenceId = "PUHF",
                     Description = "Sporting Goods",
@@ -46,29 +46,29 @@ public static class CreateOrderSample
                             ItemTotal = new Money
                             {
                                 CurrencyCode = "USD",
-                                Value = "180.00"
+                                Value = "180.00",
                             },
                             Shipping = new Money
                             {
                                 CurrencyCode = "USD",
-                                Value = "20.00"
+                                Value = "20.00",
                             },
                             Handling = new Money
                             {
                                 CurrencyCode = "USD",
-                                Value = "10.00"
+                                Value = "10.00",
                             },
                             TaxTotal = new Money
                             {
                                 CurrencyCode = "USD",
-                                Value = "20.00"
+                                Value = "20.00",
                             },
                             ShippingDiscount = new Money
                             {
                                 CurrencyCode = "USD",
-                                Value = "10.00"
-                            }
-                        }
+                                Value = "10.00",
+                            },
+                        },
                     },
                     Items = new List<Item>
                     {
@@ -80,12 +80,12 @@ public static class CreateOrderSample
                             UnitAmount = new Money
                             {
                                 CurrencyCode = "USD",
-                                Value = "90.00"
+                                Value = "90.00",
                             },
                             Tax = new Money
                             {
                                 CurrencyCode = "USD",
-                                Value = "10.00"
+                                Value = "10.00",
                             },
                             Quantity = "1",
                             Category = EItemCategory.PhysicalGoods,
@@ -98,22 +98,22 @@ public static class CreateOrderSample
                             UnitAmount = new Money
                             {
                                 CurrencyCode = "USD",
-                                Value = "45.00"
+                                Value = "45.00",
                             },
                             Tax = new Money
                             {
                                 CurrencyCode = "USD",
-                                Value = "5.00"
+                                Value = "5.00",
                             },
                             Quantity = "2",
                             Category = EItemCategory.PhysicalGoods,
-                        }
+                        },
                     },
                     ShippingDetail = new ShippingDetail
                     {
                         Name = new ShippingName
                         {
-                            FullName = "John Doe"
+                            FullName = "John Doe",
                         },
                         AddressPortable = new AddressPortable
                         {
@@ -122,11 +122,11 @@ public static class CreateOrderSample
                             AdminArea2 = "San Francisco",
                             AdminArea1 = "CA",
                             PostalCode = "94107",
-                            CountryCode = "US"
-                        }
-                    }
-                }
-            }
+                            CountryCode = "US",
+                        },
+                    },
+                },
+            ],
         };
 
         return orderRequest;
@@ -142,7 +142,7 @@ public static class CreateOrderSample
         {
             request.SetPreferReturn(EPreferReturn.Representation);
             request.SetRequestBody(BuildRequestBody());
-        });
+        }).ConfigureAwait(false);
 
         if (debug && response != null)
         {
@@ -174,7 +174,7 @@ public static class CreateOrderSample
             ApplicationContext = new ApplicationContext
             {
                 CancelUrl = "https://www.example.com",
-                ReturnUrl = "https://www.example.com"
+                ReturnUrl = "https://www.example.com",
             },
             PurchaseUnits = new List<PurchaseUnitRequest>
             {
@@ -183,10 +183,10 @@ public static class CreateOrderSample
                     AmountWithBreakdown = new AmountWithBreakdown
                     {
                         CurrencyCode = "USD",
-                        Value = "220.00"
-                    }
-                }
-            }
+                        Value = "220.00",
+                    },
+                },
+            },
         };
 
         return orderRequest;
@@ -202,7 +202,7 @@ public static class CreateOrderSample
         {
             request.SetPreferReturn(EPreferReturn.Representation);
             request.SetRequestBody(BuildRequestBodyWithMinimumFields());
-        });
+        }).ConfigureAwait(false);
 
         if (debug && response != null)
         {

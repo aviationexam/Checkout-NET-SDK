@@ -14,7 +14,7 @@ public class FormEncodedSerializer : IMessageSerializer
 
     public bool CanSerialize<TRequestBody>(
         TRequestBody body, string contentType
-    ) where TRequestBody : notnull => contentType == ApplicationXForm;
+    ) where TRequestBody : notnull => string.Equals(contentType, ApplicationXForm, StringComparison.Ordinal);
 
     public Task<HttpContent> SerializeAsync<TRequestBody>(
         TRequestBody body,
@@ -26,11 +26,17 @@ public class FormEncodedSerializer : IMessageSerializer
     {
         if (body is IDictionary<string?, string?> dictionary)
         {
-            return Task.FromResult((HttpContent) new FormUrlEncodedContent(dictionary));
+            return Task.FromResult<HttpContent>(new FormUrlEncodedContent(dictionary));
+        }
+
+        if (body is IReadOnlyDictionary<string?, string?> readOnlyDictionary)
+        {
+            return Task.FromResult<HttpContent>(new FormUrlEncodedContent(readOnlyDictionary));
         }
 
         throw new ArgumentException(
-            "Request requestBody must be IDictionary<string, string> when Content-Type is application/x-www-form-urlencoded"
+            "Request body must be IDictionary<string, string> when Content-Type is application/x-www-form-urlencoded",
+            nameof(body)
         );
     }
 

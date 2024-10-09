@@ -13,36 +13,31 @@ using Xunit.Abstractions;
 namespace PayPal.Sdk.Checkout.Test.Orders;
 
 [Collection("Orders")]
-public class OrdersCreateTest
+public class OrdersCreateTest(
+    ITestOutputHelper testOutputHelper
+)
 {
-    private readonly ITestOutputHelper _testOutputHelper;
-
-    public OrdersCreateTest(ITestOutputHelper testOutputHelper)
-    {
-        _testOutputHelper = testOutputHelper;
-    }
-
     private static OrderRequest BuildRequestBody()
     {
         var order = new OrderRequest
         {
             CheckoutPaymentIntent = EOrderIntent.Capture,
-            PurchaseUnits = new PurchaseUnitRequest[]
-            {
+            PurchaseUnits =
+            [
                 new()
                 {
                     ReferenceId = "test_ref_id1",
                     AmountWithBreakdown = new AmountWithBreakdown
                     {
                         CurrencyCode = "USD",
-                        Value = "100.00"
-                    }
-                }
-            },
+                        Value = "100.00",
+                    },
+                },
+            ],
             ApplicationContext = new ApplicationContext
             {
                 ReturnUrl = "https://www.example.com",
-                CancelUrl = "https://www.example.com"
+                CancelUrl = "https://www.example.com",
             },
         };
         return order;
@@ -54,7 +49,7 @@ public class OrdersCreateTest
         {
             request.SetPreferReturn(EPreferReturn.Representation);
             request.SetRequestBody(BuildRequestBody());
-        });
+        }).ConfigureAwait(false);
 
         return response;
     }
@@ -88,13 +83,13 @@ public class OrdersCreateTest
 
         Assert.NotNull(createdOrder.Links);
 
-        Assert.Contains(createdOrder.Links, x => x.Rel == "approve");
-        var approveUrl = createdOrder.Links.First(x => x.Rel == "approve");
+        Assert.Contains(createdOrder.Links, x => string.Equals(x.Rel, "approve", System.StringComparison.Ordinal));
+        var approveUrl = createdOrder.Links.First(x => string.Equals(x.Rel, "approve", System.StringComparison.Ordinal));
         Assert.NotNull(approveUrl.Href);
         Assert.Equal(EHttpMethod.Get, approveUrl.Method);
 
-        _testOutputHelper.WriteLine("OrderId: {0}", createdOrder.Id);
-        _testOutputHelper.WriteLine("ApproveUrl: {0}", approveUrl.Href);
+        testOutputHelper.WriteLine("OrderId: {0}", createdOrder.Id);
+        testOutputHelper.WriteLine("ApproveUrl: {0}", approveUrl.Href);
 
         Assert.Equal(EOrderStatus.Created, createdOrder.Status);
     }

@@ -23,7 +23,7 @@ public static class CaptureOrderSample
                 request.SetPreferReturn(EPreferReturn.Representation);
                 request.SetRequestBody(new CaptureRequest());
             }
-        );
+        ).ConfigureAwait(false);
 
         if (debug && response != null)
         {

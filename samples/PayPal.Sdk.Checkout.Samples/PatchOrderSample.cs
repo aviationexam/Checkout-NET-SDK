@@ -22,14 +22,14 @@ public static class PatchOrderSample
             {
                 Op = "replace",
                 Path = "/intent",
-                Value = "CAPTURE"
+                Value = "CAPTURE",
             },
             new()
             {
                 Op = "replace",
                 Path = "/purchase_units/@reference_id=='PUHF'/description",
-                Value = "Physical Goods"
-            }
+                Value = "Physical Goods",
+            },
         };
         return patches;
     }
@@ -44,12 +44,12 @@ public static class PatchOrderSample
             accessToken,
             orderId,
             BuildPatches()
-        );
+        ).ConfigureAwait(false);
 
         var response = await httpClient.GetOrderAsync(
             accessToken,
             orderId
-        );
+        ).ConfigureAwait(false);
 
         if (debug && response != null)
         {

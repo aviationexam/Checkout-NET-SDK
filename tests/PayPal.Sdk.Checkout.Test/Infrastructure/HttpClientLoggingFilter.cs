@@ -4,16 +4,11 @@ using System;
 
 namespace PayPal.Sdk.Checkout.Test.Infrastructure;
 
-public class HttpClientLoggingFilter : IHttpMessageHandlerBuilderFilter
+public class HttpClientLoggingFilter(
+    ILoggerFactory loggerFactory
+) : IHttpMessageHandlerBuilderFilter
 {
-    private readonly ILoggerFactory _loggerFactory;
-
-    public HttpClientLoggingFilter(
-        ILoggerFactory loggerFactory
-    )
-    {
-        _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
-    }
+    private readonly ILoggerFactory _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
 
     public Action<HttpMessageHandlerBuilder> Configure(Action<HttpMessageHandlerBuilder> next)
     {
