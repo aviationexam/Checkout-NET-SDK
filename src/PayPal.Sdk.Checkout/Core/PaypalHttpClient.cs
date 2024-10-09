@@ -94,7 +94,8 @@ public class PayPalHttpClient : IPayPalHttpClient
         }
 
         throw new ArgumentException(
-            $"The request {typeof(TRequest)} do not implement {typeof(IPayPalRequestWithRequestBody<TRequestBody>)}"
+            $"The request {typeof(TRequest)} do not implement {typeof(IPayPalRequestWithRequestBody<TRequestBody>)}",
+            nameof(request)
         );
     }
 
@@ -190,7 +191,8 @@ public class PayPalHttpClient : IPayPalHttpClient
         if (request is IPayPalRequestWithRequestBody)
         {
             throw new ArgumentException(
-                $"Use the {nameof(ExecuteAsync)}<TRequest, TRequestBody, TResponse> method signature"
+                $"Use the {nameof(ExecuteAsync)}<TRequest, TRequestBody, TResponse> method signature",
+                nameof(request)
             );
         }
 
@@ -243,7 +245,10 @@ public class PayPalHttpClient : IPayPalHttpClient
     {
         if (request is IPayPalRequestWithRequestBody)
         {
-            throw new ArgumentException($"Use the {nameof(ExecuteVoidAsync)}<TRequest, TRequestBody> method signature");
+            throw new ArgumentException(
+                $"Use the {nameof(ExecuteVoidAsync)}<TRequest, TRequestBody> method signature",
+                nameof(request)
+            );
         }
 
         var httpRequest = CreateHttpRequest(request, accessToken);

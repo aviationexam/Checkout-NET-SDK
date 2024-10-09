@@ -45,7 +45,10 @@ public class PayPayEncoder : IPayPayEncoder
             );
         }
 
-        throw new ArgumentException($"Not found serializer for message {contentType}");
+        throw new ArgumentException(
+            $"Not found serializer for message {contentType}",
+            nameof(body)
+        );
     }
 
     public Task<TResponse> DeserializeResponseAsync<TResponse>(
@@ -71,7 +74,8 @@ public class PayPayEncoder : IPayPayEncoder
         }
 
         throw new ArgumentException(
-            $"Not found serializer for message CharSet={mediaTypeHeaderValue.CharSet} MediaType={mediaTypeHeaderValue.MediaType}"
+            $"Not found serializer for message CharSet={mediaTypeHeaderValue.CharSet} MediaType={mediaTypeHeaderValue.MediaType}",
+            typeof(TResponse).Name
         );
     }
 }

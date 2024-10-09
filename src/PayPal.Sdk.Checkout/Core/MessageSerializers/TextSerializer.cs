@@ -30,7 +30,10 @@ public partial class TextSerializer : IMessageSerializer
             return Task.FromResult((HttpContent) new StringContent(bodyString));
         }
 
-        throw new ArgumentException("Request requestBody must be string when Content-Type is text/.*");
+        throw new ArgumentException(
+            "Request body must be string when Content-Type is text/.*",
+            nameof(body)
+        );
     }
 
     public bool CanDeserialize<TResponse>(
@@ -49,5 +52,4 @@ public partial class TextSerializer : IMessageSerializer
             cancellationToken
         );
     }
-
 }
