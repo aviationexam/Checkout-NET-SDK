@@ -47,7 +47,7 @@ public class OrdersGetTest
 
         foreach (var purchaseUnit in retrievedOrder.PurchaseUnits)
         {
-            var createdOrderPurchaseUnit = Assert.Single(createdOrder.PurchaseUnits, x => x.ReferenceId == purchaseUnit.ReferenceId);
+            var createdOrderPurchaseUnit = Assert.Single(createdOrder.PurchaseUnits, x => string.Equals(x.ReferenceId, purchaseUnit.ReferenceId, System.StringComparison.Ordinal));
 
             Assert.Equal(purchaseUnit.ReferenceId, createdOrderPurchaseUnit.ReferenceId);
             Assert.Equal(purchaseUnit.AmountWithBreakdown.CurrencyCode, createdOrderPurchaseUnit.AmountWithBreakdown.CurrencyCode);
@@ -60,7 +60,7 @@ public class OrdersGetTest
         var foundApproveUrl = false;
         foreach (var linkDescription in createdOrder.Links)
         {
-            if (linkDescription.Rel == "approve")
+            if (string.Equals(linkDescription.Rel, "approve", System.StringComparison.Ordinal))
             {
                 foundApproveUrl = true;
                 Assert.NotNull(linkDescription.Href);

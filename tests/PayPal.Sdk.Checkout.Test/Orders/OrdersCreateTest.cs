@@ -88,8 +88,8 @@ public class OrdersCreateTest
 
         Assert.NotNull(createdOrder.Links);
 
-        Assert.Contains(createdOrder.Links, x => x.Rel == "approve");
-        var approveUrl = createdOrder.Links.First(x => x.Rel == "approve");
+        Assert.Contains(createdOrder.Links, x => string.Equals(x.Rel, "approve", System.StringComparison.Ordinal));
+        var approveUrl = createdOrder.Links.First(x => string.Equals(x.Rel, "approve", System.StringComparison.Ordinal));
         Assert.NotNull(approveUrl.Href);
         Assert.Equal(EHttpMethod.Get, approveUrl.Method);
 

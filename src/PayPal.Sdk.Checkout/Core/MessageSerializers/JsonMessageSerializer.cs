@@ -16,7 +16,7 @@ public class JsonMessageSerializer : IMessageSerializer
 
     public bool CanSerialize<TRequestBody>(
         TRequestBody body, string contentType
-    ) where TRequestBody : notnull => contentType == ApplicationJson;
+    ) where TRequestBody : notnull => string.Equals(contentType, ApplicationJson, StringComparison.Ordinal);
 
     public async Task<HttpContent> SerializeAsync<TRequestBody>(
         TRequestBody body,
@@ -50,7 +50,7 @@ public class JsonMessageSerializer : IMessageSerializer
 
     public bool CanDeserialize<TResponse>(
         HttpContent response, MediaTypeHeaderValue contentType
-    ) where TResponse : notnull => contentType.MediaType == ApplicationJson;
+    ) where TResponse : notnull => string.Equals(contentType.MediaType, ApplicationJson, StringComparison.Ordinal);
 
     public async Task<TResponse> DeserializeAsync<TResponse>(
         HttpContent response,

@@ -14,7 +14,7 @@ public class FormEncodedSerializer : IMessageSerializer
 
     public bool CanSerialize<TRequestBody>(
         TRequestBody body, string contentType
-    ) where TRequestBody : notnull => contentType == ApplicationXForm;
+    ) where TRequestBody : notnull => string.Equals(contentType, ApplicationXForm, StringComparison.Ordinal);
 
     public Task<HttpContent> SerializeAsync<TRequestBody>(
         TRequestBody body,
