@@ -11,19 +11,13 @@ using System.Threading.Tasks;
 
 namespace PayPal.Sdk.Checkout.Test.Infrastructure;
 
-public class HttpClientLoggingScopeHttpMessageHandler : DelegatingHandler
+public class HttpClientLoggingScopeHttpMessageHandler(
+    ILogger scopeLogger,
+    ILogger requestLogger
+) : DelegatingHandler
 {
-    private readonly ILogger _scopeLogger;
-    private readonly ILogger _requestLogger;
-
-    public HttpClientLoggingScopeHttpMessageHandler(
-        ILogger scopeLogger,
-        ILogger requestLogger
-    )
-    {
-        _scopeLogger = scopeLogger ?? throw new ArgumentNullException(nameof(scopeLogger));
-        _requestLogger = requestLogger ?? throw new ArgumentNullException(nameof(requestLogger));
-    }
+    private readonly ILogger _scopeLogger = scopeLogger ?? throw new ArgumentNullException(nameof(scopeLogger));
+    private readonly ILogger _requestLogger = requestLogger ?? throw new ArgumentNullException(nameof(requestLogger));
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {

@@ -38,7 +38,7 @@ public static class DependencyInjectionExtensions
             .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
             {
                 AllowAutoRedirect = false,
-                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
+                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip,
             });
 
         return services;

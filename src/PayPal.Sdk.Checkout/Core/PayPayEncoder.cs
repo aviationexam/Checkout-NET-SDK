@@ -13,17 +13,12 @@ namespace PayPal.Sdk.Checkout.Core;
 
 public class PayPayEncoder : IPayPayEncoder
 {
-    private readonly IReadOnlyCollection<IMessageSerializer> _messageSerializers;
-
-    public PayPayEncoder()
-    {
-        _messageSerializers =
-        [
-            new FormEncodedSerializer(),
-            new JsonMessageSerializer(),
-            new TextSerializer()
-        ];
-    }
+    private readonly IReadOnlyCollection<IMessageSerializer> _messageSerializers =
+    [
+        new FormEncodedSerializer(),
+        new JsonMessageSerializer(),
+        new TextSerializer(),
+    ];
 
     public Task<HttpContent> SerializeRequestAsync<TRequestBody>(
         TRequestBody body,

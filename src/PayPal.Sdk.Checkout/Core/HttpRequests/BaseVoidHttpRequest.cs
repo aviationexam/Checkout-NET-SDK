@@ -4,19 +4,15 @@ using PayPal.Sdk.Checkout.RequestInterfaces;
 
 namespace PayPal.Sdk.Checkout.Core.HttpRequests;
 
-public abstract class BaseVoidHttpRequest<TRequestBody> : BaseHttpRequest, IPayPalRequestWithRequestBody<TRequestBody>
+public abstract class BaseVoidHttpRequest<TRequestBody>(
+    string path,
+    HttpMethod method
+) : BaseHttpRequest(path, method), IPayPalRequestWithRequestBody<TRequestBody>
     where TRequestBody : notnull
 {
-    public string PayPalRequestId { get; }
+    public string PayPalRequestId { get; } = Guid.NewGuid().ToString();
 
     public TRequestBody Body { get; private set; } = default!;
-
-    protected BaseVoidHttpRequest(
-        string path, HttpMethod method
-    ) : base(path, method)
-    {
-        PayPalRequestId = Guid.NewGuid().ToString();
-    }
 
     public void SetRequestBody(TRequestBody request)
     {

@@ -9,15 +9,10 @@ using Xunit.Abstractions;
 namespace PayPal.Sdk.Checkout.Test.Orders;
 
 [Collection("Orders")]
-public class OrdersGetTest
+public class OrdersGetTest(
+    ITestOutputHelper testOutputHelper
+)
 {
-    private readonly ITestOutputHelper _testOutputHelper;
-
-    public OrdersGetTest(ITestOutputHelper testOutputHelper)
-    {
-        _testOutputHelper = testOutputHelper;
-    }
-
     [Fact]
     public async Task TestOrdersGetRequest()
     {
@@ -65,11 +60,11 @@ public class OrdersGetTest
                 foundApproveUrl = true;
                 Assert.NotNull(linkDescription.Href);
                 Assert.Equal(EHttpMethod.Get, linkDescription.Method);
-                _testOutputHelper.WriteLine(linkDescription.Href);
+                testOutputHelper.WriteLine(linkDescription.Href);
             }
         }
 
-        _testOutputHelper.WriteLine(createdOrder.Id);
+        testOutputHelper.WriteLine(createdOrder.Id);
         Assert.True(foundApproveUrl);
         Assert.Equal(EOrderStatus.Created, createdOrder.Status);
     }

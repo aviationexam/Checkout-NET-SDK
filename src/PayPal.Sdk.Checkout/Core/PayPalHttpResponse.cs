@@ -4,32 +4,21 @@ using System.Net.Http.Headers;
 
 namespace PayPal.Sdk.Checkout.Core;
 
-public class PayPalHttpResponse : IPayPalHttpResponse
+public class PayPalHttpResponse(
+    HttpResponseHeaders responseHeaders,
+    HttpStatusCode responseStatusCode
+) : IPayPalHttpResponse
 {
-    public HttpResponseHeaders ResponseHeaders { get; }
+    public HttpResponseHeaders ResponseHeaders { get; } = responseHeaders;
 
-    public HttpStatusCode ResponseStatusCode { get; }
-
-    public PayPalHttpResponse(
-        HttpResponseHeaders responseHeaders,
-        HttpStatusCode responseStatusCode
-    )
-    {
-        ResponseHeaders = responseHeaders;
-        ResponseStatusCode = responseStatusCode;
-    }
+    public HttpStatusCode ResponseStatusCode { get; } = responseStatusCode;
 }
 
-public class PayPalHttpResponse<TResponse> : PayPalHttpResponse, IPayPalHttpResponse<TResponse>
+public class PayPalHttpResponse<TResponse>(
+    HttpResponseHeaders responseHeaders,
+    HttpStatusCode responseStatusCode,
+    TResponse? responseBody
+) : PayPalHttpResponse(responseHeaders, responseStatusCode), IPayPalHttpResponse<TResponse>
 {
-    public TResponse? ResponseBody { get; }
-
-    public PayPalHttpResponse(
-        HttpResponseHeaders responseHeaders,
-        HttpStatusCode responseStatusCode,
-        TResponse? responseBody
-    ) : base(responseHeaders, responseStatusCode)
-    {
-        ResponseBody = responseBody;
-    }
+    public TResponse? ResponseBody { get; } = responseBody;
 }

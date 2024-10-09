@@ -13,35 +13,14 @@ using System.Threading.Tasks;
 
 namespace PayPal.Sdk.Checkout.Core;
 
-// ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
-public class PayPalHttpClient : IPayPalHttpClient
+public class PayPalHttpClient(
+    HttpClient httpClient,
+    IPayPayEncoder payPayEncoder,
+    IOptions<PayPalOptions> payPalOptions,
+    bool leaveOpen = true
+) : IPayPalHttpClient
 {
-    private readonly HttpClient _httpClient;
-
-    private readonly IPayPayEncoder _payPayEncoder;
-
-    private readonly IOptions<PayPalOptions> _payPalOptions;
-
-    private readonly bool _leaveOpen;
-
-    /// <param name="httpClient"></param>
-    /// <param name="payPayEncoder"></param>
-    /// <param name="payPalOptions"></param>
-    /// <param name="leaveOpen">Mainly for test to call dispose on httpClient</param>
-    public PayPalHttpClient(
-        HttpClient httpClient,
-        IPayPayEncoder payPayEncoder,
-        IOptions<PayPalOptions> payPalOptions,
-        bool leaveOpen = true
-    )
-    {
-        _httpClient = httpClient;
-        _payPayEncoder = payPayEncoder;
-        _payPalOptions = payPalOptions;
-        _leaveOpen = leaveOpen;
-    }
-
-    public PayPalOptions GetPayPalOptions => _payPalOptions.Value;
+    public PayPalOptions GetPayPalOptions => payPalOptions.Value;
 
     protected virtual HttpRequestMessage CreateHttpRequest<TRequest>(
         TRequest request,
@@ -85,7 +64,7 @@ public class PayPalHttpClient : IPayPalHttpClient
     {
         if (request is IPayPalRequestWithRequestBody<TRequestBody> requestWithRequestBody)
         {
-            return await _payPayEncoder.SerializeRequestAsync(
+            return await payPayEncoder.SerializeRequestAsync(
                 requestWithRequestBody.Body,
                 (request as IPayPalRequestWithJsonRequestBody<TRequestBody>)?.JsonTypeInfoForRequestBody,
                 requestWithRequestBody.ContentType,
@@ -128,7 +107,7 @@ public class PayPalHttpClient : IPayPalHttpClient
 
             if (response.Content.Headers.ContentType != null)
             {
-                responseBody = await _payPayEncoder.DeserializeResponseAsync(
+                responseBody = await payPayEncoder.DeserializeResponseAsync(
                     response.Content,
                     jsonTypeInfoForResponseType,
                     response.Content.Headers.ContentType,
@@ -166,11 +145,11 @@ public class PayPalHttpClient : IPayPalHttpClient
             ).ConfigureAwait(false);
             httpRequest.Content = httpContent;
 
-            response = await _httpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            response = await httpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
         }
         else
         {
-            response = await _httpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            response = await httpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
         }
 
         return await ProcessResponseAsync(
@@ -198,7 +177,7 @@ public class PayPalHttpClient : IPayPalHttpClient
 
         var httpRequest = CreateHttpRequest(request, accessToken);
 
-        var response = await _httpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
 
         return await ProcessResponseAsync(
             response,
@@ -226,11 +205,11 @@ public class PayPalHttpClient : IPayPalHttpClient
             ).ConfigureAwait(false);
             httpRequest.Content = httpContent;
 
-            response = await _httpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            response = await httpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
         }
         else
         {
-            response = await _httpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            response = await httpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
         }
 
         return await ProcessResponseAsync(response, cancellationToken).ConfigureAwait(false);
@@ -253,7 +232,7 @@ public class PayPalHttpClient : IPayPalHttpClient
 
         var httpRequest = CreateHttpRequest(request, accessToken);
 
-        var response = await _httpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
 
         return await ProcessResponseAsync(response, cancellationToken).ConfigureAwait(false);
     }
@@ -266,9 +245,9 @@ public class PayPalHttpClient : IPayPalHttpClient
     {
         if (!_disposed)
         {
-            if (!_leaveOpen)
+            if (!leaveOpen)
             {
-                _httpClient.Dispose();
+                httpClient.Dispose();
             }
 
             _disposed = true;

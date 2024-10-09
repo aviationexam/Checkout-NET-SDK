@@ -20,8 +20,8 @@ public class OrdersPatchTest
             {
                 Op = "add",
                 Path = "/purchase_units/@reference_id=='test_ref_id1'/description",
-                Value = "added_description"
-            }
+                Value = "added_description",
+            },
         ];
     }
 

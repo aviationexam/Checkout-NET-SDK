@@ -34,7 +34,7 @@ public class OrdersValidateTest
                     {
                         Card = new Card(),
                         Token = new Token(),
-                    }
+                    },
                 });
             }
         );

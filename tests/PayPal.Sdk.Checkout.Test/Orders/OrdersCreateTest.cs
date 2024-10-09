@@ -13,15 +13,10 @@ using Xunit.Abstractions;
 namespace PayPal.Sdk.Checkout.Test.Orders;
 
 [Collection("Orders")]
-public class OrdersCreateTest
+public class OrdersCreateTest(
+    ITestOutputHelper testOutputHelper
+)
 {
-    private readonly ITestOutputHelper _testOutputHelper;
-
-    public OrdersCreateTest(ITestOutputHelper testOutputHelper)
-    {
-        _testOutputHelper = testOutputHelper;
-    }
-
     private static OrderRequest BuildRequestBody()
     {
         var order = new OrderRequest
@@ -35,14 +30,14 @@ public class OrdersCreateTest
                     AmountWithBreakdown = new AmountWithBreakdown
                     {
                         CurrencyCode = "USD",
-                        Value = "100.00"
-                    }
-                }
+                        Value = "100.00",
+                    },
+                },
             ],
             ApplicationContext = new ApplicationContext
             {
                 ReturnUrl = "https://www.example.com",
-                CancelUrl = "https://www.example.com"
+                CancelUrl = "https://www.example.com",
             },
         };
         return order;
@@ -93,8 +88,8 @@ public class OrdersCreateTest
         Assert.NotNull(approveUrl.Href);
         Assert.Equal(EHttpMethod.Get, approveUrl.Method);
 
-        _testOutputHelper.WriteLine("OrderId: {0}", createdOrder.Id);
-        _testOutputHelper.WriteLine("ApproveUrl: {0}", approveUrl.Href);
+        testOutputHelper.WriteLine("OrderId: {0}", createdOrder.Id);
+        testOutputHelper.WriteLine("ApproveUrl: {0}", approveUrl.Href);
 
         Assert.Equal(EOrderStatus.Created, createdOrder.Status);
     }

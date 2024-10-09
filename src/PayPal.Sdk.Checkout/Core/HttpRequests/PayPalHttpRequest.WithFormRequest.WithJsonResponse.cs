@@ -11,20 +11,15 @@ public static partial class PayPalHttpRequest
     [SuppressMessage("ReSharper", "PartialTypeWithSinglePart")]
     public static partial class WithFormRequest
     {
-        public abstract class WithJsonResponse<TResponseType> :
-            BaseHttpRequest<TResponseType, IDictionary<string, string>>,
+        public abstract class WithJsonResponse<TResponseType>(
+            string path,
+            HttpMethod method,
+            JsonTypeInfo<TResponseType> jsonTypeInfoForResponseType
+        ) : BaseHttpRequest<TResponseType, IDictionary<string, string>>(path, method),
             IPayPalRequestWithJsonResponseBody<TResponseType>
             where TResponseType : notnull
         {
-            public JsonTypeInfo<TResponseType> JsonTypeInfoForResponseType { get; }
-
-            protected WithJsonResponse(
-                string path, HttpMethod method,
-                JsonTypeInfo<TResponseType> jsonTypeInfoForResponseType
-            ) : base(path, method)
-            {
-                JsonTypeInfoForResponseType = jsonTypeInfoForResponseType;
-            }
+            public JsonTypeInfo<TResponseType> JsonTypeInfoForResponseType { get; } = jsonTypeInfoForResponseType;
         }
     }
 }

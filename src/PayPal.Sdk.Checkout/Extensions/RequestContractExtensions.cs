@@ -24,7 +24,7 @@ public static class RequestContractExtensions
         {
             EPreferReturn.Minimal => "return=minimal",
             EPreferReturn.Representation => "return=representation",
-            _ => throw new ArgumentOutOfRangeException(nameof(preferReturn), preferReturn, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(preferReturn), preferReturn, null),
         };
 
         request.Headers.Add("Prefer", preferValue);
