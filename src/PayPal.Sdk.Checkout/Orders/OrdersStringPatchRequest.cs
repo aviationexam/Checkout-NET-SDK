@@ -1,16 +1,11 @@
-﻿using PayPal.Sdk.Checkout.Core.MessageSerializers;
+using PayPal.Sdk.Checkout.Core.MessageSerializers;
 
 namespace PayPal.Sdk.Checkout.Orders;
 
 /// <inheritdoc />
-public class OrdersStringPatchRequest : OrdersPatchRequest<string, StringPatch>
-{
-    public OrdersStringPatchRequest(
-        string orderId
-    ) : base(
-        orderId,
-        PayPalJsonSerializerContext.Default.IReadOnlyCollectionStringPatch
-    )
-    {
-    }
-}
+public class OrdersStringPatchRequest(
+    string orderId
+) : OrdersPatchRequest<string, StringPatch>(
+    orderId,
+    PayPalJsonSerializerContext.Default.IReadOnlyCollectionStringPatch
+);

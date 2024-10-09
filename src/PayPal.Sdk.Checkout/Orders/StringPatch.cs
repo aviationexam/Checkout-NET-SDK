@@ -1,3 +1,3 @@
-﻿namespace PayPal.Sdk.Checkout.Orders;
+namespace PayPal.Sdk.Checkout.Orders;
 
 public class StringPatch : Patch<string>;
