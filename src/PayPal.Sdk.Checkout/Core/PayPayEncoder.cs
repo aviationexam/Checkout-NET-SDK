@@ -17,12 +17,12 @@ public class PayPayEncoder : IPayPayEncoder
 
     public PayPayEncoder()
     {
-        _messageSerializers = new IMessageSerializer[]
-        {
+        _messageSerializers =
+        [
             new FormEncodedSerializer(),
             new JsonMessageSerializer(),
-            new TextSerializer(),
-        };
+            new TextSerializer()
+        ];
     }
 
     public Task<HttpContent> SerializeRequestAsync<TRequestBody>(

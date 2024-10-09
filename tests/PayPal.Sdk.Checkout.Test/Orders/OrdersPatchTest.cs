@@ -14,15 +14,15 @@ public class OrdersPatchTest
 {
     private IReadOnlyCollection<StringPatch> BuildRequestBody()
     {
-        return new StringPatch[]
-        {
+        return
+        [
             new()
             {
                 Op = "add",
                 Path = "/purchase_units/@reference_id=='test_ref_id1'/description",
                 Value = "added_description"
             }
-        };
+        ];
     }
 
     [Fact]

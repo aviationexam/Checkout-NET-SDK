@@ -27,8 +27,8 @@ public class OrdersCreateTest
         var order = new OrderRequest
         {
             CheckoutPaymentIntent = EOrderIntent.Capture,
-            PurchaseUnits = new PurchaseUnitRequest[]
-            {
+            PurchaseUnits =
+            [
                 new()
                 {
                     ReferenceId = "test_ref_id1",
@@ -38,7 +38,7 @@ public class OrdersCreateTest
                         Value = "100.00"
                     }
                 }
-            },
+            ],
             ApplicationContext = new ApplicationContext
             {
                 ReturnUrl = "https://www.example.com",
