@@ -11,7 +11,7 @@ public static class RequestContractExtensions
     {
         if (!collection.ContainsKey(key))
         {
-            collection.Add(key, new List<string>());
+            collection.Add(key, []);
         }
 
         collection[key].Add(value);

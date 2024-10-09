@@ -16,21 +16,23 @@ public static class PatchOrderSample
          */
     private static IReadOnlyCollection<StringPatch> BuildPatches()
     {
-        var patches = new List<StringPatch>
-        {
+        IReadOnlyCollection<StringPatch> patches =
+        [
             new()
             {
                 Op = "replace",
                 Path = "/intent",
                 Value = "CAPTURE",
             },
+
             new()
             {
                 Op = "replace",
                 Path = "/purchase_units/@reference_id=='PUHF'/description",
                 Value = "Physical Goods",
             },
-        };
+
+        ];
         return patches;
     }
 
