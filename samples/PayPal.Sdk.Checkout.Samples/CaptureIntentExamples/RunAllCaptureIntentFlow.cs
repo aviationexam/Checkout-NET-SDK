@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PayPal.Sdk.Checkout.Samples.CaptureIntentExamples;
 
-public static class RunAll
+public static class RunAllCaptureIntentFlow
 {
     //Rename to Main1 => Main
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
