@@ -21,7 +21,9 @@ public static class PaymentRequestExtensions
 
         configureRequest?.Invoke(request);
 
-        var response = await payPalHttpClient.ExecuteAsync<AuthorizationsCaptureRequest, CaptureRequest, PaymentCapture>(request, accessToken, cancellationToken);
+        var response = await payPalHttpClient.ExecuteAsync<AuthorizationsCaptureRequest, CaptureRequest, PaymentCapture>(
+            request, accessToken, cancellationToken
+        ).ConfigureAwait(false);
 
         return response.ResponseBody;
     }
@@ -38,7 +40,9 @@ public static class PaymentRequestExtensions
 
         configureRequest?.Invoke(request);
 
-        var response = await payPalHttpClient.ExecuteAsync<CapturesRefundRequest, RefundRequest, PaymentRefund>(request, accessToken, cancellationToken);
+        var response = await payPalHttpClient.ExecuteAsync<CapturesRefundRequest, RefundRequest, PaymentRefund>(
+            request, accessToken, cancellationToken
+        ).ConfigureAwait(false);
 
         return response.ResponseBody;
     }

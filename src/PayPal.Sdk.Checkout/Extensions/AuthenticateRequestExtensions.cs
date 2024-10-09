@@ -15,7 +15,9 @@ public static class AuthenticateRequestExtensions
     {
         var request = new AccessTokenRequest(payPalHttpClient.GetPayPalOptions, refreshToken);
 
-        var response = await payPalHttpClient.ExecuteAsync<AccessTokenRequest, IDictionary<string, string>, AccessToken>(request, null, cancellationToken);
+        var response = await payPalHttpClient.ExecuteAsync<AccessTokenRequest, IDictionary<string, string>, AccessToken>(
+            request, accessToken: null, cancellationToken
+        ).ConfigureAwait(false);
 
         return response.ResponseBody;
     }

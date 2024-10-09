@@ -35,7 +35,7 @@ public class JsonMessageSerializer : IMessageSerializer
             body,
             requestBodyJsonTypeInfo,
             cancellationToken
-        );
+        ).ConfigureAwait(false);
 
         memoryStream.Seek(0, SeekOrigin.Begin);
 
@@ -64,13 +64,13 @@ public class JsonMessageSerializer : IMessageSerializer
 
         var stream = await response.ReadAsStreamAsync(
             cancellationToken
-        );
+        ).ConfigureAwait(false);
 
         var deserializedResponse = await JsonSerializer.DeserializeAsync(
             stream,
             responseJsonTypeInfo,
             cancellationToken
-        );
+        ).ConfigureAwait(false);
 
         return deserializedResponse ?? throw new NullReferenceException("Deserialize of the HttpContent is null");
     }

@@ -50,6 +50,6 @@ public partial class TextSerializer : IMessageSerializer
     {
         return (TResponse) (object) await response.ReadAsStringAsync(
             cancellationToken
-        );
+        ).ConfigureAwait(false);
     }
 }

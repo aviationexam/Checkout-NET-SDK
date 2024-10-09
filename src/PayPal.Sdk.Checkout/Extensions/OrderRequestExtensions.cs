@@ -35,7 +35,7 @@ public static class OrderRequestExtensions
             accessToken,
             configureRequest,
             cancellationToken
-        );
+        ).ConfigureAwait(false);
 
         return response.ResponseBody;
     }
@@ -74,7 +74,7 @@ public static class OrderRequestExtensions
             orderId,
             configureRequest,
             cancellationToken
-        );
+        ).ConfigureAwait(false);
 
         return response.ResponseBody;
     }
@@ -113,7 +113,7 @@ public static class OrderRequestExtensions
             orderId,
             configureRequest,
             cancellationToken
-        );
+        ).ConfigureAwait(false);
 
         return response.ResponseBody;
     }
@@ -130,7 +130,9 @@ public static class OrderRequestExtensions
 
         configureRequest?.Invoke(request);
 
-        return payPalHttpClient.ExecuteAsync<OrdersGetRequest, Order>(request, accessToken, cancellationToken);
+        return payPalHttpClient.ExecuteAsync<OrdersGetRequest, Order>(
+            request, accessToken, cancellationToken
+        );
     }
 
     public static async Task<Order?> GetOrderAsync(
@@ -146,7 +148,7 @@ public static class OrderRequestExtensions
             orderId,
             configureRequest,
             cancellationToken
-        );
+        ).ConfigureAwait(false);
 
         return response.ResponseBody;
     }
@@ -166,7 +168,9 @@ public static class OrderRequestExtensions
 
         configureRequest?.Invoke(request);
 
-        return await payPalHttpClient.ExecuteVoidAsync<OrdersStringPatchRequest, IReadOnlyCollection<StringPatch>>(request, accessToken, cancellationToken);
+        return await payPalHttpClient.ExecuteVoidAsync<OrdersStringPatchRequest, IReadOnlyCollection<StringPatch>>(
+            request, accessToken, cancellationToken
+        ).ConfigureAwait(false);
     }
 
     public static Task OrdersPatchRequestAsync(
@@ -193,7 +197,9 @@ public static class OrderRequestExtensions
 
         configureRequest?.Invoke(request);
 
-        return await payPalHttpClient.ExecuteAsync<OrdersValidateRequest, OrderActionRequest, Order>(request, accessToken, cancellationToken);
+        return await payPalHttpClient.ExecuteAsync<OrdersValidateRequest, OrderActionRequest, Order>(
+            request, accessToken, cancellationToken
+        ).ConfigureAwait(false);
     }
 
     public static async Task<Order?> ValidateOrderAsync(
@@ -204,7 +210,9 @@ public static class OrderRequestExtensions
         CancellationToken cancellationToken = default
     )
     {
-        var response = await payPalHttpClient.ValidateOrderRawAsync(accessToken, orderId, configureRequest, cancellationToken);
+        var response = await payPalHttpClient.ValidateOrderRawAsync(
+            accessToken, orderId, configureRequest, cancellationToken
+        ).ConfigureAwait(false);
 
         return response.ResponseBody;
     }
