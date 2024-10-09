@@ -4,7 +4,6 @@ using PayPal.Sdk.Checkout.Core.Interfaces;
 using PayPal.Sdk.Checkout.Extensions;
 using PayPal.Sdk.Checkout.Orders;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -70,9 +69,9 @@ public static class CreateOrderSample
                             },
                         },
                     },
-                    Items = new List<Item>
-                    {
-                        new()
+                    Items =
+                    [
+                        new Item
                         {
                             Name = "T-shirt",
                             Description = "Green XL",
@@ -90,6 +89,7 @@ public static class CreateOrderSample
                             Quantity = "1",
                             Category = EItemCategory.PhysicalGoods,
                         },
+
                         new()
                         {
                             Name = "Shoes",
@@ -108,7 +108,7 @@ public static class CreateOrderSample
                             Quantity = "2",
                             Category = EItemCategory.PhysicalGoods,
                         },
-                    },
+                    ],
                     ShippingDetail = new ShippingDetail
                     {
                         Name = new ShippingName
@@ -176,9 +176,9 @@ public static class CreateOrderSample
                 CancelUrl = "https://www.example.com",
                 ReturnUrl = "https://www.example.com",
             },
-            PurchaseUnits = new List<PurchaseUnitRequest>
-            {
-                new()
+            PurchaseUnits =
+            [
+                new PurchaseUnitRequest
                 {
                     AmountWithBreakdown = new AmountWithBreakdown
                     {
@@ -186,7 +186,7 @@ public static class CreateOrderSample
                         Value = "220.00",
                     },
                 },
-            },
+            ],
         };
 
         return orderRequest;
