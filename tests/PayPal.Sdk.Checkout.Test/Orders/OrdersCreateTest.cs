@@ -54,7 +54,7 @@ public class OrdersCreateTest
         {
             request.SetPreferReturn(EPreferReturn.Representation);
             request.SetRequestBody(BuildRequestBody());
-        });
+        }).ConfigureAwait(false);
 
         return response;
     }

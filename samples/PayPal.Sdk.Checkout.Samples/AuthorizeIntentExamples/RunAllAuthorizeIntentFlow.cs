@@ -12,10 +12,10 @@ public static class RunAllAuthorizeIntentFlow
     {
         var payPalHttpClient = SampleHttpClientFactory.CreateHttpClient();
 
-        var accessToken = await payPalHttpClient.AuthenticateAsync();
+        var accessToken = await payPalHttpClient.AuthenticateAsync().ConfigureAwait(false);
 
         Console.WriteLine("Running Authorize Intent Flow..");
-        var createOrderResponse = await payPalHttpClient.CreateOrder(accessToken!);
+        var createOrderResponse = await payPalHttpClient.CreateOrder(accessToken!).ConfigureAwait(false);
 
         Console.WriteLine("Status: {0}", createOrderResponse!.Status);
         Console.WriteLine("Order Id: {0}", createOrderResponse.Id);
@@ -33,7 +33,7 @@ public static class RunAllAuthorizeIntentFlow
         Console.Read();
 
         Console.WriteLine("Authorizing the Order....");
-        var authorizeOrderResponse = await payPalHttpClient.AuthorizeOrder(accessToken!, createOrderResponse.Id);
+        var authorizeOrderResponse = await payPalHttpClient.AuthorizeOrder(accessToken!, createOrderResponse.Id).ConfigureAwait(false);
 
         Console.WriteLine("Status: {0}", authorizeOrderResponse!.Status);
         var authorizationId = authorizeOrderResponse.PurchaseUnits.Single().Payments.Authorizations.Single().Id;
@@ -52,7 +52,7 @@ public static class RunAllAuthorizeIntentFlow
         Console.WriteLine("AuthorizedAmount: {0}", authorizedAmount);
 
         Console.WriteLine("Capturing the payment...");
-        var captureOrderResponse = await payPalHttpClient.CaptureOrder(accessToken!, authorizationId);
+        var captureOrderResponse = await payPalHttpClient.CaptureOrder(accessToken!, authorizationId).ConfigureAwait(false);
 
         Console.WriteLine("Status: {0}", captureOrderResponse!.Status);
         Console.WriteLine("Capture Id: {0}", captureOrderResponse.Id);
@@ -63,7 +63,7 @@ public static class RunAllAuthorizeIntentFlow
         }
 
         Console.WriteLine("Refunding the Order....");
-        var refundOrderResponse = await payPalHttpClient.CapturesRefund(accessToken!, captureOrderResponse.Id);
+        var refundOrderResponse = await payPalHttpClient.CapturesRefund(accessToken!, captureOrderResponse.Id).ConfigureAwait(false);
 
         Console.WriteLine("Status: {0}", refundOrderResponse!.Status);
         Console.WriteLine("Refund Id: {0}", refundOrderResponse.Id);

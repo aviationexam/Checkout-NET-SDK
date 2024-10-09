@@ -142,7 +142,7 @@ public static class CreateOrderSample
         {
             request.SetPreferReturn(EPreferReturn.Representation);
             request.SetRequestBody(BuildRequestBody());
-        });
+        }).ConfigureAwait(false);
 
         if (debug && response != null)
         {
@@ -202,7 +202,7 @@ public static class CreateOrderSample
         {
             request.SetPreferReturn(EPreferReturn.Representation);
             request.SetRequestBody(BuildRequestBodyWithMinimumFields());
-        });
+        }).ConfigureAwait(false);
 
         if (debug && response != null)
         {

@@ -44,12 +44,12 @@ public static class PatchOrderSample
             accessToken,
             orderId,
             BuildPatches()
-        );
+        ).ConfigureAwait(false);
 
         var response = await httpClient.GetOrderAsync(
             accessToken,
             orderId
-        );
+        ).ConfigureAwait(false);
 
         if (debug && response != null)
         {

@@ -31,7 +31,7 @@ public static class CapturesRefundSample
                     }
                 });
             }
-        );
+        ).ConfigureAwait(false);
 
         if (debug && response != null)
         {
