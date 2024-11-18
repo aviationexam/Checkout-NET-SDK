@@ -37,14 +37,14 @@ internal static class UserAgent
         }
 
         header.Append(" (");
-        header.Append(string.Join(";",
+        header.AppendJoin(';',
             FormatUserAgentParameter("lang", "DOTNET"),
             FormatUserAgentParameter("v", DotNetVersion),
             FormatUserAgentParameter("clr", DotNetClrVersion),
             FormatUserAgentParameter("bit", OperatingSystemBitness),
             FormatUserAgentParameter("os", OperatingSystemName)
-        ));
-        header.Append(")");
+        );
+        header.Append(')');
 
         return header.ToString();
     }
