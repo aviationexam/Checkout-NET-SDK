@@ -55,7 +55,7 @@
 
   <ItemGroup>
     <PackageReference Include="Aviationexam.GeneratedJsonConverters.SourceGenerator" Version="0.2.0" PrivateAssets="all" />
-    <PackageReference Include="GitReader.SourceGenerator" Version="0.1.11" PrivateAssets="all" />
+    <PackageReference Include="GitReader.SourceGenerator" Version="0.1.12" PrivateAssets="all" />
     <PackageReference Include="Meziantou.Analyzer" Version="2.0.180" PrivateAssets="all" />
   </ItemGroup>
 
