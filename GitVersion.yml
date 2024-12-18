@@ -1,8 +1,10 @@
 workflow: TrunkBased/preview1
 branches:
-  main:
-    regex: ^master$|^main$|^develop$
+  develop:
+    increment: Patch
+    regex: ^develop$
     label: nightly
+    source-branches: [develop]
 ignore:
   sha: []
 merge-message-formats: {}
