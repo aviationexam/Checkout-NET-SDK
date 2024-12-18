@@ -1,8 +1,8 @@
-mode: ContinuousDeployment
-continuous-delivery-fallback-tag: nightly
+workflow: TrunkBased/preview1
 branches:
-  develop:
-    tag: nightly
+  main:
+    regex: ^master$|^main$|^develop$
+    label: nightly
 ignore:
   sha: []
 merge-message-formats: {}
